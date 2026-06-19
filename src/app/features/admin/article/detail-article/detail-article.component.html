@@ -1,0 +1,165 @@
+@if (loading()) {
+      <div class="py-20">
+        <div class="container mx-auto px-4">
+          <div class="max-w-3xl mx-auto animate-pulse">
+            <div class="h-8 bg-neutral-200 rounded w-1/4 mb-4"></div>
+            <div class="h-12 bg-neutral-200 rounded w-3/4 mb-6"></div>
+            <div class="h-64 bg-neutral-200 rounded-xl mb-8"></div>
+            <div class="space-y-4">
+              <div class="h-4 bg-neutral-200 rounded w-full"></div>
+              <div class="h-4 bg-neutral-200 rounded w-full"></div>
+              <div class="h-4 bg-neutral-200 rounded w-2/3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    } @else if (article()) {
+
+      
+      <!-- Content -->
+    <section class="py-12 bg-neutral-50">
+        <div class="container mx-auto px-4">
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Contenu principal à gauche -->
+            <div class="lg:col-span-2 space-y-6">
+
+            <!-- Titre -->
+            <h1 class="text-3xl lg:text-4xl font-bold text-black leading-tight">
+                {{ article()!.title }}
+            </h1>
+
+            <!-- Ligne sous le titre -->
+            <hr class="border-t-2 border-gray-300 my-2">
+
+            <!-- Date et statut (même ligne) -->
+            <div class="flex items-center gap-4 text-sm text-neutral-500 mb-2">
+                <!-- Date -->
+                <span class="flex items-center gap-1">
+                <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                {{ formatDate(article()!.publishedAt || article()!.createdAt) }}
+                </span>
+
+                <!-- Statut -->
+                <span class="px-2 py-0.5 bg-[#00843B]/10 text-[#00843B] font-semibold rounded-full">
+                {{ getCategoryLabel(article()!.category) }}
+                </span>
+
+                <span class="flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+                {{ article()!.viewCount }} vues
+                </span>
+            </div>
+
+            <!-- Ligne après date/statut -->
+            <hr class="border-t-2 border-gray-300 my-2">
+
+            <!-- Résumé -->
+            @if (article()!.summary) {
+                <p class="text-black text-lg leading-relaxed text-justify mb-6">
+                {{ article()!.summary }}
+                </p>
+            }
+
+            <!-- Image en grand -->
+
+            
+<div *ngIf="article() as art"
+     class="flex items-center justify-center overflow-hidden">
+
+  <!-- ========================= -->
+  <!-- ACTUALITÉ → IMAGES -->
+  <!-- ========================= -->
+  <ng-container *ngIf="art.category === 'ACTUALITE' && art.images.length > 0">
+
+    <div class="w-full h-full flex flex-col gap-4 p-2">
+
+      <img *ngFor="let img of art.images"
+           [src]="getImageUrl(img.imageUrl)"
+           [alt]="art.title"
+           class="w-full max-h-[450px] object-cover rounded-xl shadow-md transition-transform duration-300 hover:scale-[1.02]">
+
+    </div>
+
+  </ng-container>
+
+  <!-- ========================= -->
+  <!-- PDF / AUTRE -->
+  <!-- ========================= -->
+  <ng-container *ngIf="art.category !== 'ACTUALITE'">
+
+    <div class="flex flex-col items-center justify-center bg-[#E6F5EB] border border-gray-200 rounded-xl w-full h-full p-6 text-center">
+
+      <svg class="w-12 h-12 text-red-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 2a2 2 0 00-2 2v16a2 2 0 002 2h8a2 2 0 002-2V8l-6-6H12z"/>
+      </svg>
+
+      <p class="font-medium text-gray-800 mb-2 truncate">
+        {{ art.title }}
+      </p>
+
+      <a [href]="getImageUrl(art.featuredImage)" target="_blank"
+         class="px-4 py-2 bg-[#00843B] text-white rounded hover:bg-[#006830] transition-colors">
+        Ouvrir le PDF
+      </a>
+
+    </div>
+
+  </ng-container>
+
+</div>
+
+            <!-- ========================= -->
+
+            
+
+
+            
+
+        
+
+
+            
+
+            <!-- Contenu détaillé -->
+          <!-- Contenu détaillé -->
+            <article class="max-w-none text-black content-article text-base leading-relaxed text-justify">
+            <div [innerHTML]="formatContent(article()!.content)"></div>
+            </article>
+
+
+           
+
+
+
+
+            </div>
+
+
+
+           
+
+            </div>
+
+        </div>
+    </section>
+
+    } @else {
+      <div class="py-20 text-center">
+        <svg class="w-16 h-16 text-neutral-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <h2 class="text-xl font-semibold text-neutral-700 mb-2">Article non trouvé</h2>
+        <p class="text-neutral-500 mb-6">L'article que vous recherchez n'existe pas ou a été supprimé.</p>
+        <a routerLink="/articles" class="btn-primary">Voir toutes les actualités</a>
+      </div>
+    }

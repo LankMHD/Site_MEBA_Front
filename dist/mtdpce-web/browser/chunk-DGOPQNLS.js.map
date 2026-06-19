@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/environments/environment.ts"],
+  "sourcesContent": ["export const environment = {\n  production: false,\n  apiUrl: 'https://8080-ih1f8zz8e9b8fivomcaia-ff46e720.us2.manus.computer/api/v1',\n  authUrl: 'https://8080-ih1f8zz8e9b8fivomcaia-ff46e720.us2.manus.computer/api/auth'\n};\n"],
+  "mappings": ";AAAO,IAAM,cAAc;EACzB,YAAY;EACZ,QAAQ;EACR,SAAS;;",
+  "names": []
+}

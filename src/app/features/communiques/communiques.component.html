@@ -1,0 +1,148 @@
+<section class="bg-gradient-to-br from-[#00843B] to-[#006B30] text-white py-16">
+  <div class="container mx-auto px-4">
+    <h1 class="text-4xl font-bold mb-4" style="color: white;">Communiqués</h1>
+    <p class="text-white/90 text-lg max-w-2xl">
+      Retrouvez toutes les  communiqués  du Ministère de la Transition Digitale.
+    </p>
+  </div>
+</section>
+
+
+
+<!-- Content -->
+<section class="py-12 bg-neutral-50">
+  <div class="container mx-auto px-4">
+
+    <!-- Search -->
+    <div class="card mb-8 p-4">
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="flex-1 relative">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <input 
+            type="text" 
+            
+            
+            placeholder="Rechercher u..."
+            class="input pl-10"
+          >
+        </div>
+        <button
+          
+          class="bg-[#00843B] hover:bg-[#006B30] text-white font-semibold px-6 py-2 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#6FCF97] focus:ring-offset-2"
+        >
+          Rechercher
+        </button>
+      </div>
+    </div>
+
+    <!-- Articles Grid -->
+    @if (loading()) {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for (i of [1,2,3,4,5,6]; track i) {
+          <div class="card animate-pulse">
+            <div class="h-48 bg-neutral-200 rounded-lg mb-4"></div>
+            <div class="h-4 bg-neutral-200 rounded w-1/4 mb-3"></div>
+            <div class="h-6 bg-neutral-200 rounded w-3/4 mb-2"></div>
+            <div class="h-4 bg-neutral-200 rounded w-full"></div>
+          </div>
+        }
+      </div>
+    } @else if (agendas().length === 0) {
+      <div class="text-center py-16">
+        <svg class="w-16 h-16 text-neutral-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+        </svg>
+        <h3 class="text-lg font-medium text-neutral-700 mb-2">Aucun communiqué trouvé</h3>
+        <p class="text-neutral-500">Essayez de modifier vos critères de recherche</p>
+      </div>
+    } @else {
+
+
+        <!-- Agenda -->
+<div class="space-y-6 px-4 container mx-auto">
+
+  <!-- Grille de 2 cartes par ligne -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <ng-container *ngIf="agendas().length > 0; else noCommuniquess">
+          @for (com of agendas(); track com.id) {
+
+             <div class="flex flex-col justify-between space-y-6">
+              <div class="space-y-6">
+                <!-- Communiqué 1 -->
+                 <a [href]="getImageUrl(com?.featuredImage)" target="_blank">
+                  <div  class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-shadow relative overflow-hidden cursor-pointer">
+                    <div class="flex items-start gap-6">
+                      <div class="flex-shrink-0 flex items-center justify-center w-16 h-16 rounded-full border-2"
+                          style="border-color: rgb(231, 76, 60); background-color: white;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-[rgb(231,76,60)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5v14l7-7-7-7z" />
+                        </svg>
+                      </div>
+                      <div class="flex-1">
+                        <div class="flex justify-between items-center mb-2">
+                          <span class="text-sm font-medium" style="color: rgb(231, 76, 60);">{{ formatDate(com.publishedAt || com.createdAt) }}</span>
+                          <span class="text-xs text-slate-400 uppercase">{{ getCategoryLabel(com.category) }}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2 line-clamp-2">
+                          {{ com.title }}
+                        </h3>
+                        <p class="text-slate-600 text-sm leading-relaxed line-clamp-2 mb-4">
+                        {{ com.summary }}  </p>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+
+              
+              </div>
+
+              <!-- Bouton Voir tous les communiqués aligné bas -->
+             
+            </div>
+
+
+
+          }
+
+        </ng-container>
+
+        <ng-template #noCommuniquess>
+          
+            <h3 class="text-lg font-semibold text-slate-700 mb-2">Aucun communiqué disponible</h3>
+           
+        </ng-template>
+     
+   
+  </div>
+
+  <!-- Pagination -->
+  <div class="flex justify-center items-center gap-4 mt-6">
+    <button (click)="prevPage()"
+            [disabled]="currentPage === 0"
+            class="px-4 py-2 bg-gray-200 text-gray-700 rounded disabled:opacity-50">
+      Précédent
+    </button>
+
+    <span class="font-medium">Page {{ currentPage + 1 }} / {{ totalPages }}</span>
+
+    <button (click)="nextPage()"
+            [disabled]="currentPage >= totalPages - 1"
+            class="px-4 py-2 bg-gray-200 text-gray-700 rounded disabled:opacity-50">
+      Suivant
+    </button>
+  </div>
+
+  <!-- Bouton Voir tout l’agenda -->
+  
+
+</div>
+      
+    }
+  </div>
+  
+</section>

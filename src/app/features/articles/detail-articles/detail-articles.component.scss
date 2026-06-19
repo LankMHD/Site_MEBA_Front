@@ -1,0 +1,21 @@
+::ng-deep .content-article p {
+  margin-bottom: 1.5em;
+  text-align: justify;
+  line-height: 1.6;
+}
+
+
+::ng-deep .content-article {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+::ng-deep .content-article img {
+  max-width: 100%;
+  height: auto;
+}
+
+::ng-deep .content-article p {
+  margin-bottom: 1rem;
+}

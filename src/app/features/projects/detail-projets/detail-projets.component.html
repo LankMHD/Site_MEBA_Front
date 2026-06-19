@@ -1,0 +1,160 @@
+@if (loading()) {
+  <!-- Loader -->
+  <div class="min-h-[60vh] flex items-center justify-center bg-neutral-50">
+    <div class="flex flex-col items-center gap-3">
+      <div class="w-12 h-12 border-4 border-[#E6F5EB] border-t-[#00843B] rounded-full animate-spin"></div>
+      <span class="text-sm text-neutral-500">Chargement du projet…</span>
+    </div>
+  </div>
+}
+
+@else if (project()) {
+
+  <!-- HEADER VERT (position inchangée) -->
+  <section class="bg-[#00843B] text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl">
+
+        <a
+          routerLink="/projects"
+          class="inline-flex items-center text-white/80 hover:text-white mb-4 transition-colors"
+        >
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Retour aux projets
+        </a>
+
+       
+
+        <h1 class="text-3xl lg:text-4xl font-bold mt-4" style="color: white;">
+          {{ project()!.name }}
+        </h1>
+
+        <div class="flex flex-wrap items-center gap-4 mt-4 text-white/80">
+          @if (project()!.partner) {
+            <span>Partenaire : {{ project()!.partner }}</span>
+          }
+          @if (project()!.responsibleDepartment) {
+            <span>• {{ project()!.responsibleDepartment }}</span>
+          }
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTENU -->
+  <section class="py-12 bg-neutral-50">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <!-- COLONNE GAUCHE -->
+        <div class="lg:col-span-2 space-y-6">
+
+          <div class="bg-white rounded-xl shadow p-6">
+            <h2 class="text-lg font-semibold mb-3">Description</h2>
+            <p class="text-neutral-600 leading-relaxed">
+              {{ project()!.description }}
+            </p>
+          </div>
+
+          @if (project()!.objectives) {
+            <div class="bg-white rounded-xl shadow p-6">
+              <h2 class="text-lg font-semibold mb-3">Objectifs</h2>
+              <p class="text-neutral-600 leading-relaxed">
+                {{ project()!.objectives }}
+              </p>
+            </div>
+          }
+
+        </div>
+
+        <!-- COLONNE DROITE -->
+        <div class="space-y-6">
+
+          <!-- PROGRESSION -->
+          <div class="bg-white rounded-xl shadow p-6">
+            <h3 class="text-lg font-semibold mb-4">Progression</h3>
+
+            <!-- Cercle -->
+            <div
+              class="w-20 h-20 mx-auto rounded-xl flex items-center justify-center mb-4"
+              [style.background]="getProgressColor(project()!)"
+            >
+              <span
+                class="text-2xl font-bold"
+                [style.color]="getContrastTextColor(getProgressColor(project()!))"
+              >
+                {{ project()!.progressPercentage }}%
+              </span>
+            </div>
+
+            <!-- Barre -->
+            <div class="w-full bg-neutral-200 rounded-full h-3">
+              <div
+                class="h-3 rounded-full transition-all duration-500"
+                [style.width.%]="project()!.progressPercentage"
+                [style.background]="getProgressColor(project()!)"
+              ></div>
+            </div>
+          </div>
+
+          <!-- INFORMATIONS -->
+          <div class="bg-white rounded-xl shadow p-6">
+            <h3 class="text-lg font-semibold mb-4">Informations</h3>
+
+            <ul class="space-y-3 text-sm">
+
+
+              @if (project()!.status) {
+                <li class="flex justify-between">
+                  <span class="text-neutral-500">Statut</span>
+                  <span [class]="getStatusBadgeClass(project()!.status)">
+                    {{ getStatusLabel(project()!.status) }}
+                </span>
+                </li>
+              }
+
+              @if (project()!.budget) {
+                <li class="flex justify-between">
+                  <span class="text-neutral-500">Budget</span>
+                  <span class="font-medium text-neutral-900">
+                    {{ formatBudget(project()!.budget!) }}
+                  </span>
+                </li>
+              }
+
+              @if (project()!.startDate) {
+                <li class="flex justify-between">
+                  <span class="text-neutral-500">Début</span>
+                  <span class="font-medium text-neutral-900">
+                    {{ formatDate(project()!.startDate!) }}
+                  </span>
+                </li>
+              }
+
+              @if (project()!.endDate) {
+                <li class="flex justify-between">
+                  <span class="text-neutral-500">Fin prévue</span>
+                  <span class="font-medium text-neutral-900">
+                    {{ formatDate(project()!.endDate!) }}
+                  </span>
+                </li>
+              }
+
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+}
+
+@else {
+  <div class="py-20 text-center">
+    <h2 class="text-lg font-semibold text-neutral-600">Projet non trouvé</h2>
+  </div>
+}

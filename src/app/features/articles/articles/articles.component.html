@@ -1,0 +1,159 @@
+<!-- Hero -->
+<section class="bg-gradient-to-br from-[#00843B] to-[#006B30] text-white py-16">
+  <div class="container mx-auto px-4">
+    <h1 class="text-4xl font-bold mb-4" style="color: white;">Actualités</h1>
+    <p class="text-white/90 text-lg max-w-2xl">
+      Retrouvez toutes les actualités, communiqués et événements du Ministère de la Transition Digitale.
+    </p>
+  </div>
+</section>
+
+<!-- Content -->
+<section class="py-12 bg-neutral-50">
+  <div class="container mx-auto px-4">
+
+    <!-- Search -->
+    <div class="card mb-8 p-4">
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="flex-1 relative">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <input 
+            type="text" 
+            [(ngModel)]="searchQuery"
+            (keyup.enter)="search()"
+            placeholder="Rechercher un article..."
+            class="input pl-10"
+          >
+        </div>
+        <button
+          (click)="search()"
+          class="bg-[#00843B] hover:bg-[#006B30] text-white font-semibold px-6 py-2 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#6FCF97] focus:ring-offset-2"
+        >
+          Rechercher
+        </button>
+      </div>
+    </div>
+
+    <!-- Articles Grid -->
+    @if (loading()) {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for (i of [1,2,3,4,5,6]; track i) {
+          <div class="card animate-pulse">
+            <div class="h-48 bg-neutral-200 rounded-lg mb-4"></div>
+            <div class="h-4 bg-neutral-200 rounded w-1/4 mb-3"></div>
+            <div class="h-6 bg-neutral-200 rounded w-3/4 mb-2"></div>
+            <div class="h-4 bg-neutral-200 rounded w-full"></div>
+          </div>
+        }
+      </div>
+    } @else if (articles().length === 0) {
+      <div class="text-center py-16">
+        <svg class="w-16 h-16 text-neutral-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+        </svg>
+        <h3 class="text-lg font-medium text-neutral-700 mb-2">Aucun article trouvé</h3>
+        <p class="text-neutral-500">Essayez de modifier vos critères de recherche</p>
+      </div>
+    } @else {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for (article of articles(); track article.id) {
+          <a [routerLink]="['/articles', article.id]" class="card group cursor-pointer flex flex-col h-full bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
+            
+            <!-- Image -->
+          <div class="h-48 bg-[#E6F5EB] flex items-center justify-center overflow-hidden">
+            @if (article.featuredImage) {
+              <img
+                [src]="getImageUrl(article.featuredImage)"
+                [alt]="article.title"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              > 
+
+              
+            } @else {
+              <svg class="w-16 h-16 text-[#00843B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z">
+                </path>
+              </svg>
+            }
+          </div>
+
+
+
+            <!-- Titre -->
+             <h3 class="text-xl font-bold text-black mb-2 px-4 pt-2 line-clamp-1">
+                {{ article.title }}
+            </h3>
+
+
+
+            <!-- Date, statut et vues -->
+            <div class="flex justify-between items-center text-sm text-neutral-500 px-4 mb-2">
+              <span>{{ formatDate(article.publishedAt || article.createdAt) }}</span>
+              <span class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-full text-xs font-semibold bg-[#E6F5EB] text-[#00843B]">
+                  {{ getCategoryLabel(article.category) }}
+                </span>
+                <span>{{ article.viewCount }} vues</span>
+              </span>
+            </div>
+
+            <p class="text-neutral-700 text-sm leading-relaxed text-justify px-4 mb-4 line-clamp-4">
+            {{ article.summary }}
+            </p>
+
+            <!-- Résumé 
+            <p class="text-neutral-700 text-sm px-4 mb-4 line-clamp-4">
+              {{ article.summary }}
+            </p>-->
+
+            <!-- Bouton "En savoir plus" -->
+            <div class="mt-auto px-4 pb-4 flex justify-end">
+              <span class="bg-[#00843B] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#006B30] transition">
+                En savoir plus
+              </span>
+            </div>
+
+          </a>
+        }
+      </div>
+
+      <!-- Pagination -->
+      @if (totalPages()) {
+        <div class="flex justify-center mt-10">
+          <nav class="flex items-center gap-2">
+            <button
+              (click)="goToPage(currentPage() - 1)"
+              [disabled]="currentPage() === 0"
+              class="btn-ghost disabled:opacity-50 px-3 py-1 rounded-lg border border-[#00843B] hover:bg-[#E6F5EB]">
+              ‹
+            </button>
+
+            @for (page of getPageNumbers(); track page) {
+              <button
+                (click)="goToPage(page)"
+                class="w-10 h-10 rounded-lg font-semibold transition"
+                [class]="page === currentPage()
+                  ? 'bg-[#00843B] text-white'
+                  : 'border border-[#00843B] text-[#00843B] hover:bg-[#E6F5EB]'">
+                {{ page + 1 }}
+              </button>
+            }
+
+            <button
+              (click)="goToPage(currentPage() + 1)"
+              [disabled]="currentPage() === totalPages() - 1"
+              class="btn-ghost disabled:opacity-50 px-3 py-1 rounded-lg border border-[#00843B] hover:bg-[#E6F5EB']">
+              ›
+            </button>
+          </nav>
+        </div>
+      }
+    }
+  </div>
+  
+</section>

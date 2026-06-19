@@ -1,0 +1,80 @@
+ <!-- Bannière -->
+    <div class="bg-gradient-to-r from-[#00843B] to-[#006B30] py-12" >
+      <div class="container mx-auto px-4">
+        <h1 class="text-3xl font-bold text-white mb-2">Missions</h1>
+        <nav class="text-green-100 text-sm">
+          <a routerLink="/" class="hover:text-white">Accueil</a>
+          <span class="mx-2">›</span>
+          <a routerLink="/ministere/ministre" class="hover:text-white">Ministère</a>
+          <span class="mx-2">›</span>
+          <span class="text-white">Missions</span>
+        </nav>
+      </div>
+    </div>
+    
+<section class="py-16 bg-gray-100">
+  <div class="container mx-auto px-4">
+   
+    <!--  <h2 class="text-2xl font-bold text-gray-900 mb-4">Attributions et Missions</h2>
+
+   
+    <p class="text-gray-700 mb-8 text-justify">
+      Le Ministère de la Transition Digitale, des Postes et des Communications Electroniques assure l’élaboration, la mise en œuvre et le suivi de la politique du Gouvernement en matière de transition digitale, des postes et des communications électroniques.
+      <br><br>
+      A ce titre et en relation avec les départements ministériels compétents, il est chargé :
+    </p>-->
+
+     <!-- Cas 1 : missions spécifiques -->
+<div *ngIf="missions() && missions().length > 0; else checkMissionGeneral">
+  <div class="grid gap-6">
+    <ng-container *ngFor="let mission of missions(); let i = index">
+      <div class="bg-white rounded-xl shadow-md border border-gray-100 p-6 hover:shadow-lg transition-shadow relative">
+        <!-- Bande fine couleur pays -->
+        <div class="absolute top-0 left-0 h-full w-1 rounded-l-xl" [style.background]="'#E30613'"></div>
+
+        <!-- En-tête -->
+        <div class="flex justify-between items-center cursor-pointer ml-4" (click)="open[i] = !open[i]">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h18M3 6h18M3 18h18"/>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-800">{{ mission.categorie }}</h3>
+          </div>
+          <svg [ngClass]="{'rotate-180': open[i]}" class="w-6 h-6 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </div>
+
+        <!-- Contenu -->
+        <div *ngIf="open[i]" class="mt-4 text-gray-600 text-justify space-y-2 ml-4">
+          {{ mission.description }}
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<!-- Cas 2 : pas de missions spécifiques mais mission générale existe -->
+<ng-template #checkMissionGeneral>
+  <div *ngIf="ministere()?.missionGeneral as mission; else noMission">
+    <article class="max-w-none text-black content-article text-base leading-relaxed text-justify py-6 px-4 bg-white rounded-xl shadow">
+      <div [innerHTML]="formatContent(mission)"></div>
+    </article>
+  </div>
+</ng-template>
+
+<!-- Cas 3 : aucune mission -->
+<ng-template #noMission>
+  <div class="text-center py-16">
+    <svg class="w-16 h-16 text-neutral-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+    </svg>
+    <h3 class="text-lg font-medium text-neutral-700 mb-2">Aucune mission</h3>
+  </div>
+</ng-template>
+  </div>
+</section>
+

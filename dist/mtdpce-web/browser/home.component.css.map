@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/home/home.component.ts"],
+  "sourcesContent": ["\n    @keyframes fadeIn {\n      from {\n        opacity: 0;\n        transform: translateY(10px);\n      }\n      to {\n        opacity: 1;\n        transform: translateY(0);\n      }\n    }\n    \n    .animate-fadeIn {\n      animation: fadeIn 0.5s ease-out forwards;\n    }\n  "],
+  "mappings": ";AACI,WAAA;AACE;AACE,aAAA;AACA,eAAA,WAAA;;AAEF;AACE,aAAA;AACA,eAAA,WAAA;;;AAIJ,CAAA;AACE,aAAA,OAAA,KAAA,SAAA;;",
+  "names": []
+}

@@ -1,0 +1,100 @@
+    <!-- Bannière -->
+    <div class="bg-gradient-to-r from-green-700 to-green-600 py-12">
+      <div class="container mx-auto px-4">
+        <h1 class="text-3xl font-bold text-white mb-2">Structures Rattachées</h1>
+        <nav class="text-green-100 text-sm">
+          <a routerLink="/" class="hover:text-white">Accueil</a>
+          <span class="mx-2">›</span>
+          <a routerLink="/ministere/ministre" class="hover:text-white">Ministère</a>
+          <span class="mx-2">›</span>
+          <span class="text-white">Structures Rattachées</span>
+        </nav>
+      </div>
+    </div>
+    
+    <!-- Contenu principal -->
+    <section class="py-12 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-5xl mx-auto">
+          <div *ngIf="structures() && structures().length > 0; else noData"> 
+              <div class="grid gap-8">
+               
+
+                  <div *ngFor="let structure of structures(); trackBy: trackByAcronym" class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow">
+                    <div class="p-6">
+                      <div class="flex items-start gap-6">
+                        
+
+                        <!-- Logo ou fallback -->
+                        <div class="w-20 h-20 rounded-xl bg-gray-100 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                          <ng-container *ngIf="structure.logourl; else svgFallback">
+                            <img [src]="getImageUrl(structure.logourl)"
+                                [alt]="structure.name"
+                                class="w-full h-full object-contain p-2"/>
+                          </ng-container>
+                          <ng-template #svgFallback>
+                            <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                    d="M3 21h18M4 21V7l8-4 8 4v14M9 21V9h6v12M9 13h6"/>
+                            </svg>
+                          </ng-template>
+                        </div>
+                        <div class="flex-1">
+                          <h3 class="text-xl font-bold text-gray-800 mb-2">{{ structure.name }}  ({{ structure.acronym }})</h3>
+                          <p class="text-gray-600 leading-relaxed mb-4">{{ structure.description }}</p>
+                          <div class="flex flex-wrap gap-4">
+                           
+                              <a *ngIf="structure.website" [href]="structure.website" target="_blank" 
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                                </svg>
+                                Site web
+                              </a>
+                            
+                           
+                              <a *ngIf="structure.phone" [href]="'tel:' + structure.phone" 
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                </svg>
+                                {{ structure.phone }}
+                              </a>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
+                      <div class="flex flex-wrap gap-2">
+                     
+                        <span *ngFor="let mission of structure.domaineIds" class="px-3 py-1 bg-white text-gray-600 text-sm rounded-full border border-gray-200">
+                            {{ getDomaineName(mission) }}
+                        </span>
+                        
+                      </div>
+                    </div>
+                  </div>
+                
+              </div>
+
+
+          </div>
+
+           <!-- Aucune donnée -->
+          <ng-template #noData>
+            <div class="text-center py-16">
+              <svg class="w-16 h-16 text-neutral-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+              </svg>
+              <h3 class="text-lg font-medium text-neutral-700 mb-2">Aucune structure disponible</h3>
+            </div>
+          </ng-template>
+
+          
+        </div>
+      </div>
+    </section>

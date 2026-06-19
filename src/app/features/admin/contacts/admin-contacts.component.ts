@@ -1,0 +1,168 @@
+import { Component, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ApiService } from '../../../core/services/api.service';
+import { Contact, ContactStatus } from '../../../core/models';
+
+@Component({
+  selector: 'app-admin-contacts',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    <div class="space-y-6">
+      <div>
+        <h1 class="text-2xl font-bold text-neutral-900">Messages</h1>
+        <p class="text-neutral-500">Gérez les demandes de contact</p>
+      </div>
+      
+      <div class="card p-0">
+        @if (loading()) {
+          <div class="p-8 text-center"><div class="spinner w-8 h-8 mx-auto"></div></div>
+        } @else if (contacts().length === 0) {
+          <div class="p-8 text-center">
+            <svg class="w-12 h-12 text-neutral-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+            <p class="text-neutral-500">Aucun message pour le moment</p>
+          </div>
+        } @else {
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Expéditeur</th>
+                  <th>Sujet</th>
+                  <th>Statut</th>
+                  <th>Date</th>
+                  <th class="text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (contact of contacts(); track contact.id) {
+                  <tr [class.bg-primary-50]="contact.status === ContactStatus.NON_LU">
+                    <td>
+                      <div>
+                        <p class="font-medium text-neutral-900">{{ contact.name }}</p>
+                        <p class="text-xs text-neutral-400">{{ contact.email }}</p>
+                      </div>
+                    </td>
+                    <td class="max-w-xs truncate">{{ contact.subject }}</td>
+                    <td><span [class]="getStatusBadgeClass(contact.status)">{{ getStatusLabel(contact.status) }}</span></td>
+                    <td class="text-sm text-neutral-500">{{ formatDate(contact.createdAt) }}</td>
+                    <td class="text-right">
+                      <div class="flex justify-end gap-2">
+                        <button (click)="viewContact(contact)" class="btn-ghost p-2" title="Voir">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                          </svg>
+                        </button>
+                        <button (click)="deleteContact(contact)" class="btn-ghost p-2 text-secondary-500" title="Supprimer">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                          </svg>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </div>
+      
+      @if (selectedContact()) {
+        <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg">
+            <div class="p-6 border-b border-neutral-200 flex items-center justify-between">
+              <h2 class="text-xl font-semibold text-neutral-900">Détail du message</h2>
+              <button (click)="selectedContact.set(null)" class="btn-ghost p-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+            <div class="p-6 space-y-4">
+              <div>
+                <p class="text-sm text-neutral-500">De</p>
+                <p class="font-medium text-neutral-900">{{ selectedContact()!.name }}</p>
+                <p class="text-sm text-neutral-600">{{ selectedContact()!.email }}</p>
+                @if (selectedContact()!.phone) {
+                  <p class="text-sm text-neutral-600">{{ selectedContact()!.phone }}</p>
+                }
+              </div>
+              <div>
+                <p class="text-sm text-neutral-500">Sujet</p>
+                <p class="font-medium text-neutral-900">{{ selectedContact()!.subject }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-neutral-500">Message</p>
+                <p class="text-neutral-700 whitespace-pre-wrap">{{ selectedContact()!.message }}</p>
+              </div>
+              <div class="flex items-center justify-between pt-4 border-t border-neutral-200">
+                <span [class]="getStatusBadgeClass(selectedContact()!.status)">{{ getStatusLabel(selectedContact()!.status) }}</span>
+                <div class="flex gap-2">
+                  @if (selectedContact()!.status === ContactStatus.NON_LU) {
+                    <button (click)="markAsRead(selectedContact()!)" class="btn-outline text-sm">Marquer comme lu</button>
+                  }
+                  @if (selectedContact()!.status !== ContactStatus.TRAITE) {
+                    <button (click)="markAsProcessed(selectedContact()!)" class="btn-primary text-sm">Marquer comme traité</button>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  `
+})
+export class AdminContactsComponent implements OnInit {
+  contacts = signal<Contact[]>([]);
+  loading = signal(true);
+  selectedContact = signal<Contact | null>(null);
+  ContactStatus = ContactStatus;
+  
+  constructor(private apiService: ApiService) {}
+  
+  ngOnInit(): void { this.loadContacts(); }
+  
+  loadContacts(): void {
+    this.apiService.getAllContacts(0, 50).subscribe({
+      next: (response) => { if (response.success) this.contacts.set(response.data.content); this.loading.set(false); },
+      error: () => this.loading.set(false)
+    });
+  }
+  
+  viewContact(contact: Contact): void { this.selectedContact.set(contact); }
+  
+  markAsRead(contact: Contact): void {
+    this.apiService.updateContactStatus(contact.id, 'LU').subscribe({
+      next: () => { this.loadContacts(); this.selectedContact.set(null); }
+    });
+  }
+  
+  markAsProcessed(contact: Contact): void {
+    this.apiService.updateContactStatus(contact.id, 'TRAITE').subscribe({
+      next: () => { this.loadContacts(); this.selectedContact.set(null); }
+    });
+  }
+  
+  deleteContact(contact: Contact): void {
+    if (confirm(`Supprimer le message de "${contact.name}" ?`)) {
+      this.apiService.deleteContact(contact.id).subscribe({ next: () => this.loadContacts() });
+    }
+  }
+  
+  getStatusLabel(status: string): string {
+    const labels: Record<string, string> = { 'NOUVEAU': 'Nouveau', 'LU': 'Lu', 'EN_COURS': 'En cours', 'TRAITE': 'Traité' };
+    return labels[status] || status;
+  }
+  
+  getStatusBadgeClass(status: string): string {
+    const classes: Record<string, string> = { 'NOUVEAU': 'badge-primary', 'LU': 'badge bg-neutral-100 text-neutral-600', 'EN_COURS': 'badge-warning', 'TRAITE': 'badge-success' };
+    return classes[status] || 'badge';
+  }
+  
+  formatDate(dateStr: string): string { return dateStr ? new Date(dateStr).toLocaleDateString('fr-FR') : ''; }
+}

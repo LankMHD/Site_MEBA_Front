@@ -1,0 +1,106 @@
+
+      <!-- Hero Section -->
+      <section class="bg-gradient-to-br from-[#00843B] to-[#006B30] text-white py-16">
+        <div class="container mx-auto px-4">
+          <h1 class="text-4xl font-bold mb-4" style="color: white;">Nos Services Publics</h1>
+          <p class="text-xl text-emerald-100">Découvrez l'ensemble des services proposés par le ministère</p>
+        </div>
+      </section>
+
+
+
+        <!-- Services Grid -->
+<!-- Services Grid -->
+<section class="py-12">
+  <div class="container mx-auto px-4"> <!-- <-- container ajouté -->
+    @if (loading()) {
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        @for (i of [1,2,3,4]; track i) {
+          <div class="card animate-pulse">
+            <div class="h-6 bg-neutral-200 rounded w-3/4 mb-4"></div>
+            <div class="h-4 bg-neutral-200 rounded w-full mb-2"></div>
+            <div class="h-4 bg-neutral-200 rounded w-2/3"></div>
+          </div>
+        }
+      </div>
+    } @else if (servicesAll().length === 0) {
+      <div class="text-center py-16">
+        <svg class="w-16 h-16 text-neutral-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+        </svg>
+        <h3 class="text-lg font-medium text-neutral-700 mb-2">Aucun service public trouvé</h3>
+        <p class="text-neutral-500">Essayez de modifier vos critères de recherche</p>
+      </div>
+    } @else {
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-6"> <!-- <-- grid maintenant à l'intérieur du container -->
+        @for (service of servicesAll(); track service.id) {
+          <div
+            (click)="openService(service.url)"
+            class="bg-white p-6 rounded-xl border border-slate-100 shadow-md
+                   hover:border-primary-500 hover:shadow-lg transition-all
+                   flex flex-col items-center text-center cursor-pointer">
+
+            <!-- Logo / Image -->
+            <div class="w-16 h-16 bg-accent-50 rounded-lg flex items-center justify-center mb-4 overflow-hidden">
+              <img *ngIf="service.logo" [src]="getImageUrl(service.logo)" alt="{{service.name}}" class="w-12 h-12 object-contain"/>
+              <svg *ngIf="!service.logo" class="w-8 h-8 text-accent-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+            </div>
+
+            <!-- Nom du service -->
+            <h3 class="font-semibold text-slate-800 mb-2">{{ service.name }}</h3>
+
+            <!-- Description -->
+            <p class="text-sm text-slate-600 mb-4">{{ service.description }}</p>
+
+            <!-- Lien -->
+            <span class="text-primary-600 text-sm font-medium hover:text-primary-700 transition-colors">
+              En savoir plus →
+            </span>
+
+          </div>
+        }
+      </div>
+
+     <!-- Pagination -->
+      @if (totalPages()) {
+        <div class="flex justify-center mt-10">
+          <nav class="flex items-center gap-2">
+            <button
+              (click)="goToPage(currentPage() - 1)"
+              [disabled]="currentPage() === 0"
+              class="btn-ghost disabled:opacity-50 px-3 py-1 rounded-lg border border-[#00843B] hover:bg-[#E6F5EB]">
+              ‹
+            </button>
+
+            @for (page of getPageNumbers(); track page) {
+              <button
+                (click)="goToPage(page)"
+                class="w-10 h-10 rounded-lg font-semibold transition"
+                [class]="page === currentPage()
+                  ? 'bg-[#00843B] text-white'
+                  : 'border border-[#00843B] text-[#00843B] hover:bg-[#E6F5EB]'">
+                {{ page + 1 }}
+              </button>
+            }
+
+            <button
+              (click)="goToPage(currentPage() + 1)"
+              [disabled]="currentPage() === totalPages() - 1"
+              class="btn-ghost disabled:opacity-50 px-3 py-1 rounded-lg border border-[#00843B] hover:bg-[#E6F5EB']">
+              ›
+            </button>
+          </nav>
+        </div>
+      }
+
+      
+    }
+
+
+  </div>
+</section>
+     
+ 
