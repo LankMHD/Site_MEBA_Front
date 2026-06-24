@@ -171,11 +171,14 @@ scrollTo(section: string) {
 }
 
 // Liste de toutes les routes enfants du menu Ressources
-ressourcesRoutes = ['/ressources/documents', '/ressources/politiques', '/faq'];
+documentsRoutes = [
+  '/ressources/documents', 
+  '/ressources/espace-enseignant', 
+  '/ressources/mediatheque'];
 
-isRessourcesActive(): boolean {
+isDocumentsActive(): boolean {
   // Si la route actuelle contient une des routes enfants, parent devient actif
-  return this.ressourcesRoutes.some(route => this.router.url.startsWith(route));
+  return this.documentsRoutes.some(route => this.router.url.startsWith(route));
 }
 
 // Liste des routes enfants du menu Ministère
@@ -191,4 +194,17 @@ isMinistereActive(): boolean {
   return this.ministereRoutes.some(route => this.router.url.startsWith(route));
 }
 
+// Liste des routes enfants du menu Information
+informationRoutes = [
+  '/informations/actualites',
+  '/informations/radio-educative'
+];
+
+// Fonction pour savoir si le parent Informations doit être actif
+isInformationsActive(): boolean {
+  return this.informationRoutes.some(route => this.router.url.startsWith(route));
 }
+
+}
+
+

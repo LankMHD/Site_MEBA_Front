@@ -20,7 +20,7 @@ import { RouterLink } from '@angular/router';
                 </svg>
               </div>
               <div>
-                <span class="font-semibold text-slate-800">MTDPCE</span>
+                <span class="font-semibold text-slate-800">MEBA</span>
                 <span class="text-danger-500 font-bold ml-1">Burkina Faso</span>
               </div>
             </div>
@@ -128,7 +128,7 @@ import { RouterLink } from '@angular/router';
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div class="flex flex-col md:flex-row items-center justify-between gap-4">
             <p class="text-sm text-slate-500">
-              © {{ currentYear }} MTDPCE Burkina Faso. Tous droits réservés.
+              © {{ currentYear }} MEBA Burkina Faso. Tous droits réservés.
             </p>
             <div class="flex items-center gap-4 text-sm text-slate-500">
               <a href="#" class="hover:text-primary-600 transition-colors">Mentions légales</a>

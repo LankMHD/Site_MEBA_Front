@@ -13,6 +13,8 @@ import { AuthService } from '../../core/services/auth.service';
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
           <!-- Logo et Nom du Ministère -->
+//           <p>             Ministère de L'Education Nationale, de l'Alphabétisation et de la Promotion des Langues Nationales
+//  </p>       
           <a routerLink="/" class="flex items-center gap-3 group">
             <div class="w-10 h-10 bg-primary-500 rounded-lg flex items-center justify-center flex-shrink-0">
               <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -22,8 +24,8 @@ import { AuthService } from '../../core/services/auth.service';
             <div class="hidden md:block">
               <span class="text-sm font-semibold text-slate-800">MEBA</span>
               <span class="text-sm text-danger-500 font-bold ml-1">Burkina Faso</span> <span class="text-sm font-medium text-danger-500">
-    Burkina Faso
-  </span>
+                Burkina Faso
+              </span>
             </div>
           </a>
           

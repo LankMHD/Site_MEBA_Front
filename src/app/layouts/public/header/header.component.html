@@ -58,54 +58,100 @@
        class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
        Le Ministre
     </a>
-    <a routerLink="/ministere/missions"
+    <!-- <a routerLink="/ministere/missions"
        routerLinkActive="text-primary-600 bg-primary-50"
        [routerLinkActiveOptions]="{ exact: true }"
        class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
        Missions
+    </a> -->
+
+    <a routerLink="/ministere/historique"
+       routerLinkActive="text-primary-600 bg-primary-50"
+       [routerLinkActiveOptions]="{ exact: true }"
+       class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+       Historique
     </a>
+
+    <a routerLink="/ministere/secretariat-gl"
+       routerLinkActive="text-primary-600 bg-primary-50"
+       [routerLinkActiveOptions]="{ exact: true }"
+       class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+       Sécrétariat général
+    </a>
+
     <a routerLink="/ministere/organigramme"
        routerLinkActive="text-primary-600 bg-primary-50"
        [routerLinkActiveOptions]="{ exact: true }"
        class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
        Organigramme
     </a>
+
+    <a routerLink="/ministere/Structures-centrales"
+       routerLinkActive="text-primary-600 bg-primary-50"
+       [routerLinkActiveOptions]="{ exact: true }"
+       class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+       Structures centrales
+    </a>
+
+
     <a routerLink="/ministere/structures"
        routerLinkActive="text-primary-600 bg-primary-50"
        [routerLinkActiveOptions]="{ exact: true }"
        class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
        Structures Rattachées
     </a>
+
+    <a routerLink="/ministere/Projets-programmes"
+       routerLinkActive="text-primary-600 bg-primary-50"
+       [routerLinkActiveOptions]="{ exact: true }"
+       class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+       Projets et programmes
+    </a>
   </div>
 </div>
 
-       <a 
-  (click)="goToSection('actualites'); setActive('actualites')"
-  [ngClass]="{
-    'text-primary-600 bg-primary-50': activeSection === 'actualites',
-    'text-slate-600': activeSection !== 'actualites'
-  }"
-  class="px-3 py-2 rounded-lg text-sm font-medium hover:text-primary-600 hover:bg-primary-50 cursor-pointer">
-  Actualités
-</a>
+       <!-- <a 
+        (click)="goToSection('actualites'); setActive('actualites')"
+        [ngClass]="{
+          'text-primary-600 bg-primary-50': activeSection === 'actualites',
+          'text-slate-600': activeSection !== 'actualites'
+        }"
+        class="px-3 py-2 rounded-lg text-sm font-medium hover:text-primary-600 hover:bg-primary-50 cursor-pointer">
+        Actualités
+      </a> -->
 
-       <!-- <a routerLink="/actualites" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-primary-600 hover:bg-primary-50 transition-colors whitespace-nowrap">
-          Actualités
-        </a>-->
+<div class="relative group information">
+  <!-- Bouton parent -->
+  <button
+    [ngClass]="{
+      'text-primary-600 bg-primary-50': isInformationsActive(),
+      'text-slate-600': !isInformationsActive()
+    }"
+    class="px-3 py-2 rounded-lg text-sm font-medium hover:text-primary-600 hover:bg-primary-50 flex items-center gap-1 transition-colors whitespace-nowrap">
+    Informations
+    <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+    </svg>
+  </button>
 
-  <a 
-  (click)="goToSection('projets')" 
-  [ngClass]="{
-    'text-primary-600 bg-primary-50': activeSection === 'projets',
-    'text-slate-600': activeSection !== 'projets'
-  }"
-  class="px-3 py-2 rounded-lg text-sm font-medium hover:text-primary-600 hover:bg-primary-50 transition-colors whitespace-nowrap cursor-pointer">
-  Grands Chantiers
-</a>
+  <!-- Dropdown -->
+  <div class="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-md border border-slate-100 py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+    <a (click)="goToSection('actualites'); setActive('actualites')"
+       routerLinkActive="text-primary-600 bg-primary-50"
+       [routerLinkActiveOptions]="{ exact: true }"
+       class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+       Actualités
+    </a>
 
-        <!--<a routerLink="/projets" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-primary-600 hover:bg-primary-50 transition-colors whitespace-nowrap">
-          Grands Chantiers
-        </a>-->
+    <a routerLink="/informations/radio-educative"
+       routerLinkActive="text-primary-600 bg-primary-50"
+       [routerLinkActiveOptions]="{ exact: true }"
+       class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+       Radio educative
+    </a>
+
+  </div>
+  </div>
 
         <a routerLink="/evenements" (click)="activeSection = ''"
           routerLinkActive="text-primary-600 bg-primary-50" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-primary-600 hover:bg-primary-50 transition-colors whitespace-nowrap">
@@ -116,11 +162,11 @@
           <!-- Bouton parent -->
           <button
             [ngClass]="{
-              'text-primary-600 bg-primary-50': isRessourcesActive(),
-              'text-slate-600': !isRessourcesActive()
+              'text-primary-600 bg-primary-50': isDocumentsActive(),
+              'text-slate-600': !isDocumentsActive()
             }"
             class="px-3 py-2 rounded-lg text-sm font-medium hover:text-primary-600 hover:bg-primary-50 flex items-center gap-1 transition-colors whitespace-nowrap">
-            Ressources
+            Documents
             <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
             </svg>
@@ -132,19 +178,19 @@
                     routerLinkActive="text-primary-600 bg-primary-50"
                     [routerLinkActiveOptions]="{ exact: true }"
                     class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
-                    Règlementation
+                    Documents en ligne
                   </a>
-                  <a routerLink="/ressources/politiques"
+                  <a routerLink="/ressources/espace-enseignant"
                     routerLinkActive="text-primary-600 bg-primary-50"
                     [routerLinkActiveOptions]="{ exact: true }"
                     class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
-                    Stratégie
+                    Espace Enseignants
                   </a>
-                  <a routerLink="/faq"
+                  <a routerLink="/ressources/mediatheque"
                     routerLinkActive="text-primary-600 bg-primary-50"
                     [routerLinkActiveOptions]="{ exact: true }"
                     class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
-                    FAQ
+                    Médiathèque
                   </a>
                 </div>
         </div>
