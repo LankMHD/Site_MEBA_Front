@@ -29,9 +29,9 @@ projects = signal<TypeDocument[]>([]);
 currentPage = signal(1);
 totalPages = signal(1);
 
-   
+
    constructor(private apiService: ApiService, private http: HttpClient) {}
-   
+
    ngOnInit(): void {
      this.loadDocuments(); this.loadProjects();
    }
@@ -83,7 +83,7 @@ prevPage() {
   this.goToPage(this.currentPage() - 1);
 }
 
-   
+
    loadDocuments(): void {
      this.loading.set(true);
      this.apiService.getPublicDocuments(0, 20).subscribe({
@@ -101,7 +101,7 @@ prevPage() {
        error: () => this.loading.set(false)
      });
    }
-   
+
    search(): void {
      if (!this.searchQuery.trim()) { this.loadDocuments(); return; }
      this.loading.set(true);
@@ -113,21 +113,21 @@ prevPage() {
        error: () => this.loading.set(false)
      });
    }
-   
+
    getCategoryLabel(category: string): string {
-     const labels: Record<string, string> = { 'RAPPORT': 'Rapport', 'LOI': 'Loi', 'DECRET': 'Décret', 'ARRETE': 'Arrêté', 'CIRCULAIRE': 'Circulaire', 'FORMULAIRE': 'Formulaire', 'GUIDE': 'Guide', 'AUTRE': 'Autre' };
+     const labels: Record<string, string> = { 'RAPPORT': 'Rapport', 'LOI': 'Loi', 'DECRET': 'Décret', 'ARRETE': 'Arrêté', 'CIRCULAIRE': 'Circulaire', 'FORMULAIRE': 'Formulaire', 'PRESCOLAIRE': 'Préscolaire', 'PRIMAIRE': 'Primaire', 'PRIMAIRE BILINGUE': 'Primaire bilingue', 'POST-PRIMAIRE': 'Post-Primaire','AUTRE': 'Autre' };
      return labels[category] || category;
    }
-   
+
    formatFileSize(bytes: number): string {
      if (bytes < 1024) return bytes + ' B';
      if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
      return (bytes / 1048576).toFixed(1) + ' MB';
    }
 
-       
+
 loadProjects(): void {
-  
+
 
   this.apiService.getAllTypes().subscribe({
     next: (response) => {
@@ -136,11 +136,11 @@ loadProjects(): void {
       this.projects.set(response); // ✅ DIRECTEMENT
       console.log("PROJECTS =", this.projects());
 
-      
+
     },
     error: (err) => {
       console.error("Erreur API", err);
-      
+
     }
   });
 }
@@ -149,7 +149,7 @@ loadProjects(): void {
 getImageUrl(path?: string): string | null {
      console.log(path);
     return path ? this.API_URL + path : null;
-   
+
   }
 
   downloadFile(doc: any) {

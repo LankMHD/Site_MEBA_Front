@@ -1,0 +1,57 @@
+<div class="row">
+
+<div
+class="col-lg-4 mb-4"
+*ngFor="let ministre of anciensMinistres()">
+
+<div class="card shadow">
+
+<img
+
+[src]="'http://localhost:8080/uploads/'+ministre.photo"
+
+class="card-img-top">
+
+<div class="card-body">
+
+<h4>
+
+{{ministre.nom}}
+
+</h4>
+
+<p>
+
+<!-- {{ministre.fonction}} -->
+
+</p>
+
+<p>
+
+{{ministre.dateDebut}}
+
+-
+
+{{ministre.dateFin}}
+
+</p>
+
+<p>
+
+{{ministre.description}}
+
+</p>
+
+<button class="btn btn-info">
+
+En savoir plus
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>

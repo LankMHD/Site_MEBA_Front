@@ -1,21 +1,21 @@
-<header class="bg-white sticky top-0 z-50 shadow-sm">
-  <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
-    <div class="flex items-center h-20 justify-between">
+<header class="sticky top-0 z-50 bg-white shadow-sm">
+  <div class="px-6 mx-auto max-w-7xl sm:px-8 lg:px-10">
+    <div class="flex items-center justify-between h-20">
 
       <!-- Logo + Sigle -->
-      <a routerLink="/" class="flex items-center gap-2 flex-shrink-0" >
+      <a routerLink="/" class="flex items-center flex-shrink-0 gap-2" >
         <!-- Logo -->
-        <div class="w-16 h-16 flex-shrink-0">
+        <div class="flex-shrink-0 w-16 h-16">
           <img
             [src]="ministere()?.logo ? getImageUrl(ministere()!.logo) : 'assets/images/armoirie.png'"
             [alt]="ministere()?.nomReel || 'Burkina Faso'"
-            class="w-full h-full object-contain"
+            class="object-contain w-full h-full"
           />
         </div>
 
         <!-- Sigle du Ministère + Burkina Faso -->
-       <div class="hidden md:flex flex-col leading-tight max-w-xs">
-          <span class="text-xl font-bold text-slate-900 break-words">
+       <div class="flex-col hidden max-w-xs leading-tight md:flex">
+          <span class="text-xl font-bold break-words text-slate-900">
             {{ ministere()?.nomReel || 'Burkina Faso' }}
           </span>
           <span class="text-sm font-medium text-danger-500">
@@ -25,14 +25,14 @@
       </a>
 
       <!-- Navigation Desktop -->
-      <nav class="hidden lg:flex items-center gap-1 ml-12"> <!-- ml-12 pour espacer le menu du logo -->
+      <nav class="items-center hidden gap-1 ml-12 lg:flex"> <!-- ml-12 pour espacer le menu du logo -->
 
 <a (click)="goToAccueil()"
-   class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-primary-600 hover:bg-primary-50 transition-colors whitespace-nowrap cursor-pointer">
+   class="px-3 py-2 text-sm font-medium transition-colors rounded-lg cursor-pointer text-slate-600 hover:text-primary-600 hover:bg-primary-50 whitespace-nowrap">
    Accueil
 </a>
         <!-- <a routerLink="/" routerLinkActive="text-primary-600" [routerLinkActiveOptions]="{exact:true}"
-           class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-primary-600 hover:bg-primary-50 transition-colors whitespace-nowrap">
+           class="px-3 py-2 text-sm font-medium transition-colors rounded-lg text-slate-600 hover:text-primary-600 hover:bg-primary-50 whitespace-nowrap">
           Accueil
         </a>-->
 
@@ -43,7 +43,7 @@
       'text-primary-600 bg-primary-50': isMinistereActive(),
       'text-slate-600': !isMinistereActive()
     }"
-    class="px-3 py-2 rounded-lg text-sm font-medium hover:text-primary-600 hover:bg-primary-50 flex items-center gap-1 transition-colors whitespace-nowrap">
+    class="flex items-center gap-1 px-3 py-2 text-sm font-medium transition-colors rounded-lg hover:text-primary-600 hover:bg-primary-50 whitespace-nowrap">
     Ministère
     <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -51,45 +51,45 @@
   </button>
 
   <!-- Dropdown -->
-  <div class="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-md border border-slate-100 py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+  <div class="absolute left-0 invisible w-56 py-1 mt-2 transition-all duration-200 bg-white border rounded-lg shadow-md opacity-0 top-full border-slate-100 group-hover:opacity-100 group-hover:visible">
     <a routerLink="/ministere/ministre"
        routerLinkActive="text-primary-600 bg-primary-50"
        [routerLinkActiveOptions]="{ exact: true }"
-       class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+       class="block px-4 py-2 text-sm transition-colors text-slate-600 hover:bg-primary-50 hover:text-primary-600">
        Le Ministre
     </a>
     <!-- <a routerLink="/ministere/missions"
        routerLinkActive="text-primary-600 bg-primary-50"
        [routerLinkActiveOptions]="{ exact: true }"
-       class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+       class="block px-4 py-2 text-sm transition-colors text-slate-600 hover:bg-primary-50 hover:text-primary-600">
        Missions
     </a> -->
 
     <a routerLink="/ministere/historique"
        routerLinkActive="text-primary-600 bg-primary-50"
        [routerLinkActiveOptions]="{ exact: true }"
-       class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+       class="block px-4 py-2 text-sm transition-colors text-slate-600 hover:bg-primary-50 hover:text-primary-600">
        Historique
     </a>
 
     <a routerLink="/ministere/secretariat-gl"
        routerLinkActive="text-primary-600 bg-primary-50"
        [routerLinkActiveOptions]="{ exact: true }"
-       class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+       class="block px-4 py-2 text-sm transition-colors text-slate-600 hover:bg-primary-50 hover:text-primary-600">
        Sécrétariat général
     </a>
 
     <a routerLink="/ministere/organigramme"
        routerLinkActive="text-primary-600 bg-primary-50"
        [routerLinkActiveOptions]="{ exact: true }"
-       class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+       class="block px-4 py-2 text-sm transition-colors text-slate-600 hover:bg-primary-50 hover:text-primary-600">
        Organigramme
     </a>
 
     <a routerLink="/ministere/Structures-centrales"
        routerLinkActive="text-primary-600 bg-primary-50"
        [routerLinkActiveOptions]="{ exact: true }"
-       class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+       class="block px-4 py-2 text-sm transition-colors text-slate-600 hover:bg-primary-50 hover:text-primary-600">
        Structures centrales
     </a>
 
@@ -97,26 +97,26 @@
     <a routerLink="/ministere/structures"
        routerLinkActive="text-primary-600 bg-primary-50"
        [routerLinkActiveOptions]="{ exact: true }"
-       class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+       class="block px-4 py-2 text-sm transition-colors text-slate-600 hover:bg-primary-50 hover:text-primary-600">
        Structures Rattachées
     </a>
 
     <a routerLink="/ministere/Projets-programmes"
        routerLinkActive="text-primary-600 bg-primary-50"
        [routerLinkActiveOptions]="{ exact: true }"
-       class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+       class="block px-4 py-2 text-sm transition-colors text-slate-600 hover:bg-primary-50 hover:text-primary-600">
        Projets et programmes
     </a>
   </div>
 </div>
 
-       <!-- <a 
+       <!-- <a
         (click)="goToSection('actualites'); setActive('actualites')"
         [ngClass]="{
           'text-primary-600 bg-primary-50': activeSection === 'actualites',
           'text-slate-600': activeSection !== 'actualites'
         }"
-        class="px-3 py-2 rounded-lg text-sm font-medium hover:text-primary-600 hover:bg-primary-50 cursor-pointer">
+        class="px-3 py-2 text-sm font-medium rounded-lg cursor-pointer hover:text-primary-600 hover:bg-primary-50">
         Actualités
       </a> -->
 
@@ -127,7 +127,7 @@
       'text-primary-600 bg-primary-50': isInformationsActive(),
       'text-slate-600': !isInformationsActive()
     }"
-    class="px-3 py-2 rounded-lg text-sm font-medium hover:text-primary-600 hover:bg-primary-50 flex items-center gap-1 transition-colors whitespace-nowrap">
+    class="flex items-center gap-1 px-3 py-2 text-sm font-medium transition-colors rounded-lg hover:text-primary-600 hover:bg-primary-50 whitespace-nowrap">
     Informations
     <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -135,18 +135,18 @@
   </button>
 
   <!-- Dropdown -->
-  <div class="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-md border border-slate-100 py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+  <div class="absolute left-0 invisible w-56 py-1 mt-2 transition-all duration-200 bg-white border rounded-lg shadow-md opacity-0 top-full border-slate-100 group-hover:opacity-100 group-hover:visible">
     <a (click)="goToSection('actualites'); setActive('actualites')"
        routerLinkActive="text-primary-600 bg-primary-50"
        [routerLinkActiveOptions]="{ exact: true }"
-       class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+       class="block px-4 py-2 text-sm transition-colors text-slate-600 hover:bg-primary-50 hover:text-primary-600">
        Actualités
     </a>
 
     <a routerLink="/informations/radio-educative"
        routerLinkActive="text-primary-600 bg-primary-50"
        [routerLinkActiveOptions]="{ exact: true }"
-       class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+       class="block px-4 py-2 text-sm transition-colors text-slate-600 hover:bg-primary-50 hover:text-primary-600">
        Radio educative
     </a>
 
@@ -154,7 +154,7 @@
   </div>
 
         <a routerLink="/evenements" (click)="activeSection = ''"
-          routerLinkActive="text-primary-600 bg-primary-50" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-primary-600 hover:bg-primary-50 transition-colors whitespace-nowrap">
+          routerLinkActive="text-primary-600 bg-primary-50" class="px-3 py-2 text-sm font-medium transition-colors rounded-lg text-slate-600 hover:text-primary-600 hover:bg-primary-50 whitespace-nowrap">
           Calendrier
         </a>
 
@@ -165,7 +165,7 @@
               'text-primary-600 bg-primary-50': isDocumentsActive(),
               'text-slate-600': !isDocumentsActive()
             }"
-            class="px-3 py-2 rounded-lg text-sm font-medium hover:text-primary-600 hover:bg-primary-50 flex items-center gap-1 transition-colors whitespace-nowrap">
+            class="flex items-center gap-1 px-3 py-2 text-sm font-medium transition-colors rounded-lg hover:text-primary-600 hover:bg-primary-50 whitespace-nowrap">
             Documents
             <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -173,52 +173,60 @@
           </button>
 
                 <!-- Dropdown -->
-              <div class="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-md border border-slate-100 py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+              <div class="absolute left-0 invisible w-56 py-1 mt-2 transition-all duration-200 bg-white border rounded-lg shadow-md opacity-0 top-full border-slate-100 group-hover:opacity-100 group-hover:visible">
                   <a routerLink="/ressources/documents"
                     routerLinkActive="text-primary-600 bg-primary-50"
                     [routerLinkActiveOptions]="{ exact: true }"
-                    class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+                    class="block px-4 py-2 text-sm transition-colors text-slate-600 hover:bg-primary-50 hover:text-primary-600">
                     Documents en ligne
                   </a>
                   <a routerLink="/ressources/espace-enseignant"
                     routerLinkActive="text-primary-600 bg-primary-50"
                     [routerLinkActiveOptions]="{ exact: true }"
-                    class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+                    class="block px-4 py-2 text-sm transition-colors text-slate-600 hover:bg-primary-50 hover:text-primary-600">
                     Espace Enseignants
                   </a>
+
+                  <a routerLink="/ressources/demarche-administrative"
+                    routerLinkActive="text-primary-600 bg-primary-50"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                    class="block px-4 py-2 text-sm transition-colors text-slate-600 hover:bg-primary-50 hover:text-primary-600">
+                    Démarches Administratives
+                  </a>
+
                   <a routerLink="/ressources/mediatheque"
                     routerLinkActive="text-primary-600 bg-primary-50"
                     [routerLinkActiveOptions]="{ exact: true }"
-                    class="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+                    class="block px-4 py-2 text-sm transition-colors text-slate-600 hover:bg-primary-50 hover:text-primary-600">
                     Médiathèque
                   </a>
                 </div>
         </div>
 
-        <a 
+        <a
           routerLink="/contact"
           (click)="activeSection = ''"
           routerLinkActive="text-primary-600 bg-primary-50"
-          class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-primary-600 hover:bg-primary-50 transition-colors whitespace-nowrap">
+          class="px-3 py-2 text-sm font-medium transition-colors rounded-lg text-slate-600 hover:text-primary-600 hover:bg-primary-50 whitespace-nowrap">
           Contact
         </a>
 
-       <!--  <a routerLink="/contact" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-primary-600 hover:bg-primary-50 transition-colors whitespace-nowrap">
+       <!--  <a routerLink="/contact" class="px-3 py-2 text-sm font-medium transition-colors rounded-lg text-slate-600 hover:text-primary-600 hover:bg-primary-50 whitespace-nowrap">
           Contact
         </a>-->
       </nav>
 
       <!-- Actions -->
       <div class="flex items-center gap-2 ml-6">
-        <button (click)="toggleSearch()" class="p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors">
+        <button (click)="toggleSearch()" class="p-2 transition-colors rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
           </svg>
         </button>
-        <a routerLink="/admin" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 bg-primary-500 text-white text-sm font-medium rounded-lg hover:bg-primary-600 transition-colors" style="background-color: #00843B;">
+        <a routerLink="/admin" class="items-center hidden gap-2 px-4 py-2 text-sm font-medium text-white transition-colors rounded-lg sm:inline-flex bg-primary-500 hover:bg-primary-600" style="background-color: #00843B;">
           Administration
         </a>
-        <button (click)="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors">
+        <button (click)="toggleMobileMenu()" class="p-2 transition-colors rounded-lg lg:hidden text-slate-500 hover:text-slate-700 hover:bg-slate-100">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path *ngIf="mobileMenuOpen()" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             <path *ngIf="!mobileMenuOpen()" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>

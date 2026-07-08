@@ -1,0 +1,215 @@
+  <section class="bg-gradient-to-br from-[#00843B] to-[#006B30] text-white py-16">
+      <div class="container px-4 mx-auto">
+        <h1 class="mb-4 text-4xl font-bold text-white">Démarches administratives</h1>
+        <p class="max-w-2xl mb-2 text-lg text-primary-100">
+          Consultez  les démarches administratives officielles du ministère.
+        </p>
+        <nav class="text-sm text-green-100">
+          <a routerLink="/" class="hover:text-white">Accueil</a>
+          <span class="mx-2">›</span>
+          <a routerLink="/ministere/ministre" class="hover:text-white">Ressources</a>
+          <span class="mx-2">›</span>
+          <span class="text-white">Démarches administratives</span>
+        </nav>
+      </div>
+    </section>
+
+    <section class="py-12 bg-neutral-50">
+      <div class="container px-4 mx-auto">
+
+    <!-- ENSEIGNEMENT -->
+    <h2 class="mb-6 text-xl tracking-widest text-gray-700 uppercase">
+      Enseignement
+    </h2>
+
+    <div class="overflow-hidden bg-[#57B29D] rounded-sm shadow-sm">
+      <div
+        class="flex items-center justify-between px-8 py-6 text-white cursor-pointer hover:bg-[#4ca58f]"
+        (click)="toggle(0)"
+      >
+        <span class="text-2xl font-light">
+          Demande d'autorisation d'enseigner
+        </span>
+
+
+        <span
+          class="text-3xl transition-transform duration-300"
+          [class.rotate-90]="openedIndex === 0"
+        >
+          >
+        </span>
+      </div>
+
+      <div
+        *ngIf="openedIndex === 0"
+        class="px-8 py-6 bg-white text-gray-700"
+      >
+        Description :
+<br>
+La demande d'autorisation d'enseigner est une demande faite par les personnes habilitées à enseigner afin d'avoir l'autorisation d'enseigner.
+<br>
+<br>
+Pièce(s) à fournir :
+<br>
+Aucune pièce n'est à fournir pour cette procedure
+<br>
+<br>
+Coût(s) :
+<br>
+Ce procédure n'exige aucun frais
+<br>
+<br>
+Conditions d’accès :
+<br>
+Être titulaire d'un diplôme octroyant le droit d'enseigner
+      </div>
+    </div>
+
+    <div class="overflow-hidden bg-[#57B29D] rounded-sm shadow-sm mt-[1px]">
+      <div
+        class="flex items-center justify-between px-8 py-6 text-white cursor-pointer hover:bg-[#4ca58f]"
+        (click)="toggle(1)"
+      >
+        <span class="text-2xl font-light">
+          Concours d'entrée au Prytanée Militaire du Kadiogo
+        </span>
+
+        <span
+          class="text-3xl transition-transform duration-300"
+          [class.rotate-90]="openedIndex === 1"
+        >
+          >
+        </span>
+      </div>
+
+      <div
+        *ngIf="openedIndex === 1"
+        class="px-8 py-6 bg-white text-gray-700"
+      >
+            Description :
+          <br>
+        Le PMK est un école militaire d’enseignement secondaire Burkinabè dépendant du ministère de la défense et situé sur le site militaire de Kamboincin, à proximité de Ouagadougou. C'est une école militaire d’excellence qui a pour principale mission la formation de cadres militaires et civils pour servir la nation. Cette qualité de la formation qui englobe les aspects intellectuel, moral, physique, académique et autres, est aussi un gage de succès et une référence pour nos sociétés, souvent en manque de repères où certaines valeurs de l’école semblent être en crise.
+        <br>
+        <br>
+        Pièce(s) à fournir :
+        <br>
+        Aucune pièce n'est à fournir pour cette procedure
+        <br>
+        <br>
+        Coût(s) :
+        <br>
+        Ce procédure n'exige aucun frais
+        <br>
+        <br>
+        Conditions d’accès :
+        <br>
+        - être de nationalité Burkinabé ; - être âgé (e) de onze (11) ans au minimum et treize (13) ans au maximum à la fin de l’année en cours ; - n’avoir pas déjà fait la classe de sixième (6è) des Lycées et Collèges ; - n’avoir pas fait l’objet d’une condamnation pénale.
+        <br>
+        <br>
+        Informations complémentaires :
+        <br>
+        Pièces à fournir :(1) une (01) demande manuscrite timbrée à 200 FCFA, adressée à Monsieur le Ministre de la Défense Nationale et des Anciens Combattants ; 2) un (01) certificat de nationalité burkinabè ; 3) un (01) extrait d’acte de naissance ou de jugement supplétif en tenant lieu et datant de plus de cinq (05) ans ; 4) un certificat de scolarité de la classe de CM2 de l’année en cours, attestant que le candidat est régulièrement inscrit dans la région depuis au moins deux (02) ans, (pour les enfants des agents nouvellement mutés dans la région, la décision d’affectation fait foi) ; 5) une (01) photocopie légalisée de la carte d’identité scolaire de l’année en cours ; 6) un (01) casier judiciaire datant de moins de trois (03) mois à la date du début de dépôt des dossiers de candidature ; 7) une (01) photocopie légalisée du CEPE ou une attestation de réussite de la session de l’année en cours, qui sera déposée après proclamation des résultats du CEPE à une date ultérieurement fixée; 8) un extrait du jugement conférant le statut de pupille de la nation conformément à la loi N° 62-2015 CNT du 06 septembre 2015, (pour les candidats « pupille de la Nation). Lieux de dépôt : - à l’Etat-Major du Groupement Central des Armées (Direction des Ressources humaines), aux Postes de Commandement de la 1re Région Aérienne (Armée de l’Air), de la 3e Région Militaire (Camp Général Aboubacar Sangoulé LAMIZANA) à Ouagadougou pour la Région du Centre ; -au Poste de Commandement de la 1re Région Militaire à Kaya pour la Région du Centre-Nord à Kaya ; -au Poste de Commandement de la 2e Région Militaire à Bobo-Dioulasso pour la Région des Hauts-Bassins à Bobo-Dioulasso ; -au Poste de Commandement du 23e Régiment d’Infanterie Commando basé à Dédougou pour la Région du Mouhoum ; -au Poste de Commandement du 11e Régiment d’Infanterie Commando basé à Dori pour la Région du Sahel -au Poste de Commandement du 12e Régiment d’Infanterie Commando basé à Ouahigouya pour la Région du Nord -au Poste de Commandement du 22e Régiment d’Infanterie Commando basé à Gaoua pour la Région du Sud-Ouest -au Poste de Commandement du Détachement de la 2e Compagnie d’Infanterie du 24e RIA basé à Banfora pour la Région des Cascades ; -au Poste de Commandement de la Compagnie de Gendarmerie de Manga pour la Région du Centre-Sud ; -au Poste de Commandement du 34e Régiment Inter-Armes basé à Fada N’Gourma pour les candidats de la Région du Centre-Sud ; -au Poste de Commandement de la 3e compagnie de la Brigade National des Sapeurs-Pompiers basée à Koudougou pour la Région du Centre-Ouest ; -au Poste de Commandement du 31e Régiment d’Infanterie Commando basé à Tenkodogo pour la Région du Centre-Est ; -au Poste de Commandement de la Compagnie de Gendarmerie de Ziniaré pour les candidats de la Région du Plateau Central. EPREUVES : - Une épreuve de dictée notée sur 10 ; - Une épreuve d’étude de texte notée sur 20 ; elle consiste en des questions relatives au texte et sur le vocabulaire, la conjugaison, la grammaire et l’intelligence du texte ; - L’écriture et la présentation de l’étude de texte sont notées sur 10 ; - Une épreuve de calcul comprenant : des opérations notées sur 20 ; - Un problème noté sur 20. Les épreuves écrites constituent les épreuves d’admissibilité. Un quota est fixé par région et une moyenne minimale est définie pour l’admissibilité. Les meilleurs candidats des régions sont déclarés admissibles conformément aux quotas affectés, après avoir obtenu un total de moyenne supérieur ou égal à la moyenne requise pour l’admissibilité. Les quotas des régions défaillantes sont affectés aux meilleurs candidats d’une liste d’attente nationale classée par ordre de mérite, sans distinction de la région d’origine. SEULS CENTRES D’EXAMEN : - Banfora ; - Bobo Dioulasso ; - Dédougou ; - Dori ; - Fada N’Gourma ; - Gaoua ; - Kaya ; - Koudougou ; - Manga ; - Ouagadougou ; - Ouahigouya ; - Tenkodogo ; - Ziniaré.
+        <br>
+        <br>
+        Adresse web :
+        <br>
+        <br>
+        <a href="http://pmk-bf.net" target="_blank" rel="noopener noreferrer">http://pmk-bf.net</a>
+      </div>
+    </div>
+
+    <!-- FORMATION -->
+    <h2 class="mt-12 mb-6 text-xl tracking-widest text-gray-700 uppercase">
+      Formation
+    </h2>
+
+    <div class="space-y-[1px]">
+      <div class="overflow-hidden bg-[#57B29D] rounded-sm shadow-sm">
+        <div
+          class="flex items-center justify-between px-8 py-6 text-white cursor-pointer hover:bg-[#4ca58f]"
+          (click)="toggle(2)"
+        >
+          <span class="text-2xl font-light">
+            Candidature aux concours professionnels
+          </span>
+
+          <span
+          class="text-3xl transition-transform duration-300"
+          [class.rotate-90]="openedIndex === 2"
+        >
+          >
+        </span>
+        </div>
+
+        <div *ngIf="openedIndex === 2" class="px-8 py-6 bg-white">
+          Description :
+          <br>
+          La candidature aux concours professionnels est la possibilité offerte aux travailleurs de l'Administration publique de rehausser leur niveau de connaissance dans leur métier
+          <br>
+          <br>
+          Pièce(s) à fournir :
+          <br>
+          Aucune pièce n'est à fournir pour cette procedure
+          <br>
+          <br>
+          Coût(s) :
+          <br>
+          Ce procédure n'exige aucun frais
+          <br>
+          <br>
+          Conditions d’accès :
+          <br>
+          Exerçer dans le métier pendant au moins 3 ans Être âgé de 47 ans au plus
+        </div>
+      </div>
+
+      <div class="overflow-hidden bg-[#57B29D] rounded-sm shadow-sm">
+        <div
+          class="flex items-center justify-between px-8 py-6 text-white cursor-pointer hover:bg-[#4ca58f]"
+          (click)="toggle(3)"
+        >
+          <span class="text-2xl font-light">
+            Formation initiale aux métiers
+          </span>
+
+          <span
+            class="text-3xl transition-transform duration-300"
+            [class.rotate-90]="openedIndex === 3"
+          >
+            >
+          </span>
+        </div>
+
+        <div *ngIf="openedIndex === 3" class="px-8 py-6 bg-white">
+          Description :
+          <br>
+          Le centre d'Évaluation et de Formation Professionnelle de Ouagadougou (CEFPO) a pour mission de contribuer à la mise en oeuvre de la Politique Nationale d'Enseignement et de Formation Techniques et Professionnels (PN/EFTP), À ce titre, il offre dix (10) filières de formation qui sont (Maintenance des véhicules automobiles, Maintenance informatique et bureautique, Génie civil / Bâtiment, Construction métallique, Menuiserie ' Bois, Électricité ' bâtiment, Coupe / couture, Coiffure, Froid et climatisation, Esthétique)
+          <br>
+          <br>
+          Pièce(s) à fournir :
+          <br>
+          Aucune pièce n'est à fournir pour cette procedure
+          <br>
+          <br>
+          Coût(s) :
+          <br>
+          Ce procédure n'exige aucun frais
+          <br>
+          <br>
+          Conditions d’accès :
+          <br>
+          Le recrutement se fait sur examen de dossier# Les candidats doivent être titulaires du BEPC, CAP, CQP
+          <br>
+          <br>
+          Informations complémentaires :
+          <br>
+          Le centre d'Évaluation et de Formation Professionnelle de Ouagadougou (CEFPO) situé au 1504 Avenue DIMDOLOBSOM secteur 5, Ouagadougou téléphone (00226) 25301875/81 Page facebook: cefpo.bf
+        </div>
+      </div>
+    </div>
+
+  </div>
+    </section>
+
+
+

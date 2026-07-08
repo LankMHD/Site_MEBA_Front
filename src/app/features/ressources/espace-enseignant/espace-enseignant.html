@@ -1,62 +1,165 @@
- <!-- Bannière -->
-    <div class="bg-gradient-to-r from-[#00843B] to-[#006B30] py-12">
-      <div class="container mx-auto px-4">
-        <h1 class="text-3xl font-bold text-white mb-2">Espace enseignant</h1>
-        <nav class="text-green-100 text-sm">
+  <section class="bg-gradient-to-br from-[#00843B] to-[#006B30] text-white py-16">
+      <div class="container px-4 mx-auto">
+        <h1 class="mb-4 text-4xl font-bold text-white">Espace enseignant</h1>
+        <p class="max-w-2xl mb-2 text-lg text-primary-100">
+          Consultez et téléchargez les documents officiels du ministère.
+        </p>
+        <nav class="text-sm text-green-100">
           <a routerLink="/" class="hover:text-white">Accueil</a>
           <span class="mx-2">›</span>
-          <a routerLink="/ressources/espace-enseignant" class="hover:text-white">Ministère</a>
+          <a routerLink="/ministere/ministre" class="hover:text-white">Ressources</a>
           <span class="mx-2">›</span>
           <span class="text-white">Espace enseignant</span>
         </nav>
       </div>
-    </div>
+    </section>
 
-
-    
-  
-  <!-- Directions par niveau -->
-<section class="py-16 bg-gray-50">
-  <div class="container mx-auto px-4">
-    <div class="max-w-6xl mx-auto">
-
-      <!-- Organigramme Timeline -->
-      <div class="relative">
-        <!-- Ligne verticale gauche -->
-        
-
-         
-        <!-- Vérifie s'il y a des niveaux / directions -->
-        <ng-container *ngIf="niveaux() && niveaux().length > 0; else noData">
-           <div class="absolute left-6 top-0 bottom-0 w-1 bg-green-200 rounded"></div>
-
-          <!-- Boucle sur les niveaux -->
-          
-
-        </ng-container>
-
-        <!-- Fallback si aucune donnée -->
-        <ng-template #noData>
-          <div class="text-center py-16">
-            <svg class="w-16 h-16 text-neutral-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z">
-              </path>
-            </svg>
-            <h3 class="text-lg font-medium text-neutral-700 mb-2">Aucune donnée disponible</h3>
+    <section class="py-12 bg-neutral-50">
+      <div class="container px-4 mx-auto">
+        <div class="mb-8 card">
+          <div class="flex flex-col gap-4 md:flex-row">
+            <div class="relative flex-1">
+              <svg class="absolute w-5 h-5 -translate-y-1/2 left-3 top-1/2 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+              <input type="text" [(ngModel)]="searchQuery" (keyup.enter)="search()" placeholder="Rechercher un document..." class="pl-10 input" >
+            </div>
+            <button (click)="search()" class="btn-primary" style="background-color: #006B30;">Rechercher</button>
           </div>
-        </ng-template>
+        </div>
+
+        @if (loading()) {
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            @for (i of [1,2,3,4,5,6]; track i) {
+              <div class="card animate-pulse">
+                <div class="w-12 h-12 mb-4 bg-neutral-200 rounded-xl"></div>
+                <div class="w-3/4 h-5 mb-2 rounded bg-neutral-200"></div>
+                <div class="w-1/2 h-4 rounded bg-neutral-200"></div>
+              </div>
+            }
+          </div>
+        } @else {
+
+            <div class="flex items-start gap-6">
+
+            <!-- Colonne gauche : types de documents -->
+            <div class="w-full p-4 bg-white border border-gray-200 shadow-sm md:w-80 lg:w-96 rounded-2xl">
+                <div class="flex items-center justify-between mb-4">
+                    <h4 class="text-sm font-semibold tracking-wide text-gray-700 uppercase">Guides pédagogiques</h4>
+                    <!-- <span class="text-xs text-gray-500">{{ projects().length }} {{ projects().length > 1 ? 'éléments' : 'élément' }}</span> -->
+                </div>
+
+                <ul class="space-y-2">
+                @for (type of projects().slice(4, 8); track type.id) {
+                    <li
+                    class="px-3 py-2 text-sm text-gray-800 transition-all duration-200 border border-gray-200 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 hover:border-gray-300"
+                    [class.bg-[#E8F5EC]]="selectedType() === type.name"
+                    [class.border-[#00843B]]="selectedType() === type.name"
+                    [class.text-[#006B30]]="selectedType() === type.name"
+                    [class.font-semibold]="selectedType() === type.name"
+                    (click)="selectType(type.name)">
+                    {{ type.name }}
+                    </li>
+                }
+                </ul>
+            </div>
+
+            <!-- Colonne droite : documents -->
+            <div class="flex-1 p-4 bg-white shadow rounded-xl">
+                @if (documents().length === 0) {
+                <!-- Message si aucun document trouvé -->
+                <div class="py-16 text-center">
+                    <svg class="w-16 h-16 mx-auto mb-4 text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                    </svg>
+                    <h3 class="mb-2 text-lg font-medium text-neutral-700">Aucun document trouvé</h3>
+                </div>
+                } @else {
+                <!-- Affichage des documents -->
+                @for (doc of documents(); track doc.id) {
+                    <div class="flex items-center justify-between py-3 border-b last:border-b-0">
+                    <!-- Icône PDF -->
+                    <div class="flex items-center justify-center flex-shrink-0 w-12 h-12 bg-red-100 rounded-xl">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 2H14L18 6V20C18 21.1046 17.1046 22 16 22H6C4.89543 22 4 21.1046 4 20V4C4 2.89543 4.89543 2 6 2Z" fill="#E53E3E"/>
+                        <path d="M14 2V6H18" fill="white"/>
+                        </svg>
+                    </div>
+
+                    <!-- Titre + catégorie + taille -->
+                    <div class="flex-1 min-w-0 px-4">
+                        <h3 class="text-sm font-semibold truncate text-neutral-900">{{ doc.title }}</h3>
+                        <div class="flex items-center gap-2 mt-1 text-xs text-neutral-400">
+                        <span class="badge-primary">{{ getCategoryLabel(doc.category) }}</span>
+                        @if (doc.fileSize) {
+                            <span>{{ formatFileSize(doc.fileSize) }}</span>
+                        }
+                        </div>
+                    </div>
+
+
+                    <!-- Bouton Télécharger -->
+                    @if (doc.filePath) {
+                      <button (click)="downloadFile(doc)"
+                              class="flex items-center gap-2 px-4 py-2 text-sm text-white transition-colors bg-red-600 rounded-xl hover:bg-red-700">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                        </svg>
+                        Télécharger
+                      </button>
+                    }
+
+                    </div>
+                }
+
+
+                <div class="flex items-center justify-end gap-2 px-6 py-2 mt-2 border-t border-gray-200 rounded-b-lg bg-gray-50">
+
+  <button (click)="prevPage()"
+          [disabled]="currentPage() === 1"
+          class="px-3 py-1 transition-colors border border-gray-300 rounded hover:bg-gray-100 disabled:opacity-50">
+    « Précédent
+  </button>
+
+  <ng-container *ngFor="let page of pages()">
+    <button (click)="goToPage(page)"
+            [ngClass]="currentPage() === page
+                    ? 'px-3 py-1 border rounded text-white'
+                    : 'px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 transition-colors'"
+            [ngStyle]="currentPage() === page ? {'background-color':'#00843B', 'border-color':'#00843B'} : {}">
+      {{ page }}
+    </button>
+  </ng-container>
+
+  <button (click)="nextPage()"
+          [disabled]="currentPage() === totalPages()"
+          class="px-3 py-1 transition-colors border border-gray-300 rounded hover:bg-gray-100 disabled:opacity-50">
+    Suivant »
+  </button>
+
+</div>
+
+
+
+                }
+            </div>
+
+            </div>
+
+
+
+        }
+
+
+
+
+
+
 
       </div>
-
-    </div>
-  </div>
-</section>
+    </section>
 
 
-    <!-- Contenu principal -->
- 
-
-
-    
 

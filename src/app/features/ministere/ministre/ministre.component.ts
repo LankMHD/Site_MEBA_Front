@@ -26,7 +26,7 @@ articles = signal<Ministere[]>([]);
  ministre= signal<Ministre | null>(null);
   loading = signal(true);
    constructor(private apiService: ApiService, private router: Router, private min: MinistereService) {}
-  
+
   ngOnInit(): void {
     this.loadArticles();
     this.loadMinistres();
@@ -50,7 +50,7 @@ articles = signal<Ministere[]>([]);
               this.loadMinistereById(ministereId);
             }
 
-          
+
           }
           this.loading.set(false);
         },
@@ -64,7 +64,7 @@ articles = signal<Ministere[]>([]);
     loadMinistereById(id: number) {
       this.apiService.getminById(id).subscribe({
         next: (response) => {
-          
+
           if (response.success) {
        this.ministere.set(response.data); // ✅ extraire data
         //console.log('Ministère chargé :', this.ministere);
@@ -96,7 +96,7 @@ articles = signal<Ministere[]>([]);
               this.loadMinistreById(ministreId);
             }
 
-          
+
           }
           this.loading.set(false);
         },
@@ -110,7 +110,7 @@ articles = signal<Ministere[]>([]);
     loadMinistreById(id: number) {
       this.min.getMinistreById(id).subscribe({
         next: (response) => {
-          
+
           if (response.success) {
         this.ministre.set(response.data); // ✅ extraire data
         console.log('Ministère chargé :', this.ministre);
@@ -155,7 +155,7 @@ formatContentTailwind(content: string): string {
   getImageUrl(path?: string): string | null {
      console.log(path);
     return path ? this.API_URL + path : null;
-   
+
   }
 
 

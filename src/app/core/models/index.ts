@@ -54,7 +54,7 @@ export interface Service {
   description: string;
   url: string;
   logo: string;
-  
+
 }
 
 // Article
@@ -117,10 +117,10 @@ export interface Evenement {
   isRegistrationOpen:boolean;
   createdBy:string;
   isPublic:boolean;
-  
+
   authorName?: string;
   authorId?: number;
-  
+
   createdAt: string;
 
   updatedAt?: string;
@@ -171,6 +171,7 @@ export enum DocumentCategory {
 
 export enum DocumentType {
   DOCUMENT = 'DOCUMENT SIMPLE',
+  EDUCATION = 'DOCUMENT EDUCATION',
   POLITIQUE = 'DOCUMENT POLITIQUE',
 
 }

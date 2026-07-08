@@ -72,19 +72,19 @@ goToPage(page: number): void {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
-  
+
   getPageNumbers(): number[] {
     const total = this.totalPages();
     const current = this.currentPage();
     const pages: number[] = [];
-    
+
     let start = Math.max(0, current - 2);
     let end = Math.min(total - 1, current + 2);
-    
+
     for (let i = start; i <= end; i++) {
       pages.push(i);
     }
-    
+
     return pages;
   }
 
@@ -96,7 +96,7 @@ goToPage(page: number): void {
     getImageUrl(path?: string): string | null {
      console.log(path);
     return path ? this.API_URL + path : null;
-   
+
   }
 
 

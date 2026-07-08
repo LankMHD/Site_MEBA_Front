@@ -24,7 +24,7 @@ export interface Events {
   createdAt: string;
   updatedAt: string;
   isPublic: boolean;
-  
+
 }
 
 export type EventStatus = 'UPCOMING' | 'ONGOING' | 'COMPLETED' | 'CANCELLED';
@@ -71,6 +71,7 @@ export interface EService {
   updatedAt: string;
 }
 
+
 export interface FAQ {
   id: number;
   question: string;
@@ -97,7 +98,7 @@ export interface NewsletterSubscription {
 
 export interface Structure {
   id: number;
-  
+
   name: string;
   acronym: string;
   type: StructureType;
@@ -129,7 +130,7 @@ export interface Organigramme {
 
   niveau: string,
   photo: string,
-  
+
   email: string;
   website: string;
   logoUrl: string;
@@ -150,14 +151,14 @@ export interface Ministere {
   image: string;
   presentationSynthetique: string;
   presentationGlobale:string;
-  
+
 }
 
 export interface Domains {
   id: number;
   nom: string;
-  
-  
+
+
 }
 
 export type StructureType = 'DIRECTION' | 'SERVICE' | 'AGENCE' | 'ETABLISSEMENT' | 'PROJET' | 'MINISTERE'| 'CABINET';
@@ -165,12 +166,12 @@ export type StructureType = 'DIRECTION' | 'SERVICE' | 'AGENCE' | 'ETABLISSEMENT'
 
 export interface Mission {
   id: number;
-  
+
   categorie: string;
   description: string;
-  
+
   ministereId: number;
-  
+
 
 
 
@@ -178,7 +179,7 @@ export interface Mission {
 
 export interface Ministre {
   id: number;
-  
+
   nom: string,
   prenom: string,
   profession: string,
@@ -186,7 +187,7 @@ export interface Ministre {
   photo: string,
   isActif: boolean,
   ministereId: 0,
-  
+
 
 
 
@@ -198,5 +199,24 @@ export interface Etats {
   id: number;
   nom: string;
   valeur: string;
-  
+
+}
+export interface AncienMinistre{
+
+    id:number;
+
+    nom:string;
+
+    prenom:string;
+
+    // fonction:string;
+
+    description:string;
+
+    photo:string;
+
+    dateDebut:string | null;
+
+    dateFin:string | null;
+
 }

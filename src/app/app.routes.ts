@@ -22,10 +22,12 @@ export const routes: Routes = [
       { path: 'ministere/Structures-centrales', loadComponent: () => import('./features/ministere/structures-centrales/structures-centrales').then(m => m.StructuresCentrales) },
       { path: 'ministere/Projets-programmes', loadComponent: () => import('./features/ministere/projets-programmes/projets-programmes').then(m => m.ProjetsProgrammes) },
       { path: 'informations/radio-educative', loadComponent: () => import('./features/informations/radio-educative/radio-educative').then(m => m.RadioEducative) },
-      //{ path: '/informations/radio-educative', loadComponent: () => import('./features/informations/radio-educative/radio-educative').then(m => m.RadioEducative) },
       { path: 'ressources/documents', loadComponent: () => import('./features/ressources/documents/documents/documents').then(m => m.Documents) },
       { path: 'ressources/espace-enseignant', loadComponent: () => import('./features/ressources/espace-enseignant/espace-enseignant').then(m => m.EspaceEnseignant) },
       { path: 'ressources/mediatheque', loadComponent: () => import('./features/ressources/mediatheque/mediatheque').then(m => m.Mediatheque) },
+      { path: 'ressources/demarche-administrative', loadComponent: () => import('./features/ressources/demarche-administrative/demarche-administrative').then(m => m.DemarcheAdministrative) },
+
+
 
       { path: 'ministere/organigramme', loadComponent: () => import('./features/ministere/organigramme/organigramme.component').then(m => m.OrganigrammeComponent) },
       { path: 'ministere/structures', loadComponent: () => import('./features/ministere/structurerattaches/structurerattaches.component').then(m => m.StructurerattachesComponent) },
@@ -35,27 +37,27 @@ export const routes: Routes = [
       { path: 'agendas', loadComponent: () => import('./features/agendas/agendas.component').then(m => m.AgendasComponent) },
       { path: 'agendas/:id', loadComponent: () => import('./features/agendas/detail-agenda/detail-agenda.component').then(m => m.DetailAgendaComponent) },
      { path: 'communiques', loadComponent: () => import('./features/communiques/communiques.component').then(m => m.CommuniquesComponent) },
-      
+
       // Redirections pour compatibilité
       { path: 'articles', redirectTo: 'actualites', pathMatch: 'full' },
-      
+
       { path: 'articles/:id', redirectTo: 'actualites/:id', pathMatch: 'full' },
       { path: 'projects', redirectTo: 'projets', pathMatch: 'full' },
       { path: 'projects/:id', redirectTo: 'projets/:id', pathMatch: 'full' },
       { path: 'documents', redirectTo: 'ressources/documents', pathMatch: 'full' },
        { path: 'politiques', redirectTo: 'ressources/politiques', pathMatch: 'full' },
        { path: 'services', redirectTo: 'services', pathMatch: 'full' },
-     
+
     ]
   },
-  
+
   // Auth routes (no layout)
-  { 
-    path: 'auth/login', 
+  {
+    path: 'auth/login',
     loadComponent: () => import('./features/auth/login.component').then(m => m.LoginComponent),
     canActivate: [guestGuard]
   },
-  
+
   // Admin routes
   {
     path: 'admin',
@@ -84,12 +86,16 @@ export const routes: Routes = [
      { path: 'domains', loadComponent: () => import('./features/admin/domains/domains.component').then(m => m.DomainsComponent) },
      { path: 'ministre', loadComponent: () => import('./features/admin/ministere/ministre/ministre.component').then(m => m.MinistreComponent) },
      { path: 'etats', loadComponent: () => import('./features/admin/ministere/etats/etats.component').then(m => m.EtatsComponent) },
-     
+
      { path: 'structures', loadComponent: () => import('./features/admin/structure-rattaches/structure-rattaches.component').then(m => m.StructureRattachesComponent) },
-     
+
+      { path: 'anciens-ministres', loadComponent: () => import('./features/admin/anciens-ministres/anciens-ministres').then(m => m.AnciensMinistresComponent) },
+      { path: 'structures-centrales', loadComponent: () => import('./features/admin/structures-centrales/structures-centrales').then(m => m.StructuresCentrales) },
+
+
     ]
   },
-  
+
   // Fallback
   { path: '**', redirectTo: '' }
 ];

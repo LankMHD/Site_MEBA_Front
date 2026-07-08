@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiResponse, Page, Article, Project, Document, Contact, DashboardStats, User, TypeDocument, Agenda, Service } from '../models';
-import { Events, FlashInfo, EService, FAQ, NewsletterSubscription, Structure, Ministere } from '../models/event.model';
+import { Events, FlashInfo, EService, FAQ, NewsletterSubscription, Structure, Ministere, AncienMinistre } from '../models/event.model';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -28,14 +28,14 @@ export class ApiService {
 getAllServicepublic(): Observable<ApiResponse<Page<Service>>> {
   return this.http.get<ApiResponse<Page<Service>>>(`${this.API_URL}/services`);
 }
- 
+
 
 
   getServicesById(id: number): Observable<ApiResponse<Service>> {
     return this.http.get<ApiResponse<Service>>(`${this.API_URL}/services/${id}`);
   }
 
- 
+
 
    createServices(formData: FormData): Observable<ApiResponse<Service>> {
     return this.http.post<ApiResponse<Service>>(
@@ -65,14 +65,14 @@ getAllServicepublic(): Observable<ApiResponse<Page<Service>>> {
     return this.http.get<ApiResponse<Page<Agenda>>>(`${this.API_URL}/agendas`, { params });
   }
 
- 
+
 
 
   getAgendasById(id: number): Observable<ApiResponse<Agenda>> {
     return this.http.get<ApiResponse<Agenda>>(`${this.API_URL}/agendas/${id}`);
   }
 
- 
+
 
    createAgendas(formData: FormData): Observable<ApiResponse<Agenda>> {
     return this.http.post<ApiResponse<Agenda>>(
@@ -443,7 +443,7 @@ updateDocument(id: number, formData: FormData): Observable<ApiResponse<Document>
 
   //minsitère
 
-  
+
    getAllMins(page = 0, size = 10, sortBy = 'createdAt', sortDir = 'desc'): Observable<ApiResponse<Page<Ministere>>> {
     const params = new HttpParams()
       .set('page', page).set('size', size)
@@ -459,7 +459,7 @@ updateDocument(id: number, formData: FormData): Observable<ApiResponse<Document>
 
 
 
- 
+
   createmin(formData: FormData): Observable<ApiResponse<Ministere>> {
     return this.http.post<ApiResponse<Ministere>>(
       `${this.API_URL}/ministeres`,
@@ -474,7 +474,7 @@ updateDocument(id: number, formData: FormData): Observable<ApiResponse<Document>
     );
   }
 
- 
+
   deleteMin(id: number): Observable<ApiResponse<void>> {
     return this.http.delete<ApiResponse<void>>(`${this.API_URL}/ministeres/${id}`);
   }
@@ -677,4 +677,24 @@ getAllEvents(page = 0, size = 10): Observable<Page<Events>> {
   deleteStructure(id: number): Observable<ApiResponse<void>> {
     return this.http.delete<ApiResponse<void>>(`${this.API_URL}/structures/${id}`);
   }
+
+
+// *******Ancien ministre
+
+  getAllAnciensMinistres(){
+    return this.http.get<ApiResponse<AncienMinistre[]>>(
+        `${this.API_URL}/anciens-ministres/public`
+    );
+}
+
+
+ajouterAncienMinistre(ancienMinistre: AncienMinistre | FormData) {
+  return this.http.post(
+    `${this.API_URL}/anciens-ministres`,
+    ancienMinistre
+  );
+}
+
+
+
 }
