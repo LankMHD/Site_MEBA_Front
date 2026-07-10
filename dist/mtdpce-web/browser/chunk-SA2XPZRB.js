@@ -1,0 +1,1 @@
+import{Cb as a,Ka as s,eb as r,fb as n}from"./chunk-7PIIM6BR.js";import"./chunk-DAQOROHW.js";var c=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=s({type:t,selectors:[["app-structures-centrales"]],decls:2,vars:0,template:function(e,o){e&1&&(r(0,"p"),a(1,"structures-centrales works!"),n())},encapsulation:2})};export{c as StructuresCentrales};

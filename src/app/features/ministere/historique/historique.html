@@ -451,9 +451,11 @@
                   {{ ministre.description }}
                 </p>
 
-                <button class="self-start px-4 py-2 mt-4 text-white bg-green-600 rounded hover:bg-green-700">
-                  En savoir plus
-                </button>
+                <button
+                    [routerLink]="['/ministere/historique/anciens-ministres', ministre.id]"
+                    class="self-start px-4 py-2 mt-4 text-white bg-green-600 rounded hover:bg-green-700">
+                    En savoir plus
+               </button>
               </div>
             </div>
           </ng-container>

@@ -1,0 +1,1 @@
+import{Cb as m,Ka as n,eb as o,fb as s}from"./chunk-7PIIM6BR.js";import"./chunk-DAQOROHW.js";var c=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=n({type:t,selectors:[["app-documents"]],decls:2,vars:0,template:function(e,i){e&1&&(o(0,"p"),m(1,"documents works!"),s())},encapsulation:2})};export{c as Documents};

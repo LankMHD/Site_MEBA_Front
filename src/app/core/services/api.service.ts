@@ -695,6 +695,39 @@ ajouterAncienMinistre(ancienMinistre: AncienMinistre | FormData) {
   );
 }
 
+updateAncienMinistre(id: number, formData: FormData): Observable<ApiResponse<AncienMinistre>> {
+  return this.http.put<ApiResponse<AncienMinistre>>(
+    `${this.API_URL}/anciens-ministres/${id}`,
+    formData
+  );
+}
+
+deleteAncienMinistre(id: number): Observable<ApiResponse<void>> {
+  return this.http.delete<ApiResponse<void>>(
+    `${this.API_URL}/anciens-ministres/${id}`
+  );
+}
+
+getAncienMinistresById(id: number): Observable<ApiResponse<AncienMinistre>> {
+  return this.http.get<ApiResponse<AncienMinistre>>(
+    `${this.API_URL}/anciens-ministres/${id}`
+  );
+}
+
+
+getRadioEducative(page = 0, size = 10): Observable<ApiResponse<Page<any>>> {
+  const params = new HttpParams().set('page', page).set('size', size);
+  return this.http.get<ApiResponse<Page<any>>>(`${this.API_URL}/radio-educative`, { params });
+}
+
+saveOrUpdateRadioEducative(formData: FormData): Observable<ApiResponse<any>> {
+  // If formData has an id field to indicate update, backend should handle create/update accordingly.
+  return this.http.post<ApiResponse<any>>(`${this.API_URL}/radio-educative`, formData);
+}
+
+deleteRadioEducative(id: number): Observable<ApiResponse<void>> {
+  return this.http.delete<ApiResponse<void>>(`${this.API_URL}/radio-educative/${id}`);
+}
 
 
 }

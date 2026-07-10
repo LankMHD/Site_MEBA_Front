@@ -1,0 +1,76 @@
+ <h2 class="mb-8 text-3xl font-bold text-green-700">
+        Radio éducative
+    </h2>
+
+<div class="max-w-4xl p-8 mx-auto bg-white rounded-lg shadow">
+
+    <!-- Chargement -->
+    <div *ngIf="loading()" class="py-10 text-center">
+        Chargement...
+    </div>
+
+    <div *ngIf="!loading()">
+
+        <!-- Audio actuel -->
+        <div *ngIf="audio()" class="mb-8">
+
+            <h3 class="mb-3 text-lg font-semibold">
+                Audio actuel
+            </h3>
+
+            <audio controls class="w-full">
+                <source
+                    [src]="getAudioUrl(audio()!.audio)"
+                    type="audio/mpeg">
+            </audio>
+
+        </div>
+
+        <!-- Upload -->
+        <div class="mb-6">
+
+            <label class="block mb-2 font-semibold">
+                Choisir un nouvel audio
+            </label>
+
+            <input
+                type="file"
+                accept="audio/*"
+                (change)="onFileSelected($event)"
+                class="block w-full p-2 border rounded">
+
+        </div>
+
+        <!-- Nom du fichier -->
+        <div *ngIf="selectedFile" class="mb-8 text-gray-600">
+
+            {{ selectedFile.name }}
+
+        </div>
+
+        <!-- Boutons -->
+        <div class="flex gap-4">
+
+            <button
+                class="px-6 py-2 text-white bg-green-600 rounded hover:bg-green-700"
+                (click)="saveAudio()"
+                [disabled]="saving()">
+
+                Enregistrer
+
+            </button>
+
+            <button
+                *ngIf="audio()"
+                class="px-6 py-2 text-white bg-red-600 rounded hover:bg-red-700"
+                (click)="deleteAudio()">
+
+                Supprimer
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

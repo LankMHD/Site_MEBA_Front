@@ -1,0 +1,131 @@
+<!-- Bannière -->
+<div class="bg-gradient-to-r from-[#00843B] to-[#006B30] py-10">
+  <div class="container px-4 mx-auto">
+    <nav class="text-sm text-green-100">
+      <a routerLink="/" class="hover:text-white">Accueil</a>
+      <span class="mx-2">›</span>
+      <a routerLink="/ministere/historique" class="hover:text-white">Ministère</a>
+      <span class="mx-2">›</span>
+      <a routerLink="/ministere/historique" fragment="anciens" class="hover:text-white">Anciens ministres</a>
+      <span class="mx-2">›</span>
+      <span class="text-white">Détails</span>
+    </nav>
+  </div>
+</div>
+
+<!-- Chargement -->
+<div *ngIf="loading()" class="flex items-center justify-center py-32">
+  <div class="w-10 h-10 border-4 border-green-600 border-t-transparent rounded-full animate-spin"></div>
+</div>
+
+<!-- Contenu principal -->
+<div *ngIf="!loading() && ministre()" class="container px-4 py-12 mx-auto">
+  <div class="flex flex-col gap-8 lg:flex-row">
+
+    <!-- Colonne gauche : détail du ministre -->
+    <div class="flex-1">
+
+      <!-- Nom complet -->
+      <h1 class="mb-6 text-3xl font-bold text-gray-800">
+        {{ ministre()!.nom }} {{ ministre()!.prenom }}
+      </h1>
+
+      <!-- Photo principale -->
+      <div class="overflow-hidden bg-gray-100 rounded-lg mb-8"
+           style="max-width: 520px; height: 600px;">
+        <img
+          [src]="getImageUrl(ministre()!.photo)"
+          [alt]="ministre()!.nom + ' ' + ministre()!.prenom"
+          class="object-cover object-top w-full h-full"
+        />
+      </div>
+
+      <!-- Dates de mandat -->
+      <div *ngIf="ministre()!.dateDebut || ministre()!.dateFin"
+           class="flex items-center gap-2 mb-6 text-gray-500">
+        <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+        </svg>
+        <span class="text-sm font-medium">
+          {{ ministre()!.dateDebut ?? '—' }} — {{ ministre()!.dateFin ?? "En fonction" }}
+        </span>
+      </div>
+
+      <!-- Description / Biographie -->
+      <div *ngIf="ministre()!.description"
+           class="prose max-w-none text-gray-700 leading-relaxed text-lg">
+        <p>{{ ministre()!.description }}</p>
+      </div>
+
+      <!-- Bouton retour -->
+      <div class="mt-10">
+        <a routerLink="/ministere/historique"
+           fragment="anciens"
+           class="inline-flex items-center gap-2 px-5 py-2 text-white bg-green-600 rounded hover:bg-green-700 transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+          Retour à la liste
+        </a>
+      </div>
+    </div>
+
+    <!-- Colonne droite : autres anciens ministres -->
+    <div class="w-full lg:w-80 flex-shrink-0">
+
+      <div class="sticky top-24 bg-[#e8eff5] rounded-lg p-6">
+
+        <h2 class="mb-4 text-lg font-semibold tracking-widest text-center text-gray-600 uppercase">
+          Autres anciens ministres
+        </h2>
+        <hr class="mb-6 border-gray-300">
+
+        <!-- Chargement sidebar -->
+        <div *ngIf="loadingAutres()" class="text-center py-6 text-gray-400 text-sm">
+          Chargement...
+        </div>
+
+        <!-- Liste des autres ministres -->
+        <div *ngIf="!loadingAutres()" class="space-y-3">
+          <ng-container *ngFor="let autre of autres()">
+            <a (click)="selectAutre(autre.id)"
+               [ngClass]="{ 'ring-2 ring-green-300 bg-green-50': autre.id === currentId(), 'bg-white hover:shadow-md hover:bg-green-50': autre.id !== currentId() }"
+               class="flex items-center gap-4 p-3 rounded-lg shadow-sm transition-all cursor-pointer"
+            >
+              <!-- Miniature photo -->
+              <div class="flex-shrink-0 w-16 h-16 overflow-hidden rounded-md bg-gray-100">
+                <img
+                  [src]="getImageUrl(autre.photo)"
+                  [alt]="autre.nom"
+                  class="object-cover object-top w-full h-full"
+                />
+              </div>
+
+              <!-- Nom -->
+              <span class="text-sm font-medium text-gray-800 leading-tight">
+                {{ autre.nom }} {{ autre.prenom }}
+              </span>
+            </a>
+          </ng-container>
+
+          <!-- Message si liste vide -->
+          <p *ngIf="autres().length === 0" class="text-center text-sm text-gray-400 py-4">
+            Aucun autre ministre disponible.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Ministre non trouvé -->
+<div *ngIf="!loading() && !ministre()" class="py-32 text-center text-gray-500">
+  <p class="text-xl">Ministre introuvable.</p>
+  <a RouterLink="/ministere/historique" fragment="anciens"
+     class="inline-block mt-6 px-5 py-2 text-white bg-green-600 rounded hover:bg-green-700">
+    Retour à la liste
+  </a>
+</div>

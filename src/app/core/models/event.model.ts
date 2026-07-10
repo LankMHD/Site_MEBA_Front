@@ -218,5 +218,11 @@ export interface AncienMinistre{
     dateDebut:string | null;
 
     dateFin:string | null;
-
 }
+
+
+  export interface RadioEducative {
+  id: number;
+  audio: string;
+}
+

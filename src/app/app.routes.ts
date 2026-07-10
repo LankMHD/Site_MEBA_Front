@@ -26,6 +26,7 @@ export const routes: Routes = [
       { path: 'ressources/espace-enseignant', loadComponent: () => import('./features/ressources/espace-enseignant/espace-enseignant').then(m => m.EspaceEnseignant) },
       { path: 'ressources/mediatheque', loadComponent: () => import('./features/ressources/mediatheque/mediatheque').then(m => m.Mediatheque) },
       { path: 'ressources/demarche-administrative', loadComponent: () => import('./features/ressources/demarche-administrative/demarche-administrative').then(m => m.DemarcheAdministrative) },
+      { path: 'ministere/historique/anciens-ministres/:id', loadComponent: () => import('./features/ministere/anciens-ministres-detail/anciens-ministres-detail').then(m => m.AnciensMinistresDetail) },
 
 
 
@@ -36,7 +37,9 @@ export const routes: Routes = [
       { path: 'evenements', loadComponent: () => import('./features/events/evenements/evenements.component').then(m => m.EvenementsComponent) },
       { path: 'agendas', loadComponent: () => import('./features/agendas/agendas.component').then(m => m.AgendasComponent) },
       { path: 'agendas/:id', loadComponent: () => import('./features/agendas/detail-agenda/detail-agenda.component').then(m => m.DetailAgendaComponent) },
-     { path: 'communiques', loadComponent: () => import('./features/communiques/communiques.component').then(m => m.CommuniquesComponent) },
+      { path: 'communiques', loadComponent: () => import('./features/communiques/communiques.component').then(m => m.CommuniquesComponent) },
+
+      { path: 'informations/radio-educative',loadComponent: () =>import('./features/informations/radio-educative/radio-educative').then(m => m.RadioEducative),},
 
       // Redirections pour compatibilité
       { path: 'articles', redirectTo: 'actualites', pathMatch: 'full' },
@@ -78,7 +81,7 @@ export const routes: Routes = [
       { path: 'types', loadComponent: () => import('./features/admin/types/types.component').then(m => m.TypesComponent) },
       { path: 'types-projets', loadComponent: () => import('./features/admin/projet/types/types.component').then(m => m.TypesComponent) },
       { path: 'agendas', loadComponent: () => import('./features/admin/article/agenda/agenda.component').then(m => m.AgendaComponent) },
-      { path: 'services', loadComponent: () => import('./features/admin/services/services.component').then(m => m.ServicesComponent) },
+    { path: 'services', loadComponent: () => import('./features/admin/services/services.component').then(m => m.ServicesComponent) },
      { path: 'evenements', loadComponent: () => import('./features/admin/evenements/evenements.component').then(m => m.EvenementsComponent) },
      { path: 'ministère', loadComponent: () => import('./features/admin/ministere/ministere.component').then(m => m.MinistereComponent) },
      { path: 'organigramme', loadComponent: () => import('./features/admin/organigramme/organigramme.component').then(m => m.OrganigrammeComponent) },
@@ -90,8 +93,10 @@ export const routes: Routes = [
      { path: 'structures', loadComponent: () => import('./features/admin/structure-rattaches/structure-rattaches.component').then(m => m.StructureRattachesComponent) },
 
       { path: 'anciens-ministres', loadComponent: () => import('./features/admin/anciens-ministres/anciens-ministres').then(m => m.AnciensMinistresComponent) },
+
       { path: 'structures-centrales', loadComponent: () => import('./features/admin/structures-centrales/structures-centrales').then(m => m.StructuresCentrales) },
 
+      { path: 'admin/radio-educative',loadComponent: () => import('./features/admin/radio-educative/radio-educative').then(m => m.RadioEducativeComponent),},
 
     ]
   },
