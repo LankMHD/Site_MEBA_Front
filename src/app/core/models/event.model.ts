@@ -226,3 +226,24 @@ export interface AncienMinistre{
   audio: string;
 }
 
+export interface Photo {
+  id?: number;
+  imageUrl: string;
+}
+
+export interface Video {
+  id?: number;
+  videoUrl?: string;
+  youtubeUrl?: string;
+}
+
+export interface StructureCentrale {
+  id?: number;
+  sigle: string;
+  nom: string;
+  photo?: string;
+  description?: string;
+  datePublication?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}

@@ -20,8 +20,8 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
           </svg>
-          <input 
-            type="text" 
+          <input
+            type="text"
             [(ngModel)]="searchQuery"
             (keyup.enter)="search()"
             placeholder="Rechercher un article..."
@@ -62,17 +62,17 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         @for (article of articles(); track article.id) {
           <a [routerLink]="['/articles', article.id]" class="card group cursor-pointer flex flex-col h-full bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
-            
+
             <!-- Image -->
           <div class="h-48 bg-[#E6F5EB] flex items-center justify-center overflow-hidden">
             @if (article.featuredImage) {
               <img
-                [src]="getImageUrl(article.featuredImage)"
-                [alt]="article.title"
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-              > 
+                  [src]="getImageUrl($any(article.featuredImage || article.images[0]))"
+                  [alt]="article.title"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                >
 
-              
+
             } @else {
               <svg class="w-16 h-16 text-[#00843B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -106,7 +106,7 @@
             {{ article.summary }}
             </p>
 
-            <!-- Résumé 
+            <!-- Résumé
             <p class="text-neutral-700 text-sm px-4 mb-4 line-clamp-4">
               {{ article.summary }}
             </p>-->
@@ -155,5 +155,5 @@
       }
     }
   </div>
-  
+
 </section>

@@ -13,50 +13,179 @@
     </div>
 
 
+<!-- ===========================
+     CONTENU
+============================ -->
+<section class="container py-5">
+<!-- ===================== -->
+<!-- PHOTOTHÈQUE -->
+<!-- ===================== -->
 
+<section class="photo-section">
 
-  <!-- Directions par niveau -->
-<section class="py-16 bg-gray-50">
-  <div class="container px-4 mx-auto">
-    <div class="max-w-6xl mx-auto">
-
-      <!-- Organigramme Timeline -->
-      <div class="relative">
-        <!-- Ligne verticale gauche -->
-
-
-
-        <!-- Vérifie s'il y a des niveaux / directions -->
-        <ng-container *ngIf="niveaux() && niveaux().length > 0; else noData">
-           <div class="absolute top-0 bottom-0 w-1 bg-green-200 rounded left-6"></div>
-
-          <!-- Boucle sur les niveaux -->
-
-
-        </ng-container>
-
-        <!-- Fallback si aucune donnée -->
-        <ng-template #noData>
-          <div class="py-16 text-center">
-            <svg class="w-16 h-16 mx-auto mb-4 text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z">
-              </path>
-            </svg>
-            <h3 class="mb-2 text-lg font-medium text-neutral-700">Aucune donnée disponible</h3>
-          </div>
-        </ng-template>
-
+    <div class="section-header">
+      <div>
+        <h2> <i class="bi bi-images me-2"></i>
+          Photothèque
+        </h2>
+        <p> Galerie des photos du ministère. </p>
       </div>
-
     </div>
-  </div>
+    @if(loadingPhotos()){
+
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary"></div>
+        </div>
+
+    }
+
+    @else{
+
+        @if(photos().length === 0){
+
+            <div class="text-center py-5">
+
+                <i class="bi bi-images display-3"></i>
+
+                <p>Aucune photo disponible.</p>
+
+            </div>
+
+        }
+
+        @else{
+
+            <div class="photo-grid">
+
+                @for(photo of photos(); track photo.id){
+
+                    <div
+                        class="photo-item"
+                        (click)="openPhoto(photo)">
+
+                        <img
+                            [src]="getImageUrl(photo.imageUrl)"
+                            alt="Photo">
+
+                    </div>
+
+                }
+
+            </div>
+
+            <div class="text-center mt-5">
+
+                <button
+                    class="btn btn-outline-primary px-4"
+                    (click)="viewAllPhotos()">
+
+                    Voir toute la photothèque
+
+                </button>
+
+            </div>
+
+        }
+    }
+
 </section>
 
+    <!-- ===================== -->
+    <!-- VIDÉOTHÈQUE -->
+    <!-- ===================== -->
 
-    <!-- Contenu principal -->
+    <div class="section-header mt-5">
 
+        <div>
 
+            <h2>
 
+                <i class="bi bi-camera-reels me-2"></i>
 
+                Vidéothèque
 
+            </h2>
+
+            <p>
+
+                Retrouvez les vidéos des événements et activités.
+
+            </p>
+
+        </div>
+
+        <button
+            class="btn btn-outline-danger"
+            (click)="viewAllVideos()">
+
+            Voir toute la vidéothèque
+
+        </button>
+
+    </div>
+
+    @if(loadingVideos()){
+
+        <div class="text-center py-5">
+
+            <div class="spinner-border text-danger"></div>
+
+        </div>
+
+    }
+
+    @else{
+
+        @if(videos().length===0){
+
+            <div class="text-center py-5">
+
+                <i class="bi bi-camera-video display-3"></i>
+
+                <p>Aucune vidéo disponible.</p>
+
+            </div>
+
+        }
+
+        @else{
+
+            @for(video of videos(); track video.id){
+
+                <div class="video-box mb-5">
+
+                    @if(isYoutube(video)){
+
+                        <iframe
+
+                            [src]="getYoutubeEmbedUrl(video.youtubeUrl)"
+
+                            allowfullscreen>
+
+                        </iframe>
+
+                    }
+
+                    @else{
+
+                        <video
+                            controls
+                            preload="metadata">
+
+                            <source
+                                [src]="getVideoUrl(video.videoUrl)"
+                                type="video/mp4">
+
+                        </video>
+
+                    }
+
+                </div>
+
+            }
+
+        }
+
+    }
+
+</section>

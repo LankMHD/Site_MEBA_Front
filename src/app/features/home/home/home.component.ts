@@ -20,9 +20,9 @@ registerLocaleData(localeFr, 'fr');
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './home.component.html',
-  
+
   styleUrls: ['./home.component.scss'],
-  
+
   styles: [`
     @keyframes fadeIn {
       from {
@@ -34,7 +34,7 @@ registerLocaleData(localeFr, 'fr');
         transform: translateY(0);
       }
     }
-    
+
     .animate-fadeIn {
       animation: fadeIn 0.5s ease-out forwards;
     }
@@ -49,7 +49,7 @@ private etatService = inject(MinistereService);
 
    ministeres= signal<Ministere[]>([]);
    ministere1!: Ministere;
-   ministere = signal<Ministere | null>(null); 
+   ministere = signal<Ministere | null>(null);
 
   articles = signal<Article[]>([]);
   allActualites = signal<Article[]>([]);
@@ -65,13 +65,13 @@ private etatService = inject(MinistereService);
 
 
 // Signals pour gérer l'état
-  
+
   showAll = signal(false);
   currentPage = signal(1);
   pageSizeReduced = 6;
   pageSizeFull = 9;
   totalPages = signal(1);
-  pageSize = 9; 
+  pageSize = 9;
 
   // Signaux pour Communiqués
 
@@ -101,7 +101,7 @@ totalProjectPages = signal(1);
     this.loadData();
     this.startAutoRefresh();
 
-    
+
   }
 
   ngOnDestroy() {
@@ -138,7 +138,7 @@ totalProjectPages = signal(1);
               this.loadMinistereById(ministereId);
             }
 
-          
+
           }
           this.loading.set(false);
         },
@@ -152,7 +152,7 @@ totalProjectPages = signal(1);
     loadMinistereById(id: number) {
       this.apiService.getminById(id).subscribe({
         next: (response) => {
-          
+
           if (response.success) {
        this.ministere.set(response.data); // ✅ extraire data
         console.log('Ministère chargé :', this.ministere);
@@ -180,13 +180,13 @@ totalProjectPages = signal(1);
           return;
         }
 
-       
+
 
         const now = new Date();
         const threeDaysAgo = new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000);
 
         // Filtrer les actualités récentes (3 jours) et catégorie ACTUALITE
-        const recentArticles = allData.filter(a => 
+        const recentArticles = allData.filter(a =>
           a.category === 'ACTUALITE' &&
           new Date(a.createdAt) >= threeDaysAgo
         );
@@ -263,7 +263,7 @@ loadArticles(page: number = 0) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
-  
+
 // Chargement initial (mode réduit, 3 communiqués)
 // Chargement initial : 3 communiqués
 loadCommuniquesInitial() {
@@ -323,7 +323,7 @@ prevCommPage() {
   this.apiService.getPublishedArticles().subscribe({
     next: (response: any) => {
       const allData: Article[] = Array.isArray(response?.data?.content) ? response.data.content : Array.isArray(response) ? response : [];
-      
+
       if (!allData.length) {
         this.articles.set([]);
         this.isLoading.set(false);
@@ -373,10 +373,10 @@ prevCommPage() {
 loadProjects() {
   this.apiService.getPublicProjects().subscribe({
     next: (response: any) => {
-      const allData: Project[] = Array.isArray(response?.data?.content) 
-        ? response.data.content 
-        : Array.isArray(response) 
-          ? response 
+      const allData: Project[] = Array.isArray(response?.data?.content)
+        ? response.data.content
+        : Array.isArray(response)
+          ? response
           : [];
 
       // Trier par date décroissante
@@ -423,10 +423,10 @@ prevProjectPage() {
   this.apiService.getPublicProjects().subscribe({
     next: (response: any) => {
       // Sécuriser la récupération de data
-      const allData: Project[] = Array.isArray(response?.data.content) 
-        ? response.data.content 
-        : Array.isArray(response) 
-          ? response 
+      const allData: Project[] = Array.isArray(response?.data.content)
+        ? response.data.content
+        : Array.isArray(response)
+          ? response
           : [];
 
       // Trier par date décroissante (les plus récents en premier)
@@ -731,10 +731,16 @@ formatBudget(budget: number): string {
     return labels[category] || category;
   }
 
-    getImageUrl(path?: string): string | null {
-     console.log(path);
-    return path ? this.API_URL + path : null;
-   
+  getImageUrl(path?: string): string | null {
+    if (!path) return null;
+
+    const normalizedPath = path.trim();
+    if (/^https?:\/\//i.test(normalizedPath)) {
+      return normalizedPath;
+    }
+
+    const prefix = normalizedPath.startsWith('/') ? '' : '/';
+    return `${this.API_URL}${prefix}${normalizedPath}`;
   }
 
   formatDate(dateStr: string): string {

@@ -1,0 +1,128 @@
+<section class="py-5">
+
+    <div class="container">
+
+        <!-- Bouton retour -->
+        <div class="mb-4">
+
+            <a
+                routerLink="/mediatheque/videos"
+                class="btn btn-outline-primary">
+
+                <i class="bi bi-arrow-left"></i>
+                Retour aux vidéos
+
+            </a>
+
+        </div>
+
+        <!-- Chargement -->
+        @if (loading()) {
+
+            <div class="py-5 text-center">
+
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">
+                        Chargement...
+                    </span>
+                </div>
+
+            </div>
+
+        }
+
+        <!-- Détail -->
+        @else {
+
+            @if (video()) {
+
+                <div class="row justify-content-center">
+
+                    <div class="col-lg-10">
+
+                        <div class="border-0 shadow card">
+
+                            <div class="card-body">
+
+                                <!-- Vidéo YouTube -->
+                                @if (isYoutubeVideo()) {
+
+                                    <div class="ratio ratio-16x9">
+
+                                        <iframe
+                                            [src]="getYoutubeEmbedUrl(video()?.youtubeUrl)"
+                                            title="Vidéo YouTube"
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowfullscreen>
+                                        </iframe>
+
+                                    </div>
+
+                                }
+
+                                <!-- Vidéo locale -->
+                                @else {
+
+                                    <video
+                                        class="rounded w-100"
+                                        controls>
+
+                                        <source
+                                            [src]="getVideoUrl(video()?.videoUrl)"
+                                            type="video/mp4">
+
+                                        Votre navigateur ne supporte pas la lecture des vidéos.
+
+                                    </video>
+
+                                }
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            }
+
+            @else {
+
+                <div class="py-5 text-center">
+
+                    <img
+                        src="assets/images/empty.svg"
+                        width="180"
+                        alt="Vidéo introuvable">
+
+                    <h4 class="mt-4">
+
+                        Vidéo introuvable
+
+                    </h4>
+
+                    <p class="text-muted">
+
+                        Cette vidéo n'existe pas ou a été supprimée.
+
+                    </p>
+
+                    <a
+                        routerLink="/mediatheque/videos"
+                        class="btn btn-primary">
+
+                        Retour à la liste
+
+                    </a>
+
+                </div>
+
+            }
+
+        }
+
+    </div>
+
+</section>

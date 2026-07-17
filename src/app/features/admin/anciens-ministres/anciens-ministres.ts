@@ -111,8 +111,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class AnciensMinistresComponent implements OnInit {
 
-  fileUrl = environment.FileUrl;
-
+fileUrl = (environment as any).fileUrl || (environment as any).FileUrl || 'http://localhost:8096';
   // ── Liste ──────────────────────────────────────────────────────────────
   documents = signal<AncienMinistre[]>([]);
   loading   = signal(true);
@@ -338,10 +337,17 @@ export class AnciensMinistresComponent implements OnInit {
   }
 
   // ── Image ──────────────────────────────────────────────────────────────
-  getImageUrl(path?: string): string {
+getImageUrl(path?: string): string {
     if (!path) return 'assets/images/default-ministre.jpg';
-    if (path.startsWith('http://') || path.startsWith('https://')) return path;
-    const normalized = path.startsWith('/uploads/') ? path : `/uploads/${path}`;
-    return `${this.fileUrl}${normalized}`;
+
+    if (path.startsWith('http://') || path.startsWith('https://')) {
+      return path;
+    }
+
+    const cleanPath = path.startsWith('/uploads/')
+      ? path
+      : `/uploads/${path}`;
+
+    return `${this.fileUrl.replace(/\/$/, '')}${cleanPath}`;
   }
 }

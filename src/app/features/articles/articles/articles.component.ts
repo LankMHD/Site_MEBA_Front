@@ -9,7 +9,7 @@ import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'app-articles',
   standalone: true,
- imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.scss']
 })
@@ -21,27 +21,27 @@ export class ArticlesComponent {
   totalPages = signal(0);
   searchQuery = '';
 
-  private readonly API_URL = environment.FileUrl;
-  
+  private readonly API_URL =
+    (environment as any).fileUrl ||
+    (environment as any).FileUrl ||
+    'http://localhost:8096';
+
   constructor(private apiService: ApiService) {}
-  
+
   ngOnInit(): void {
     this.loadArticles();
   }
-  
+
   loadArticles(): void {
     this.loading.set(true);
     this.apiService.getPublishedArticles(this.currentPage(), 9).subscribe({
       next: (response) => {
         if (response.success) {
-
           const actualiteArticles = response.data.content.filter(
-          (article: any) => article.category === 'ACTUALITE'
+            (article: any) => article.category === 'ACTUALITE'
           );
-          this.articles.set(actualiteArticles);
 
-          //this.articles.set(response.data.content);
-          console.log(this.articles());
+          this.articles.set(actualiteArticles);
           this.totalPages.set(response.data.totalPages);
         }
         this.loading.set(false);
@@ -49,13 +49,13 @@ export class ArticlesComponent {
       error: () => this.loading.set(false)
     });
   }
-  
+
   search(): void {
     if (!this.searchQuery.trim()) {
       this.loadArticles();
       return;
     }
-    
+
     this.loading.set(true);
     this.apiService.searchArticles(this.searchQuery, 0, 9).subscribe({
       next: (response) => {
@@ -69,7 +69,7 @@ export class ArticlesComponent {
       error: () => this.loading.set(false)
     });
   }
-  
+
   goToPage(page: number): void {
     if (page >= 0 && page < this.totalPages()) {
       this.currentPage.set(page);
@@ -77,22 +77,22 @@ export class ArticlesComponent {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
-  
+
   getPageNumbers(): number[] {
     const total = this.totalPages();
     const current = this.currentPage();
     const pages: number[] = [];
-    
+
     let start = Math.max(0, current - 2);
     let end = Math.min(total - 1, current + 2);
-    
+
     for (let i = start; i <= end; i++) {
       pages.push(i);
     }
-    
+
     return pages;
   }
-  
+
   getCategoryLabel(category: string): string {
     const labels: Record<string, string> = {
       'ACTUALITE': 'Actualité',
@@ -104,17 +104,21 @@ export class ArticlesComponent {
     };
     return labels[category] || category;
   }
-  
+
   formatDate(dateStr: string): string {
     if (!dateStr) return '';
     const date = new Date(dateStr);
     return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
   }
 
-
   getImageUrl(path?: string): string | null {
-     console.log(path);
-    return path ? this.API_URL + path : null;
-   
+    if (!path) return null;
+
+    if (path.startsWith('http://') || path.startsWith('https://')) {
+      return path;
+    }
+
+    const cleanPath = path.startsWith('/') ? path : `/${path}`;
+    return `${this.API_URL.replace(/\/$/, '')}${cleanPath}`;
   }
 }

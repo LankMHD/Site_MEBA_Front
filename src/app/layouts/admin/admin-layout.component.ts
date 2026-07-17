@@ -261,13 +261,31 @@ import { AuthService } from '../../core/services/auth.service';
                   Etats
                 </a>
 
-                <!-- <a routerLink="/admin/admin/radio-educative" routerLinkActive="bg-primary-50 text-primary-600 font-medium"
+                <a routerLink="/admin/admin/photo/new" routerLinkActive="bg-primary-50 text-primary-600 font-medium"
                    class="flex items-center gap-3 px-4 py-3 text-sm text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
                 </svg>
-                 Radio éducative
-                </a> -->
+                 Photos
+                </a>
+
+                <a routerLink="/admin/admin/video/new" routerLinkActive="bg-primary-50 text-primary-600 font-medium"
+                   class="flex items-center gap-3 px-4 py-3 text-sm text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                </svg>
+                 videos
+                </a>
+
+
+                <a routerLink="/admin/admin/structure-centrale" routerLinkActive="bg-primary-50 text-primary-600 font-medium"
+                   class="flex items-center gap-3 px-4 py-3 text-sm text-slate-600 rounded-lg hover:bg-slate-50 transition-colors">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                </svg>
+                 Structures Centrales
+                </a>
+
 
 
 

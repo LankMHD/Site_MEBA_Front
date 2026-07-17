@@ -22,44 +22,44 @@ export class HeaderComponent {
      private readonly API_URL = environment.FileUrl;
      private apiService = inject(ApiService);
      private etatService = inject(MinistereService);
-  
+
   mobileMenuOpen = signal(false);
   searchOpen = signal(false);
   openSubmenu = signal<string | null>(null);
 
      ministeres= signal<Ministere[]>([]);
      ministere1!: Ministere;
-     ministere = signal<Ministere | null>(null); 
+     ministere = signal<Ministere | null>(null);
 
      constructor(private router: Router) {}
 
 
       ngOnInit() {
     this.loadMinistere();
-    
-    
+
+
   }
-  
+
   toggleMobileMenu() {
     this.mobileMenuOpen.update(v => !v);
     if (!this.mobileMenuOpen()) {
       this.openSubmenu.set(null);
     }
   }
-  
+
   closeMobileMenu() {
     this.mobileMenuOpen.set(false);
     this.openSubmenu.set(null);
   }
-  
+
   toggleSearch() {
     this.searchOpen.update(v => !v);
   }
-  
+
   toggleSubmenu(menu: string) {
     this.openSubmenu.update(v => v === menu ? null : menu);
   }
-  
+
   @HostListener('window:resize')
   onResize() {
     if (window.innerWidth >= 1024) {
@@ -85,7 +85,7 @@ export class HeaderComponent {
               this.loadMinistereById(ministereId);
             }
 
-          
+
           }
           this.loading.set(false);
         },
@@ -99,7 +99,7 @@ export class HeaderComponent {
     loadMinistereById(id: number) {
       this.apiService.getminById(id).subscribe({
         next: (response) => {
-          
+
           if (response.success) {
        this.ministere.set(response.data); // ✅ extraire data
         //console.log('Ministère chargé :', this.ministere);
@@ -116,7 +116,7 @@ export class HeaderComponent {
       getImageUrl(path?: string): string | null {
      console.log(path);
     return path ? this.API_URL + path : null;
-   
+
   }
 
 
@@ -172,8 +172,8 @@ scrollTo(section: string) {
 
 // Liste de toutes les routes enfants du menu Ressources
 documentsRoutes = [
-  '/ressources/documents', 
-  '/ressources/espace-enseignant', 
+  '/ressources/documents',
+  '/ressources/espace-enseignant',
   '/ressources/mediatheque'];
 
 isDocumentsActive(): boolean {

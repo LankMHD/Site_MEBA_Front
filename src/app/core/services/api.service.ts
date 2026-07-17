@@ -1,9 +1,13 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiResponse, Page, Article, Project, Document, Contact, DashboardStats, User, TypeDocument, Agenda, Service } from '../models';
-import { Events, FlashInfo, EService, FAQ, NewsletterSubscription, Structure, Ministere, AncienMinistre } from '../models/event.model';
+import { Events, FlashInfo, EService, FAQ, NewsletterSubscription, Structure, Ministere, AncienMinistre, Photo, Video } from '../models/event.model';
 import { environment } from '../../../environments/environment';
+import { StructureCentrale } from '../../features/admin/ministere/structure-centrale/structure-centrale';
+
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -730,4 +734,206 @@ deleteRadioEducative(id: number): Observable<ApiResponse<void>> {
 }
 
 
+
+// mediathèque
+/* ===========================================================
+   PHOTOS
+=========================================================== */
+
+private readonly photoUrl = `${environment.apiUrl}/photos`;
+
+/**
+ * Liste des photos
+ */
+getAllPhotos(): Observable<any> {
+  return this.http.get<any>(this.photoUrl);
 }
+
+/**
+ * Détail d'une photo
+ */
+getPhotoById(id: number): Observable<any> {
+  return this.http.get<any>(`${this.photoUrl}/${id}`);
+}
+
+/**
+ * Ajouter une photo
+ */
+createPhoto(formData: FormData): Observable<any> {
+  return this.http.post<any>(
+    this.photoUrl,
+    formData
+  );
+}
+
+/**
+ * Modifier une photo
+ */
+updatePhoto(id: number, formData: FormData): Observable<any> {
+  return this.http.put<any>(
+    `${this.photoUrl}/${id}`,
+    formData
+  );
+}
+
+/**
+ * Supprimer une photo
+ */
+deletePhoto(id: number): Observable<any> {
+  return this.http.delete<any>(
+    `${this.photoUrl}/${id}`
+  );
+}
+
+
+/* ===========================================================
+   VIDEOS
+=========================================================== */
+
+private readonly videoUrl = `${environment.apiUrl}/videos`;
+
+/**
+ * Liste des vidéos
+ */
+getAllVideos(): Observable<any> {
+  return this.http.get<any>(this.videoUrl);
+}
+
+/**
+ * Détail d'une vidéo
+ */
+getVideoById(id: number): Observable<any> {
+  return this.http.get<any>(
+    `${this.videoUrl}/${id}`
+  );
+}
+
+/**
+ * Ajouter une vidéo
+ */
+createVideo(formData: FormData): Observable<any> {
+  return this.http.post<any>(
+    this.videoUrl,
+    formData
+  );
+}
+
+/**
+ * Modifier une vidéo
+ */
+updateVideo(id: number, formData: FormData): Observable<any> {
+  return this.http.put<any>(
+    `${this.videoUrl}/${id}`,
+    formData
+  );
+}
+
+/**
+ * Supprimer une vidéo
+ */
+deleteVideo(id: number): Observable<any> {
+  return this.http.delete<any>(
+    `${this.videoUrl}/${id}`
+  );
+}
+
+
+
+// ============ STRUCTURES CENTRALES ============
+
+
+getAllStructuresCentrales(
+  page = 0,
+  size = 10,
+  sortBy = 'createdAt',
+  sortDir = 'desc'
+): Observable<ApiResponse<Page<StructureCentrale>>> {
+
+  const params = new HttpParams()
+    .set('page', page)
+    .set('size', size)
+    .set('sortBy', sortBy)
+    .set('sortDir', sortDir);
+
+  return this.http.get<ApiResponse<Page<StructureCentrale>>>(
+    `${this.API_URL}/structures-centrales`,
+    { params }
+  );
+}
+
+
+
+getStructureCentraleById(id: number): Observable<ApiResponse<StructureCentrale>> {
+
+  return this.http.get<ApiResponse<StructureCentrale>>(
+    `${this.API_URL}/structures-centrales/${id}`
+  );
+
+}
+
+
+
+createStructureCentrale(
+  formData: FormData
+): Observable<ApiResponse<StructureCentrale>> {
+
+  return this.http.post<ApiResponse<StructureCentrale>>(
+    `${this.API_URL}/structures-centrales`,
+    formData
+  );
+
+}
+
+
+
+updateStructureCentrale(
+  id: number,
+  formData: FormData
+): Observable<ApiResponse<StructureCentrale>> {
+
+  return this.http.put<ApiResponse<StructureCentrale>>(
+    `${this.API_URL}/structures-centrales/${id}`,
+    formData
+  );
+
+}
+
+
+
+deleteStructureCentrale(
+  id: number
+): Observable<ApiResponse<void>> {
+
+  return this.http.delete<ApiResponse<void>>(
+    `${this.API_URL}/structures-centrales/${id}`
+  );
+
+}
+
+
+
+// PUBLIC
+
+getPublicStructuresCentrales(): Observable<ApiResponse<StructureCentrale[]>> {
+
+  return this.http.get<ApiResponse<StructureCentrale[]>>(
+    `${this.API_URL}/structures-centrales/public`
+  );
+
+}
+
+
+
+getPublicStructureCentraleById(
+  id: number
+): Observable<ApiResponse<StructureCentrale>> {
+
+  return this.http.get<ApiResponse<StructureCentrale>>(
+    `${this.API_URL}/structures-centrales/public/${id}`
+  );
+
+}
+
+}
+
+

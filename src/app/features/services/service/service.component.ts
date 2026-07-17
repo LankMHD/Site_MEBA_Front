@@ -1,10 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { EService } from '../../../core/models/event.model';
+import { EService, Photo } from '../../../core/models/event.model';
 import { ApiService } from '../../../core/services/api.service';
 import { Service } from '../../../core/models';
 import { environment } from '../../../../environments/environment';
+
+
 
 @Component({
   selector: 'app-service',
@@ -109,5 +111,8 @@ goToPage(page: number): void {
   closeModal() {
     this.selectedService = null;
   }
+
+
+
 
 }

@@ -1,0 +1,222 @@
+<div class="container py-4">
+
+    <div class="card shadow border-0">
+
+        <div class="card-header bg-primary text-white">
+
+            <h4 class="mb-0">
+
+                @if(isEdit()){
+
+                    Modifier une vidéo
+
+                } @else {
+
+                    Ajouter une vidéo
+
+                }
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            @if(loading()){
+
+                <div class="text-center py-5">
+
+                    <div class="spinner-border text-primary"></div>
+
+                </div>
+
+            }
+
+            @else{
+
+                <form (ngSubmit)="save()">
+
+                    <!-- Choix du type -->
+                    <div class="mb-4">
+
+                        <label class="form-label fw-bold">
+
+                            Type de vidéo
+
+                        </label>
+
+                        <div class="d-flex gap-4 mt-2">
+
+                            <div class="form-check">
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    id="local"
+                                    [checked]="mode() === 'local'"
+                                    (change)="changeMode('local')">
+
+                                <label
+                                    class="form-check-label"
+                                    for="local">
+
+                                    Vidéo locale
+
+                                </label>
+
+                            </div>
+
+                            <div class="form-check">
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    id="youtube"
+                                    [checked]="mode() === 'youtube'"
+                                    (change)="changeMode('youtube')">
+
+                                <label
+                                    class="form-check-label"
+                                    for="youtube">
+
+                                    Lien YouTube
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- ========================= -->
+                    <!-- Upload vidéo -->
+                    <!-- ========================= -->
+
+                    @if(mode() === 'local'){
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+
+                                Sélectionner une vidéo
+
+                            </label>
+
+                            <input
+                                type="file"
+                                class="form-control"
+                                accept="video/*"
+                                (change)="onFileSelected($event)">
+
+                            <div class="form-text">
+
+                                Formats acceptés :
+                                MP4, AVI, MOV, MKV...
+
+                            </div>
+
+                        </div>
+
+                        @if(preview){
+
+                            <div class="mb-4 text-center">
+
+                                <video
+                                    controls
+                                    style="width:100%;max-width:700px;border-radius:10px;">
+
+                                    <source
+                                        [src]="preview">
+
+                                </video>
+
+                            </div>
+
+                        }
+
+                    }
+
+                    <!-- ========================= -->
+                    <!-- Lien YouTube -->
+                    <!-- ========================= -->
+
+                    @if(mode() === 'youtube'){
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+
+                                URL YouTube
+
+                            </label>
+
+                            <input
+                                type="url"
+                                class="form-control"
+                                placeholder="https://www.youtube.com/watch?v=..."
+                                [(ngModel)]="video.youtubeUrl"
+                                name="youtubeUrl">
+
+                        </div>
+
+                        @if(video.youtubeUrl){
+
+                            <div class="alert alert-info">
+
+                                <i class="bi bi-youtube me-2"></i>
+
+                                Le lien YouTube sera enregistré.
+
+                            </div>
+
+                        }
+
+                    }
+
+                    <!-- Boutons -->
+
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+
+                        <a
+                            routerLink="/admin/videos"
+                            class="btn btn-secondary">
+
+                            Annuler
+
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                            [disabled]="saving()">
+
+                            @if(saving()){
+
+                                <span class="spinner-border spinner-border-sm me-2"></span>
+
+                                Enregistrement...
+
+                            }
+
+                            @else{
+
+                                <i class="bi bi-check-circle me-2"></i>
+
+                                Enregistrer
+
+                            }
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            }
+
+        </div>
+
+    </div>
+
+</div>
