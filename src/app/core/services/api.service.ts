@@ -2,9 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiResponse, Page, Article, Project, Document, Contact, DashboardStats, User, TypeDocument, Agenda, Service } from '../models';
-import { Events, FlashInfo, EService, FAQ, NewsletterSubscription, Structure, Ministere, AncienMinistre, Photo, Video } from '../models/event.model';
+import { Events, FlashInfo, EService, FAQ, NewsletterSubscription, Structure, Ministere, AncienMinistre, StructureCentrale, Photo, Video } from '../models/event.model';
 import { environment } from '../../../environments/environment';
-import { StructureCentrale } from '../../features/admin/ministere/structure-centrale/structure-centrale';
 
 
 
@@ -839,38 +838,137 @@ deleteVideo(id: number): Observable<any> {
 
 
 
-// ============ STRUCTURES CENTRALES ============
+// // ============ STRUCTURES CENTRALES ============
 
 
-getAllStructuresCentrales(
+// getAllStructureCentrale(
+//   page = 0,
+//   size = 10,
+//   sortBy = 'createdAt',
+//   sortDir = 'desc'
+// ): Observable<ApiResponse<Page<StructureCentrale>>> {
+
+//   const params = new HttpParams()
+//     .set('page', page)
+//     .set('size', size)
+//     .set('sortBy', sortBy)
+//     .set('sortDir', sortDir);
+
+//   return this.http.get<ApiResponse<Page<StructureCentrale>>>(
+//     `${this.API_URL}/structure-centrale`,
+//     { params }
+//   );
+// }
+
+
+
+// getStructureCentraleById(id: number): Observable<ApiResponse<StructureCentrale>> {
+
+//   return this.http.get<ApiResponse<StructureCentrale>>(
+//     `${this.API_URL}/structure-centrale/${id}`
+//   );
+
+// }
+
+
+
+// createStructureCentrale(
+//   formData: FormData
+// ): Observable<ApiResponse<StructureCentrale>> {
+
+//   return this.http.post<ApiResponse<StructureCentrale>>(
+//     `${this.API_URL}/structure-centrale`,
+//     formData
+//   );
+
+// }
+
+
+
+// updateStructureCentrale(
+//   id: number,
+//   formData: FormData
+// ): Observable<ApiResponse<StructureCentrale>> {
+
+//   return this.http.put<ApiResponse<StructureCentrale>>(
+//     `${this.API_URL}/structure-centrale/${id}`,
+//     formData
+//   );
+
+// }
+
+
+
+// deleteStructureCentrale(
+//   id: number
+// ): Observable<ApiResponse<void>> {
+
+//   return this.http.delete<ApiResponse<void>>(
+//     `${this.API_URL}/structure-centrale/${id}`
+//   );
+
+// }
+
+
+
+// // PUBLIC
+
+// getPublicStructuresCentrales(): Observable<ApiResponse<StructureCentrale[]>> {
+
+//   return this.http.get<ApiResponse<StructureCentrale[]>>(
+//     `${this.API_URL}/structure-centrale/public`
+//   );
+
+// }
+
+
+
+// getPublicStructureCentraleById(
+//   id: number
+// ): Observable<ApiResponse<StructureCentrale>> {
+
+//   return this.http.get<ApiResponse<StructureCentrale>>(
+//     `${this.API_URL}/structure-centrale/public/${id}`
+//   );
+
+// }
+
+// ===========================================================
+// STRUCTURES CENTRALES
+// ===========================================================
+
+getAllStructureCentrale(
   page = 0,
-  size = 10,
-  sortBy = 'createdAt',
-  sortDir = 'desc'
+  size = 10
 ): Observable<ApiResponse<Page<StructureCentrale>>> {
 
   const params = new HttpParams()
     .set('page', page)
-    .set('size', size)
-    .set('sortBy', sortBy)
-    .set('sortDir', sortDir);
+    .set('size', size);
 
   return this.http.get<ApiResponse<Page<StructureCentrale>>>(
-    `${this.API_URL}/structures-centrales`,
+    `${this.API_URL}/structure-centrale`,
     { params }
   );
 }
 
 
-
-getStructureCentraleById(id: number): Observable<ApiResponse<StructureCentrale>> {
+getStructureCentraleById(
+  id: number
+): Observable<ApiResponse<StructureCentrale>> {
 
   return this.http.get<ApiResponse<StructureCentrale>>(
-    `${this.API_URL}/structures-centrales/${id}`
+    `${this.API_URL}/structure-centrale/${id}`
   );
-
 }
 
+
+getPublicStructureCentrale(): Observable<ApiResponse<StructureCentrale[]>> {
+
+  return this.http.get<ApiResponse<StructureCentrale[]>>(
+    `${this.API_URL}/structure-centrale/public`
+  );
+}
 
 
 createStructureCentrale(
@@ -878,12 +976,10 @@ createStructureCentrale(
 ): Observable<ApiResponse<StructureCentrale>> {
 
   return this.http.post<ApiResponse<StructureCentrale>>(
-    `${this.API_URL}/structures-centrales`,
+    `${this.API_URL}/structure-centrale`,
     formData
   );
-
 }
-
 
 
 updateStructureCentrale(
@@ -892,12 +988,10 @@ updateStructureCentrale(
 ): Observable<ApiResponse<StructureCentrale>> {
 
   return this.http.put<ApiResponse<StructureCentrale>>(
-    `${this.API_URL}/structures-centrales/${id}`,
+    `${this.API_URL}/structure-centrale/${id}`,
     formData
   );
-
 }
-
 
 
 deleteStructureCentrale(
@@ -905,33 +999,8 @@ deleteStructureCentrale(
 ): Observable<ApiResponse<void>> {
 
   return this.http.delete<ApiResponse<void>>(
-    `${this.API_URL}/structures-centrales/${id}`
+    `${this.API_URL}/structure-centrale/${id}`
   );
-
-}
-
-
-
-// PUBLIC
-
-getPublicStructuresCentrales(): Observable<ApiResponse<StructureCentrale[]>> {
-
-  return this.http.get<ApiResponse<StructureCentrale[]>>(
-    `${this.API_URL}/structures-centrales/public`
-  );
-
-}
-
-
-
-getPublicStructureCentraleById(
-  id: number
-): Observable<ApiResponse<StructureCentrale>> {
-
-  return this.http.get<ApiResponse<StructureCentrale>>(
-    `${this.API_URL}/structures-centrales/public/${id}`
-  );
-
 }
 
 }

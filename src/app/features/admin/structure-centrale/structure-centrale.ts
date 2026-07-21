@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 
-import { ApiService } from '../../../../core/services/api.service';
-import { StructureCentrale } from '../../../../core/models/event.model';
+import { ApiService } from '../../../core/services/api.service';
+import { StructureCentrale } from '../../../core/models/event.model';
 
 
 @Component({
-  selector: 'app-structures-centrales',
+  selector: 'app-structure-centrale',
   standalone: true,
   imports: [
     CommonModule,
@@ -18,7 +18,7 @@ import { StructureCentrale } from '../../../../core/models/event.model';
   templateUrl: './structure-centrale.html',
   styleUrls: ['./structure-centrale.scss']
 })
-export class StructuresCentralesComponent {
+export class StructureCentraleComponent {
 
 
   // ===============================
@@ -295,45 +295,31 @@ export class StructuresCentralesComponent {
   // ===============================
 
 
-  onFileSelected(event:Event){
+  onPhotoSelected(event: Event): void {
 
-    const input =
-      event.target as HTMLInputElement;
+  const input = event.target as HTMLInputElement;
 
-
-    if(!input.files || input.files.length===0){
-
-      this.selectedImage=null;
-
-      return;
-
-    }
-
-
-    const file=input.files[0];
-
-
-    if(!file.type.startsWith('image/')){
-
-
-      this.showNotification(
-        "Veuillez sélectionner une image",
-        "error"
-      );
-
-
-      input.value='';
-
-      return;
-
-    }
-
-
-    this.selectedImage=file;
-
-    this.fileError=false;
-
+  if (!input.files || input.files.length === 0) {
+    this.selectedImage = null;
+    return;
   }
+
+  const file = input.files[0];
+
+  if (!file.type.startsWith('image/')) {
+
+    this.showNotification(
+      'Veuillez sélectionner une image',
+      'error'
+    );
+
+    input.value = '';
+    this.selectedImage = null;
+    return;
+  }
+
+  this.selectedImage = file;
+}
 
 
 
@@ -344,123 +330,94 @@ export class StructuresCentralesComponent {
   // ===============================
 
 
-  saveStructure(form?:NgForm){
+  saveStructure(form?: NgForm): void {
 
-
-    if(!this.form.nom){
-
-      return;
-
-    }
-
-
-    this.saving.set(true);
-
-
-
-    const dto={
-
-      sigle:this.form.sigle,
-
-      nom:this.form.nom,
-
-      description:this.form.description,
-
-      datePublication:this.form.datePublication
-
-    };
-
-
-
-    const formData=new FormData();
-
-
-    formData.append(
-      'structure',
-      new Blob(
-        [JSON.stringify(dto)],
-        {
-          type:'application/json'
-        }
-      )
+  if (!this.form.sigle || !this.form.nom) {
+    this.showNotification(
+      'Le sigle et le nom sont obligatoires',
+      'error'
     );
+    return;
+  }
 
+  this.saving.set(true);
 
+  const formData = new FormData();
 
-    if(this.selectedImage){
+  //  Les noms doivent correspondre exactement au backend
+  formData.append('sigle', this.form.sigle.trim());
 
-      formData.append(
-        'file',
-        this.selectedImage
+  formData.append('nom', this.form.nom.trim());
+
+  formData.append(
+    'description',
+    this.form.description?.trim() || ''
+  );
+
+  if (this.form.datePublication) {
+    formData.append(
+      'datePublication',
+      this.form.datePublication
+    );
+  }
+
+  if (this.selectedImage) {
+    formData.append(
+      'photo',
+      this.selectedImage
+    );
+  }
+
+  const editing = this.editingStructure();
+
+  const request = editing
+    ? this.apiService.updateStructureCentrale(
+        editing.id!,
+        formData
+      )
+    : this.apiService.createStructureCentrale(
+        formData
       );
-
-    }
-
-
-
-    const editing =
-      this.editingStructure();
-
-
-
-    const request = editing
-
-      ? this.apiService.updateStructureCentrale(
-          editing.id!,
-          formData
-        )
-
-      : this.apiService.createStructureCentrale(
-          formData
-        );
-
-
-
 
     request.subscribe({
 
-      next:()=>{
+    next: (response) => {
 
+      this.saving.set(false);
 
-        this.loadStructures();
+      this.loadStructures();
 
-        this.closeModal(form);
+      this.closeModal(form);
 
-        this.saving.set(false);
+      this.showNotification(
+        editing
+          ? 'Structure centrale modifiée avec succès'
+          : 'Structure centrale ajoutée avec succès',
+        'success'
+      );
+    },
 
+    error: (error) => {
 
-        this.showNotification(
-          editing
-          ? "Structure centrale modifiée avec succès"
-          : "Structure centrale ajoutée avec succès",
-          "success"
-        );
+      console.error('========== ERREUR STRUCTURE CENTRALE ==========');
+      console.error('Status HTTP :', error.status);
+      console.error('Erreur complète :', error);
+      console.error('Réponse backend :', error.error);
+      console.error('Message backend :', error.error?.message);
+      console.error('==============================================');
 
+      this.saving.set(false);
 
-      },
+      this.showNotification(
+        error.error?.message ||
+        'Erreur lors de l’enregistrement',
+        'error'
+      );
+    }
 
+  }); // fermeture de subscribe
 
-      error:()=>{
-
-
-        this.saving.set(false);
-
-
-        this.showNotification(
-          "Erreur lors de l'enregistrement",
-          "error"
-        );
-
-
-      }
-
-    });
-
-
-
-  }
-
-
+} // fermeture de saveStructure()
 
 
 
@@ -624,5 +581,5 @@ export class StructuresCentralesComponent {
 
 
 }
-export type { StructureCentrale };
+
 

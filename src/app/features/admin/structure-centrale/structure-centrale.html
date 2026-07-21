@@ -1,0 +1,540 @@
+<!-- ================= NOTIFICATION ================= -->
+
+<div
+  *ngIf="notification().show"
+  class="fixed top-5 right-5 z-50 px-5 py-3 rounded-lg shadow-lg text-white"
+  [ngClass]="{
+    'bg-green-600': notification().type === 'success',
+    'bg-red-600': notification().type === 'error',
+    'bg-blue-600': notification().type === 'info'
+  }"
+>
+  {{ notification().message }}
+</div>
+
+
+
+<!-- ================= HEADER ================= -->
+
+<div class="bg-gradient-to-r from-[#00843B] to-[#006B30] py-10">
+
+  <div class="container mx-auto px-6">
+
+    <h1 class="text-3xl font-bold text-white">
+      Structures Centrales
+    </h1>
+
+    <p class="text-white/80 mt-2">
+      Gérer les structures centrales
+    </p>
+
+  </div>
+
+</div>
+
+
+
+
+<div class="container mx-auto px-6 py-8">
+
+
+  <!-- ================= ACTION BAR ================= -->
+
+  <div class="flex justify-between items-center mb-6">
+
+
+    <h2 class="text-xl font-semibold text-gray-800">
+      Liste des structures centrales
+    </h2>
+
+
+    <button
+      (click)="openModal()"
+      class="bg-[#00843B] hover:bg-[#006B30]
+             text-white px-5 py-2 rounded-lg
+             shadow transition"
+    >
+
+      + Nouvelle structure centrale
+
+    </button>
+
+
+  </div>
+
+
+
+
+
+  <!-- ================= LOADING ================= -->
+
+  <div
+    *ngIf="loading()"
+    class="text-center py-10 text-gray-500"
+  >
+
+    Chargement des données...
+
+  </div>
+
+
+
+
+
+  <!-- ================= TABLE ================= -->
+
+  <div
+    *ngIf="!loading()"
+    class="overflow-x-auto bg-white rounded-xl shadow"
+  >
+
+
+    <table class="min-w-full">
+
+
+      <thead
+        class="bg-gray-100 border-b"
+      >
+
+        <tr>
+
+
+          <th class="px-6 py-4 text-left text-sm font-semibold">
+            Sigle
+          </th>
+
+
+          <th class="px-6 py-4 text-left text-sm font-semibold">
+            Nom
+          </th>
+
+
+          <th class="px-6 py-4 text-left text-sm font-semibold">
+            Date
+          </th>
+
+
+          <th class="px-6 py-4 text-center text-sm font-semibold">
+            Actions
+          </th>
+
+
+        </tr>
+
+      </thead>
+
+
+
+
+      <tbody>
+
+
+        <tr
+          *ngFor="
+          let structure of structures();
+          trackBy: trackByStructureId
+          "
+          class="border-b hover:bg-gray-50"
+        >
+
+
+
+          <!-- SIGLE -->
+
+          <td class="px-6 py-4 font-medium text-gray-700">
+
+            {{ structure.sigle }}
+
+          </td>
+
+
+
+
+          <!-- NOM -->
+
+          <td class="px-6 py-4">
+
+            {{ structure.nom }}
+
+          </td>
+
+
+
+
+          <!-- DATE -->
+
+          <td class="px-6 py-4 text-gray-600">
+
+            {{ formatDate(structure.datePublication || '') }}
+
+          </td>
+
+
+
+
+          <!-- ACTIONS -->
+
+          <td class="px-6 py-4">
+
+            <div class="flex justify-center gap-3">
+
+
+
+              <!-- VOIR -->
+
+              <button
+                class="px-3 py-1 rounded-md
+                       bg-blue-50 text-blue-600
+                       hover:bg-blue-100"
+                title="Voir"
+              >
+
+                <i class="pi pi-eye"></i>
+
+              </button>
+
+
+
+
+
+              <!-- MODIFIER -->
+
+              <button
+                (click)="editStructure(structure)"
+                class="px-3 py-1 rounded-md
+                       bg-yellow-50 text-yellow-600
+                       hover:bg-yellow-100"
+                title="Modifier"
+              >
+
+                <i class="pi pi-pencil"></i>
+
+              </button>
+
+
+
+
+
+              <!-- SUPPRIMER -->
+
+              <button
+                (click)="deleteStructure(structure)"
+                class="px-3 py-1 rounded-md
+                       bg-red-50 text-red-600
+                       hover:bg-red-100"
+                title="Supprimer"
+              >
+
+                <i class="pi pi-trash"></i>
+
+              </button>
+
+
+
+            </div>
+
+
+          </td>
+
+
+
+        </tr>
+
+
+
+
+
+        <!-- Aucun résultat -->
+
+        <tr
+          *ngIf="structures().length === 0"
+        >
+
+          <td
+            colspan="4"
+            class="text-center py-10 text-gray-500"
+          >
+
+            Aucune structure centrale disponible
+
+          </td>
+
+
+        </tr>
+
+
+
+      </tbody>
+
+
+    </table>
+
+
+  </div>
+
+
+
+
+
+  <!-- ================= PAGINATION ================= -->
+
+
+  <div
+    class="flex justify-center items-center gap-2 mt-6"
+    *ngIf="totalPages() > 1"
+  >
+
+
+    <button
+      (click)="prevPage()"
+      class="px-3 py-1 border rounded"
+    >
+
+      Précédent
+
+    </button>
+
+
+
+    <button
+      *ngFor="let page of pages()"
+      (click)="goToPage(page)"
+      class="px-3 py-1 border rounded"
+      [ngClass]="{
+        'bg-[#00843B] text-white':
+        currentPage() === page
+      }"
+    >
+
+      {{ page }}
+
+    </button>
+
+
+
+    <button
+      (click)="nextPage()"
+      class="px-3 py-1 border rounded"
+    >
+
+      Suivant
+
+    </button>
+
+
+  </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- ==================================================
+     MODAL AJOUT / MODIFICATION
+================================================== -->
+
+
+<div
+ *ngIf="showModal()"
+ class="fixed inset-0 bg-black/40
+        flex items-center justify-center
+        z-40"
+>
+
+
+<div
+ class="bg-white rounded-xl shadow-xl
+        w-full max-w-xl p-6"
+>
+
+
+<h2 class="text-xl font-bold mb-5">
+
+{{ editingStructure()
+ ? 'Modifier une structure centrale'
+ : 'Nouvelle structure centrale'
+}}
+
+</h2>
+
+
+
+<form
+#structureForm="ngForm"
+(ngSubmit)="saveStructure(structureForm)"
+>
+
+
+
+<div class="space-y-4">
+
+
+
+<input
+[(ngModel)]="form.sigle"
+name="sigle"
+placeholder="Sigle"
+class="w-full border rounded-lg px-4 py-2"
+/>
+
+
+
+<input
+[(ngModel)]="form.nom"
+name="nom"
+placeholder="Nom de la structure"
+class="w-full border rounded-lg px-4 py-2"
+/>
+
+
+
+<textarea
+[(ngModel)]="form.description"
+name="description"
+placeholder="Description"
+class="w-full border rounded-lg px-4 py-2"
+rows="4">
+</textarea>
+
+
+
+
+<input
+type="date"
+[(ngModel)]="form.datePublication"
+name="datePublication"
+class="w-full border rounded-lg px-4 py-2"
+/>
+
+
+
+
+
+<input
+  type="file"
+  accept="image/*"
+  (change)="onPhotoSelected($event)"
+>
+
+
+
+
+</div>
+
+
+
+
+
+<div class="flex justify-end gap-3 mt-6">
+
+
+<button
+type="button"
+(click)="closeModal(structureForm)"
+class="px-5 py-2 border rounded-lg"
+>
+
+Annuler
+
+</button>
+
+
+
+
+<button
+type="submit"
+[disabled]="saving()"
+class="px-5 py-2 bg-[#00843B]
+       text-white rounded-lg"
+>
+
+{{saving() ? 'Enregistrement...' : 'Enregistrer'}}
+
+</button>
+
+
+
+</div>
+
+
+
+</form>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- ==================================================
+     MODAL CONFIRMATION
+================================================== -->
+
+
+<div
+*ngIf="confirmModal().show"
+class="fixed inset-0 bg-black/40
+       flex items-center justify-center
+       z-50"
+>
+
+
+<div
+class="bg-white rounded-xl p-6 w-full max-w-md"
+>
+
+
+<h3 class="font-semibold text-lg mb-4">
+Confirmation
+</h3>
+
+
+
+<p class="text-gray-600 mb-6">
+{{confirmModal().message}}
+</p>
+
+
+
+<div class="flex justify-end gap-3">
+
+
+<button
+(click)="closeConfirmModal()"
+class="px-4 py-2 border rounded"
+>
+
+Annuler
+
+</button>
+
+
+<button
+(click)="confirmModal().onConfirm()"
+class="px-4 py-2 bg-red-600 text-white rounded"
+>
+
+Supprimer
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+</div>

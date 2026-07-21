@@ -1,0 +1,82 @@
+:host {
+  display: block;
+}
+
+
+/* ================================
+   TABLEAU
+================================ */
+
+table {
+  border-collapse: collapse;
+}
+
+
+tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+
+
+/* ================================
+   BOUTONS ACTIONS
+================================ */
+
+button {
+  transition: all 0.2s ease;
+}
+
+
+
+/* ================================
+   MODALES
+================================ */
+
+.modal-backdrop {
+  backdrop-filter: blur(3px);
+}
+
+
+
+/* ================================
+   INPUTS FORMULAIRE
+================================ */
+
+input,
+textarea {
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+input:focus,
+textarea:focus {
+  border-color: #00843B;
+  box-shadow: 0 0 0 2px rgba(0, 132, 59, 0.15);
+}
+
+
+
+/* ================================
+   PAGINATION
+================================ */
+
+.pagination button {
+  min-width: 38px;
+}
+
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 768px) {
+
+
+  table {
+    min-width: 700px;
+  }
+
+
+}

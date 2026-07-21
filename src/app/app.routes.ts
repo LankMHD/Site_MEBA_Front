@@ -19,7 +19,8 @@ export const routes: Routes = [
       { path: 'ministere/missions', loadComponent: () => import('./features/ministere/mission/mission.component').then(m => m.MissionComponent) },
       { path: 'ministere/historique', loadComponent: () => import('./features/ministere/historique/historique').then(m => m.Historique) },
       { path: 'ministere/secretariat-gl', loadComponent: () => import('./features/ministere/secretariat-gl/secretariat-gl').then(m => m.SecretariatGl) },
-      { path: 'ministere/Structures-centrales', loadComponent: () => import('./features/ministere/structures-centrales/structures-centrales').then(m => m.StructuresCentrales) },
+      { path: 'ministere/Structure-centrale', loadComponent: () => import('./features/ministere/structure-centrale/structure-centrale').then(m => m.StructureCentraleComponent) },
+      { path: 'structure-centrale/:id',loadComponent: () => import('./features/ministere/structure-centrale-detail/structure-centrale-detail').then(m => m.StructureCentraleDetailComponent)},
       { path: 'ministere/Projets-programmes', loadComponent: () => import('./features/ministere/projets-programmes/projets-programmes').then(m => m.ProjetsProgrammes) },
       { path: 'informations/radio-educative', loadComponent: () => import('./features/informations/radio-educative/radio-educative').then(m => m.RadioEducative) },
       { path: 'ressources/documents', loadComponent: () => import('./features/ressources/documents/documents/documents').then(m => m.Documents) },
@@ -94,7 +95,7 @@ export const routes: Routes = [
 
       { path: 'anciens-ministres', loadComponent: () => import('./features/admin/anciens-ministres/anciens-ministres').then(m => m.AnciensMinistresComponent) },
 
-      { path: 'structures-centrales', loadComponent: () => import('./features/admin/structures-centrales/structures-centrales').then(m => m.StructuresCentrales) },
+
 
       { path: 'admin/radio-educative',loadComponent: () => import('./features/admin/radio-educative/radio-educative').then(m => m.RadioEducativeComponent),},
 
@@ -112,7 +113,7 @@ export const routes: Routes = [
 
     { path: 'admin/video/edit/:id',loadComponent: () =>import('./features/admin/video/video-form/video-form').then(m => m.VideoFormComponent)},
 
-     { path: 'admin/ministere/structure-centrale',loadComponent: () =>import('./features/admin/ministere/structure-centrale/structure-centrale').then(m => m.StructuresCentralesComponent)}
+     { path: 'structure-centrale',loadComponent: () =>import('./features/admin/structure-centrale/structure-centrale').then(m => m.StructureCentraleComponent)}
 
     ]
   },

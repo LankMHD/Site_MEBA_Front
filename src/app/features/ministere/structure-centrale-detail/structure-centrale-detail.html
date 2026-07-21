@@ -1,0 +1,86 @@
+<!-- Bannière -->
+<div class="bg-gradient-to-r from-[#00843B] to-[#006B30] py-12">
+  <div class="container mx-auto px-4">
+    <h1 class="mb-2 text-3xl font-bold text-white">Structures Centrales</h1>
+    <nav class="text-sm text-green-100">
+      <a routerLink="/" class="hover:text-white">Accueil</a>
+      <span class="mx-2">›</span>
+      <a routerLink="/ministere/ministre" class="hover:text-white">Ministère</a>
+      <span class="mx-2">›</span>
+      <a routerLink="/ministere/Structure-centrale" class="hover:text-white">Structures Centrales</a>
+      <span class="mx-2">›</span>
+      <span class="text-white">{{ structure()?.nom || 'Détail' }}</span>
+    </nav>
+  </div>
+</div>
+
+<section class="py-16 bg-gray-100">
+  <div class="container mx-auto px-4">
+
+    <div *ngIf="loading()" class="text-center py-10">
+      <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Chargement...</span>
+      </div>
+    </div>
+
+    <div *ngIf="!loading() && structure() as item" class="space-y-10">
+      <div class="grid gap-8 xl:grid-cols-[1.8fr_0.9fr]">
+        <div class="rounded-2xl bg-white p-0 shadow-lg sm:p-0 overflow-hidden">
+          <article class="overflow-hidden">
+
+            <div class="p-6 sm:p-8">
+              <span class="inline-block mb-3 text-3xl font-bold uppercase text-black">
+                {{ item.sigle }}
+              </span>
+              <hr>
+              <p class="mb-4 text-sm text-slate-500" *ngIf="item.datePublication">
+                {{ item.datePublication | date:'dd/MM/yyyy' }} | Structure centrale
+              </p>
+
+              <h4 class="mb-4 font-bold text-slate-900">{{ item.nom }}</h4>
+
+              <div class="text-base leading-8 text-slate-700" *ngIf="item.description">
+                <div [innerHTML]="formatContent(item.description)"></div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <aside class="rounded-2xl bg-white p-6 shadow-lg" *ngIf="autresStructures().length > 0">
+          <h3 class="mb-5 text-xl font-bold text-slate-900">Autres Structures</h3>
+
+          <div class="space-y-3">
+            <a
+              *ngFor="let autre of autresStructures()"
+              [routerLink]="['/structure-centrale', autre.id]"
+              class="block rounded-xl border border-slate-200 bg-slate-50 p-4 transition hover:border-[#00843B] hover:bg-emerald-50"
+            >
+              <div class="flex items-center gap-3">
+                <div class="h-12 w-12 overflow-hidden rounded-lg bg-slate-100">
+                  <img
+                    *ngIf="autre.photo"
+                    [src]="getImageUrl(autre.photo)"
+                    [alt]="autre.nom"
+                    class="h-full w-full object-cover"
+                  >
+                  <div
+                    *ngIf="!autre.photo"
+                    class="grid h-full w-full place-items-center bg-gradient-to-br from-emerald-100 to-sky-100 text-[10px] font-semibold text-emerald-700"
+                  >
+                    S
+                  </div>
+                </div>
+
+                <div>
+                  <div class="text-sm font-bold uppercase text-[#00843B]">{{ autre.sigle }}</div>
+                  <div class="text-sm font-semibold text-slate-800">{{ autre.nom }}</div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+  </div>
+</section>
