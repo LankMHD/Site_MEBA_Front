@@ -1,0 +1,279 @@
+<section class="py-5">
+
+    <div class="container">
+
+        <!-- ========================= -->
+        <!-- BOUTON RETOUR -->
+        <!-- ========================= -->
+
+        <div class="mb-4 text-end">
+
+
+                <a
+                            routerLink="/ressources/mediatheque"
+                            class="btn btn-green right">
+
+                            <i class="bi bi-arrow-right"></i>
+
+                            Retour
+
+                        </a>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- CHARGEMENT -->
+        <!-- ========================= -->
+
+        @if (loading()) {
+
+            <div class="py-5 text-center">
+
+                <div
+                    class="spinner-border text-primary"
+                    role="status">
+
+                    <span class="visually-hidden">
+
+                        Chargement...
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        }
+
+        @else {
+
+
+            <!-- ========================= -->
+<!-- DÉTAIL PHOTO -->
+<!-- ========================= -->
+
+@if (type() === 'photo') {
+
+    @if (photo()) {
+
+        <div class="photo-viewer">
+
+            <!-- Flèche gauche -->
+
+            <button
+                class="photo-nav photo-nav-left"
+                (click)="previousPhoto()"
+                [disabled]="currentPhotoIndex() === 0"
+                aria-label="Photo précédente">
+
+                <span class="arrow">‹</span>
+
+            </button>
+
+
+            <!-- Cadre de la photo -->
+
+            <div class="photo-frame">
+
+                <img
+                    [src]="getImageUrl(
+                        photo()?.imageUrl
+                    )"
+                    class="photo-image"
+                    alt="Photo">
+
+            </div>
+
+
+            <!-- Flèche droite -->
+
+            <button
+                class="photo-nav photo-nav-right"
+                (click)="nextPhoto()"
+                [disabled]="
+                    currentPhotoIndex()
+                    === photos().length - 1
+                "
+                aria-label="Photo suivante">
+
+                <span class="arrow">›</span>
+
+            </button>
+
+        </div>
+
+
+        <!-- Position de la photo -->
+
+        <div
+            class="mt-3 text-center text-muted">
+
+            Photo
+            {{ currentPhotoIndex() + 1 }}
+            sur
+            {{ photos().length }}
+
+        </div>
+
+    }
+
+    @else {
+
+        <div
+            class="py-5 text-center">
+
+            <img
+                src="assets/images/empty.svg"
+                width="180"
+                alt="Aucune photo">
+
+            <h4 class="mt-4">
+
+                Photo introuvable
+
+            </h4>
+
+            <p class="text-muted">
+
+                Cette photo n'existe pas
+                ou a été supprimée.
+
+            </p>
+
+        </div>
+
+    }
+
+}
+
+
+            <!-- ========================= -->
+            <!-- DÉTAIL VIDÉO -->
+            <!-- ========================= -->
+
+            @else if (type() === 'video') {
+
+                @if (video()) {
+
+                    <div
+                        class="row justify-content-center">
+
+                        <div class="col-lg-10">
+
+                            <div
+                                class="border-0 shadow card">
+
+                                <div class="card-body">
+
+
+                                    <!-- VIDÉO YOUTUBE -->
+
+                                    @if (isYoutubeVideo()) {
+
+                                        <div
+                                            class="ratio ratio-16x9">
+
+                                            <iframe
+                                                [src]="
+                                                    getYoutubeEmbedUrl(
+                                                        video()?.youtubeUrl
+                                                    )
+                                                "
+                                                title="Vidéo YouTube"
+                                                frameborder="0"
+                                                allow="
+                                                    accelerometer;
+                                                    autoplay;
+                                                    clipboard-write;
+                                                    encrypted-media;
+                                                    gyroscope;
+                                                    picture-in-picture
+                                                "
+                                                allowfullscreen>
+
+                                            </iframe>
+
+                                        </div>
+
+                                    }
+
+
+                                    <!-- VIDÉO LOCALE -->
+
+                                    @else {
+
+                                        <video
+                                            class="rounded w-100"
+                                            controls>
+
+                                            <source
+                                                [src]="
+                                                    getVideoUrl(
+                                                        video()?.videoUrl
+                                                    )
+                                                "
+                                                type="video/mp4">
+
+                                            Votre navigateur
+                                            ne supporte pas
+                                            la lecture des vidéos.
+
+                                        </video>
+
+                                    }
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                }
+
+                @else {
+
+                    <div
+                        class="py-5 text-center">
+
+                        <img
+                            src="assets/images/empty.svg"
+                            width="180"
+                            alt="Vidéo introuvable">
+
+                        <h4 class="mt-4">
+
+                            Vidéo introuvable
+
+                        </h4>
+
+                        <p class="text-muted">
+
+                            Cette vidéo n'existe pas
+                            ou a été supprimée.
+
+                        </p>
+
+                        <!-- <a
+                            routerLink="/ressources/mediatheque"
+                            class="btn btn-green">
+
+                            <i class="bi bi-arrow-left"></i>
+
+                            Retour à la médiathèque
+
+                        </a> -->
+
+                    </div>
+
+                }
+
+            }
+
+        }
+
+    </div>
+
+</section>

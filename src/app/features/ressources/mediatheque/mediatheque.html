@@ -16,7 +16,7 @@
 <!-- ===========================
      CONTENU
 ============================ -->
-<section class="container py-5">
+<!-- <section class="container py-5"> -->
 <!-- ===================== -->
 <!-- PHOTOTHÈQUE -->
 <!-- ===================== -->
@@ -57,7 +57,10 @@
 
             <div class="photo-grid">
 
-                @for(photo of photos(); track photo.id){
+                @for(
+                        photo of getPaginatedPhotos();
+                        track photo.id
+                    ){
 
                     <div
                         class="photo-item"
@@ -72,29 +75,58 @@
                 }
 
             </div>
-
-            <div class="text-center mt-5">
-
-                <button
-                    class="btn btn-outline-primary px-4"
-                    (click)="viewAllPhotos()">
-
-                    Voir toute la photothèque
-
-                </button>
-
-            </div>
-
         }
     }
+
+    <div class="mt-5 text-center">
+
+    <button
+        class="btn btn-green me-2"
+        (click)="previousPhotoPage()"
+        [disabled]="currentPhotoPage() === 1">
+
+        <span>‹</span>
+
+        Précédent
+
+    </button>
+
+
+    <span
+        class="mx-3">
+
+        Page
+        {{ currentPhotoPage() }}
+        sur
+        {{ getTotalPhotoPages() }}
+
+    </span>
+
+
+    <button
+        class="btn btn-green ms-2"
+        (click)="nextPhotoPage()"
+        [disabled]="
+            currentPhotoPage()
+            === getTotalPhotoPages()
+        ">
+
+        Suivant
+
+        <span>›</span>
+
+    </button>
+
+</div>
 
 </section>
 
     <!-- ===================== -->
     <!-- VIDÉOTHÈQUE -->
     <!-- ===================== -->
+  <section class="video-section">
 
-    <div class="section-header mt-5">
+    <!-- <div class="section-header mt-5">
 
         <div>
 
@@ -114,14 +146,15 @@
 
         </div>
 
-        <button
-            class="btn btn-outline-danger"
-            (click)="viewAllVideos()">
+    </div> -->
 
-            Voir toute la vidéothèque
-
-        </button>
-
+    <div class="section-header">
+      <div>
+        <h2> <i class="bi bi-camera-reels me-2"></i>
+          Vidéothèque
+        </h2>
+        <p> Retrouvez les vidéos des événements et activités. </p>
+      </div>
     </div>
 
     @if(loadingVideos()){
@@ -187,5 +220,7 @@
         }
 
     }
+  </section>
 
-</section>
+<!--
+   -->

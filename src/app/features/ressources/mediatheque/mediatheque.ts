@@ -34,6 +34,10 @@ export class MediathequeComponent implements OnInit {
   loadingPhotos = signal(true);
   loadingVideos = signal(true);
 
+  photosPerPage = 8;
+
+  currentPhotoPage = signal(1);
+
   constructor(
     private apiService: ApiService,
     private router: Router,
@@ -83,6 +87,60 @@ export class MediathequeComponent implements OnInit {
     });
 
   }
+
+  getTotalPhotoPages(): number {
+
+  return Math.ceil(
+    this.photos().length /
+    this.photosPerPage
+  );
+
+}
+
+getPaginatedPhotos(): Photo[] {
+
+  const start =
+    (this.currentPhotoPage() - 1)
+    * this.photosPerPage;
+
+  const end =
+    start + this.photosPerPage;
+
+  return this.photos().slice(
+    start,
+    end
+  );
+
+}
+
+nextPhotoPage(): void {
+
+  if (
+    this.currentPhotoPage()
+    < this.getTotalPhotoPages()
+  ) {
+
+    this.currentPhotoPage.update(
+      page => page + 1
+    );
+
+  }
+
+}
+
+previousPhotoPage(): void {
+
+  if (
+    this.currentPhotoPage() > 1
+  ) {
+
+    this.currentPhotoPage.update(
+      page => page - 1
+    );
+
+  }
+
+}
 
   /**
    * ==========================
@@ -225,18 +283,17 @@ export class MediathequeComponent implements OnInit {
    */
   openPhoto(photo: Photo): void {
 
-    if (!photo.id) {
-
-      return;
-
-    }
-
-    this.router.navigate([
-      '/mediatheque/photos',
-      photo.id
-    ]);
-
+  if (!photo.id) {
+    return;
   }
+
+  this.router.navigate([
+    '/ressources/mediatheque',
+    'photo',
+    photo.id
+  ]);
+
+}
 
   /**
    * ==========================
@@ -245,41 +302,17 @@ export class MediathequeComponent implements OnInit {
    */
   openVideo(video: Video): void {
 
-    if (!video.id) {
-
-      return;
-
-    }
-
-    this.router.navigate([
-      '/mediatheque/videos',
-      video.id
-    ]);
-
+  if (!video.id) {
+    return;
   }
 
-  /**
-   * Voir toute la photothèque
-   */
-  viewAllPhotos(): void {
+  this.router.navigate([
+    '/ressources/mediatheque',
+    'video',
+    video.id
+  ]);
 
-    this.router.navigate([
-      '/mediatheque/photos'
-    ]);
-
-  }
-
-  /**
-   * Voir toute la vidéothèque
-   */
-  viewAllVideos(): void {
-
-    this.router.navigate([
-      '/mediatheque/videos'
-    ]);
-
-  }
-
+}
 
 
 getYoutubeEmbedUrl(url: string | undefined): SafeResourceUrl {

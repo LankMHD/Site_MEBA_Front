@@ -26,6 +26,7 @@ export const routes: Routes = [
       { path: 'ressources/documents', loadComponent: () => import('./features/ressources/documents/documents/documents').then(m => m.Documents) },
       { path: 'ressources/espace-enseignant', loadComponent: () => import('./features/ressources/espace-enseignant/espace-enseignant').then(m => m.EspaceEnseignant) },
       { path: 'ressources/mediatheque', loadComponent: () => import('./features/ressources/mediatheque/mediatheque').then(m => m.MediathequeComponent) },
+      { path: 'ressources/mediatheque/:type/:id', loadComponent: () => import('./features/ressources/mediatheque-detail/mediatheque-detail').then(m => m.MediathequeDetailComponent) },
       { path: 'ressources/demarche-administrative', loadComponent: () => import('./features/ressources/demarche-administrative/demarche-administrative').then(m => m.DemarcheAdministrative) },
       { path: 'ministere/historique/anciens-ministres/:id', loadComponent: () => import('./features/ministere/anciens-ministres-detail/anciens-ministres-detail').then(m => m.AnciensMinistresDetail) },
 
@@ -97,21 +98,13 @@ export const routes: Routes = [
 
 
 
-      { path: 'admin/radio-educative',loadComponent: () => import('./features/admin/radio-educative/radio-educative').then(m => m.RadioEducativeComponent),},
+      { path: 'admin/radio-educative',loadComponent: () => import('./features/admin/radio-educative/radio-educative').then(m => m.RadioEducativeComponent)},
 
 
-      { path: 'admin/photo', loadComponent: () => import('./features/admin/photo/photo-admin-list/photo-admin-list').then(m => m.PhotoAdminListComponent) },
-
-    { path: 'admin/photo/new',loadComponent: () =>import('./features/admin/photo/photo-form/photo-form').then(m => m.PhotoFormComponent)},
-
-    { path: 'admin/photo/edit/:id',loadComponent: () =>import('./features/admin/photo/photo-form/photo-form').then(m => m.PhotoFormComponent)},
+      { path: 'admin/photo',loadComponent: () =>import('./features/admin/photo/photo').then(m => m.PhotoComponent)},
 
 
-    { path: 'admin/video',loadComponent: () =>import('./features/admin/video/video-admin-list/video-admin-list').then(m => m.VideoAdminListComponent)},
-
-    { path: 'admin/video/new',loadComponent: () =>import('./features/admin/video/video-form/video-form').then(m => m.VideoFormComponent)},
-
-    { path: 'admin/video/edit/:id',loadComponent: () =>import('./features/admin/video/video-form/video-form').then(m => m.VideoFormComponent)},
+    { path: 'admin/video',loadComponent: () =>import('./features/admin/video/video').then(m => m.VideoComponent)},
 
      { path: 'structure-centrale',loadComponent: () =>import('./features/admin/structure-centrale/structure-centrale').then(m => m.StructureCentraleComponent)}
 
