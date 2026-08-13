@@ -50,6 +50,14 @@ totalPages = signal(1);
 }
 
 
+private isProjetProgrammeDocument(doc: Document): boolean {
+  return doc?.typeDocument === 'PROJET PROGRAMME';
+}
+
+private getProjetProgrammeDocuments(docs: Document[]): Document[] {
+  return docs.filter((doc) => this.isProjetProgrammeDocument(doc));
+}
+
 filterDocuments() {
   const filtered = this.allDocuments().filter(doc =>
     !this.selectedType() || doc.typeName === this.selectedType()
@@ -90,13 +98,11 @@ prevPage() {
      this.apiService.getPublicDocuments(0, 20).subscribe({
        next: (response) => {
         if (response.success) {
-        // Filtrer les documents pour ne garder que ceux de catégorie "DOCUMENT EDUCATION"
-        const filteredDocs = response.data.content.filter(
-          (doc: Document) => doc.typeName === 'DOCUMENT SIMPLE'
-        );
-        this.allDocuments.set(filteredDocs);
-        this.filterDocuments();
-      }
+          const filteredDocs = this.getProjetProgrammeDocuments(response.data.content);
+          this.allDocuments.set(filteredDocs);
+          this.currentPage.set(1);
+          this.filterDocuments();
+        }
          this.loading.set(false);
        },
        error: () => this.loading.set(false)
@@ -108,7 +114,12 @@ prevPage() {
      this.loading.set(true);
      this.apiService.searchDocuments(this.searchQuery, 0, 20).subscribe({
        next: (response) => {
-         if (response.success) this.documents.set(response.data.content);
+         if (response.success) {
+           const filteredDocs = this.getProjetProgrammeDocuments(response.data.content);
+           this.allDocuments.set(filteredDocs);
+           this.currentPage.set(1);
+           this.filterDocuments();
+         }
          this.loading.set(false);
        },
        error: () => this.loading.set(false)
@@ -153,18 +164,25 @@ getImageUrl(path?: string): string | null {
 
   }
 
+  openFile(doc: any) {
+    const fileUrl = this.getImageUrl(doc.filePath);
+    if (fileUrl) {
+      window.open(fileUrl, '_blank');
+    }
+  }
+
   downloadFile(doc: any) {
-  this.http.get(this.getImageUrl(doc.filePath)!, {
-    responseType: 'blob'
-  }).subscribe(blob => {
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = doc.title + '.pdf';
-    a.click();
-    window.URL.revokeObjectURL(url);
-  });
-}
+    this.http.get(this.getImageUrl(doc.filePath)!, {
+      responseType: 'blob'
+    }).subscribe(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = doc.title + '.pdf';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
+  }
 
 
   downloadDoc(doc: any) {

@@ -23,7 +23,7 @@ import { Article, ArticleCategory, ArticleStatus } from '../../../core/models';
           Nouvel article
         </button>
       </div>
-      
+
       <!-- Table -->
       <div class="card p-0">
         @if (loading()) {
@@ -62,7 +62,7 @@ import { Article, ArticleCategory, ArticleStatus } from '../../../core/models';
                     <td><span class="badge-primary">{{ getCategoryLabel(article.category) }}</span></td>
                     <td><span [class]="getStatusBadgeClass(article.status)">{{ getStatusLabel(article.status) }}</span></td>
                     <td>{{ article.viewCount }}</td>
-                    <td class="text-sm text-neutral-500">{{ formatDate(article.createdAt) }}</td>
+                  <td class="text-sm text-neutral-500">{{ formatDate(article.createdAt) }}</td>
                     <td class="text-right">
                       <div class="flex justify-end gap-2">
                         <button (click)="editArticle(article)" class="btn-ghost p-2" title="Modifier">
@@ -84,7 +84,7 @@ import { Article, ArticleCategory, ArticleStatus } from '../../../core/models';
           </div>
         }
       </div>
-      
+
       <!-- Modal -->
       @if (showModal()) {
         <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
@@ -94,23 +94,23 @@ import { Article, ArticleCategory, ArticleStatus } from '../../../core/models';
                 {{ editingArticle() ? 'Modifier l\\'article' : 'Nouvel article' }}
               </h2>
             </div>
-            
+
             <form (ngSubmit)="saveArticle()" class="p-6 space-y-5">
               <div>
                 <label class="label">Titre <span class="text-secondary-500">*</span></label>
                 <input type="text" [(ngModel)]="form.title" name="title" class="input" required>
               </div>
-              
+
               <div>
                 <label class="label">Résumé</label>
                 <textarea [(ngModel)]="form.summary" name="summary" rows="2" class="input resize-none"></textarea>
               </div>
-              
+
               <div>
                 <label class="label">Contenu <span class="text-secondary-500">*</span></label>
                 <textarea [(ngModel)]="form.content" name="content" rows="6" class="input resize-none" required></textarea>
               </div>
-              
+
               <div class="grid grid-cols-2 gap-4">
                 <div>
                   <label class="label">Catégorie</label>
@@ -133,12 +133,17 @@ import { Article, ArticleCategory, ArticleStatus } from '../../../core/models';
                   </select>
                 </div>
               </div>
-              
+
+              <div>
+                <label class="label">Date de publication</label>
+                <input type="date" [(ngModel)]="form.publishedAt" name="publishedAt" class="input">
+              </div>
+
               <div class="flex items-center gap-2">
                 <input type="checkbox" [(ngModel)]="form.featured" name="featured" id="featured" class="rounded border-neutral-300 text-primary-500 focus:ring-primary-500">
                 <label for="featured" class="text-sm text-neutral-700">Mettre en avant</label>
               </div>
-              
+
               <div class="flex justify-end gap-3 pt-4 border-t border-neutral-200">
                 <button type="button" (click)="closeModal()" class="btn-ghost">Annuler</button>
                 <button type="submit" [disabled]="saving()" class="btn-primary">
@@ -161,22 +166,23 @@ export class AdminArticlesComponent implements OnInit {
   showModal = signal(false);
   editingArticle = signal<Article | null>(null);
   saving = signal(false);
-  
-  form: { title: string; summary: string; content: string; category: ArticleCategory; status: ArticleStatus; featured: boolean } = {
+
+  form: { title: string; summary: string; content: string; category: ArticleCategory; status: ArticleStatus; featured: boolean; publishedAt: string | undefined } = {
     title: '',
     summary: '',
     content: '',
+    publishedAt: undefined,
     category: ArticleCategory.ACTUALITE,
     status: ArticleStatus.DRAFT,
     featured: false
   };
-  
+
   constructor(private apiService: ApiService) {}
-  
+
   ngOnInit(): void {
     this.loadArticles();
   }
-  
+
   loadArticles(): void {
     this.apiService.getAllArticles(0, 50).subscribe({
       next: (response) => {
@@ -188,18 +194,18 @@ export class AdminArticlesComponent implements OnInit {
       error: () => this.loading.set(false)
     });
   }
-  
+
   openModal(): void {
-    this.form = { title: '', summary: '', content: '', category: ArticleCategory.ACTUALITE, status: ArticleStatus.DRAFT, featured: false };
+    this.form = { title: '', summary: '', content: '', category: ArticleCategory.ACTUALITE, status: ArticleStatus.DRAFT, featured: false, publishedAt: undefined };
     this.editingArticle.set(null);
     this.showModal.set(true);
   }
-  
+
   closeModal(): void {
     this.showModal.set(false);
     this.editingArticle.set(null);
   }
-  
+
   editArticle(article: Article): void {
     this.form = {
       title: article.title,
@@ -207,22 +213,23 @@ export class AdminArticlesComponent implements OnInit {
       content: article.content,
       category: article.category,
       status: article.status,
-      featured: article.featured
+      featured: article.featured,
+      publishedAt: article.publishedAt
     };
     this.editingArticle.set(article);
     this.showModal.set(true);
   }
-  
+
   saveArticle(): void {
     if (!this.form.title || !this.form.content) return;
-    
+
     this.saving.set(true);
     const editing = this.editingArticle();
-    
+
     const request = editing
       ? this.apiService.updateArticle1(editing.id, this.form)
       : this.apiService.createArticle1(this.form);
-    
+
     request.subscribe({
       next: (response) => {
         if (response.success) {
@@ -234,7 +241,7 @@ export class AdminArticlesComponent implements OnInit {
       error: () => this.saving.set(false)
     });
   }
-  
+
   deleteArticle(article: Article): void {
     if (confirm(`Supprimer l'article "${article.title}" ?`)) {
       this.apiService.deleteArticle(article.id).subscribe({
@@ -242,7 +249,7 @@ export class AdminArticlesComponent implements OnInit {
       });
     }
   }
-  
+
   getCategoryLabel(category: string): string {
     const labels: Record<string, string> = {
       'ACTUALITE': 'Actualité', 'COMMUNIQUE': 'Communiqué', 'EVENEMENT': 'Événement',
@@ -250,14 +257,14 @@ export class AdminArticlesComponent implements OnInit {
     };
     return labels[category] || category;
   }
-  
+
   getStatusLabel(status: string): string {
     const labels: Record<string, string> = {
       'DRAFT': 'Brouillon', 'PENDING': 'En attente', 'PUBLISHED': 'Publié', 'ARCHIVED': 'Archivé'
     };
     return labels[status] || status;
   }
-  
+
   getStatusBadgeClass(status: string): string {
     const classes: Record<string, string> = {
       'DRAFT': 'badge bg-neutral-100 text-neutral-600',
@@ -267,7 +274,7 @@ export class AdminArticlesComponent implements OnInit {
     };
     return classes[status] || 'badge';
   }
-  
+
   formatDate(dateStr: string): string {
     if (!dateStr) return '';
     return new Date(dateStr).toLocaleDateString('fr-FR');

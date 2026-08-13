@@ -180,5 +180,10 @@ getImageUrl(path?: string): string | null {
   });
 }
 
-
+openFile(doc: any) {
+    const fileUrl = this.getImageUrl(doc.filePath);
+    if (fileUrl) {
+      window.open(fileUrl, '_blank');
+    }
+  }
 }

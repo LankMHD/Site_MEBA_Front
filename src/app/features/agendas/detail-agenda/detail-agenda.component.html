@@ -26,10 +26,10 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                 </svg>
-                Retour à la liste 
+                Retour à la liste
             </a>
 
-            <!-- Badge catégorie 
+            <!-- Badge catégorie
             <span class="inline-block bg-white/20 text-white px-3 py-1 rounded-full mb-4 text-sm font-semibold">
                 {{ getCategoryLabel(article()!.category) }}
             </span>-->
@@ -60,14 +60,14 @@
                 {{ formatDate(article()!.publishedAt || article()!.createdAt) }}
                 </span>
 
-                
+
 
             </div>
             </div>
         </div>
     </section>
 
-      
+
       <!-- Content -->
     <section class="py-12 bg-neutral-50">
         <div class="container mx-auto px-4">
@@ -111,13 +111,13 @@
                 </p>
             }
 
-            
+
             @if (article()?.images?.length) {
             <div class="space-y-6 mb-6">
                 @for (image of article()!.images; track image.id) {
                 <div class="rounded-xl overflow-hidden shadow-lg bg-white w-full">
-                    <img 
-                    [src]="getImageUrl(image.imageUrl)" 
+                    <img
+                    [src]="getImageUrl(image.imageUrl)"
                     [alt]="article()!.title"
                     class="w-full h-auto"
                     >
@@ -143,7 +143,7 @@
             <!-- Partager cet article -->
             <div class="mt-12 pt-8 border-t border-neutral-200">
             <h3 class="text-lg font-semibold text-neutral-900 mb-4">Partager cet article</h3>
-            
+
 
 
             <div class="flex gap-3">
@@ -169,21 +169,15 @@
                 </button>
             </div>
             </div>
-
-
-
-
             </div>
 
-
-
-            <!-- Sidebar droite: 5 actualités récentes -->
+           <!-- Sidebar droite: 5 actualités récentes -->
             <aside class="space-y-6 bg-gray-100 p-6 rounded-xl">
                 <h3 class="text-xl font-bold text-neutral-900 mb-4">Agenda</h3>
                 <div class="flex flex-col justify-between space-y-6">
-                    
 
-                    <div *ngFor="let agenda of agendas()" 
+
+                    <div *ngFor="let agenda of agendas()"
                         class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-shadow cursor-pointer group">
 
                         <div class="flex items-center gap-4" [routerLink]="['/agendas', agenda.id]">
@@ -201,8 +195,6 @@
                             <span class="text-sm font-medium text-[rgb(231,76,60)]">
                                 {{ agenda.title }}
                             </span>
-
-                            
                             </div>
 
                             <!-- Summary -->
@@ -215,15 +207,8 @@
 
                     </div>
 
-                
-
-                    
-                    
-                    
-
-                   
                 </div>
-            
+
             </aside>
 
             </div>

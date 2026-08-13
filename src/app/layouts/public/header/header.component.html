@@ -136,7 +136,7 @@
 
   <!-- Dropdown -->
   <div class="absolute left-0 invisible w-56 py-1 mt-2 transition-all duration-200 bg-white border rounded-lg shadow-md opacity-0 top-full border-slate-100 group-hover:opacity-100 group-hover:visible">
-    <a (click)="goToSection('actualites'); setActive('actualites')"
+    <a routerLink="/actualites"
        routerLinkActive="text-primary-600 bg-primary-50"
        [routerLinkActiveOptions]="{ exact: true }"
        class="block px-4 py-2 text-sm transition-colors text-slate-600 hover:bg-primary-50 hover:text-primary-600">
@@ -223,9 +223,9 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
           </svg>
         </button>
-        <a routerLink="/admin" class="items-center hidden gap-2 px-4 py-2 text-sm font-medium text-white transition-colors rounded-lg sm:inline-flex bg-primary-500 hover:bg-primary-600" style="background-color: #00843B;">
+        <!-- <a routerLink="/admin" class="items-center hidden gap-2 px-4 py-2 text-sm font-medium text-white transition-colors rounded-lg sm:inline-flex bg-primary-500 hover:bg-primary-600" style="background-color: #00843B;">
           Administration
-        </a>
+        </a> -->
         <button (click)="toggleMobileMenu()" class="p-2 transition-colors rounded-lg lg:hidden text-slate-500 hover:text-slate-700 hover:bg-slate-100">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path *ngIf="mobileMenuOpen()" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>

@@ -39,13 +39,11 @@
         Anciens ministres
         <span class="absolute bottom-0 left-0 w-0 h-0 border-l-[16px] border-l-sky-500 border-t-[16px] border-t-transparent"></span>
       </a>
-
-
-
-
     </div>
   </div>
 </section>
+
+
 <section id="attributions" class="py-12 bg-gray-50 scroll-mt-24">
   <div class="container px-4 mx-auto">
 
@@ -84,7 +82,14 @@
       </div>
 
       <!-- Bloc droite -->
-      <div class="bg-[#f2f2f2] p-10">
+      <div class="bg-[#f2f2f2] p-10"
+      class="bg-white
+       border border-transparent
+       p-10
+       hover:border-blue-500
+       hover:shadow-xl
+       hover:scale-[1.01]
+       transition-all duration-300">
 
         <div class="grid gap-8 md:grid-cols-2">
 
@@ -142,7 +147,16 @@
     <div class="grid gap-0 mt-0 lg:grid-cols-2">
 
       <!-- Bloc Enseignement général -->
-      <div class="bg-[#f1f1f5] border-r-2 border-sky-500 p-10">
+      <!-- <div class="bg-[#f1f1f5] border-r-2 border-sky-500 p-10"> -->
+
+        <div
+  class="bg-[#f1f1f5]
+       border border-transparent
+       p-10
+       hover:border-blue-500
+       hover:shadow-xl
+       hover:scale-[1.01]
+       transition-all duration-300">
 
         <h5 class="mb-10 text-2xl text-center text-gray-800">
           En matière d’éducation préscolaire, d’enseignements primaire et secondaire général :
@@ -256,7 +270,13 @@
       </div>
 
       <!-- Bloc EFTP -->
-      <div class="bg-[#eef3fb] p-10">
+      <div class="bg-[#eef3fb]
+       border border-transparent
+       p-10
+       hover:border-blue-500
+       hover:shadow-xl
+       hover:scale-[1.01]
+       transition-all duration-300">
 
         <h3 class="mb-10 text-2xl text-center text-gray-800">
           En matière d’enseignement et de formation techniques et professionnels :
@@ -354,6 +374,8 @@
 
   </div>
 </section>
+
+
 <section id="historique" class="py-16 bg-white scroll-mt-24">
   <div class="container px-4 mx-auto">
 
@@ -410,8 +432,8 @@
 
 <section id="anciens" class="py-16 bg-gray-50 scroll-mt-24">
 
-      <div class="text-center mb-14">
-        <h2 class="mt-8 text-4xl font-light text-gray-500">
+      <div class="text-center mb-5">
+        <h2 class="text-4xl font-light text-gray-500">
         Les anciens ministres
         </h2>
 
@@ -423,9 +445,14 @@
           Aucun ancien ministre trouvé pour le moment.
         </div>
 
-        <div *ngIf="!loading() && anciensMinistres().length > 0" class="grid gap-6 mt-10 sm:grid-cols-1 md:grid-cols-3">
+        <!-- <div *ngIf="!loading() && anciensMinistres().length > 0"
+          class="grid gap-6 mt-10 sm:grid-cols-1 md:grid-cols-3"> -->
+          <div *ngIf="!loading() && anciensMinistres().length > 0"
+              class="grid max-w-7xl mx-auto gap-8 mt-10 px-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+
           <ng-container *ngFor="let ministre of anciensMinistres()">
-            <div class="overflow-hidden bg-white rounded-lg shadow-md">
+            <!-- <div class="overflow-hidden bg-white rounded-lg shadow-md"> -->
+              <div class="overflow-hidden bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow">
               <div class="overflow-hidden bg-gray-100 h-72">
                 <img
                   [src]="getImageUrl(ministre.photo)"

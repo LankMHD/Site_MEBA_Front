@@ -1,46 +1,315 @@
- <!-- Bannière -->
-    <div class="bg-gradient-to-r from-[#00843B] to-[#006B30] py-12">
-      <div class="container px-4 mx-auto">
-        <h1 class="mb-2 text-3xl font-bold text-white">Radio educative</h1>
-        <nav class="text-sm text-green-100">
-          <a routerLink="/" class="hover:text-white">Accueil</a>
-          <span class="mx-2">›</span>
-          <a routerLink="/informations/radio-educative" class="hover:text-white">Informations</a>
-          <span class="mx-2">›</span>
-          <span class="text-white">Radio educative</span>
-        </nav>
+<!-- Bannière -->
+<div class="bg-gradient-to-r from-[#00843B] to-[#006B30] py-12">
+  <div class="container px-4 mx-auto">
+    <h1 class="mb-2 text-3xl font-bold text-white">
+      Radio éducative
+    </h1>
+
+    <nav class="text-sm text-green-100">
+      <a routerLink="/" class="hover:text-white">
+        Accueil
+      </a>
+
+      <span class="mx-2">›</span>
+
+      <a
+        routerLink="/informations/radio-educative"
+        class="hover:text-white"
+      >
+        Informations
+      </a>
+
+      <span class="mx-2">›</span>
+
+      <span class="text-white">
+        Radio éducative
+      </span>
+    </nav>
+  </div>
+</div>
+
+
+<!-- Contenu principal -->
+<section class="py-16 bg-gray-50">
+  <div class="container px-4 mx-auto">
+
+    <div class="grid items-stretch gap-8 lg:grid-cols-2">
+
+            <!-- ================================= -->
+      <!-- BLOC GAUCHE : ÉCOUTER LA RADIO -->
+      <!-- ================================= -->
+
+      <div
+        class="flex flex-col justify-center p-8 bg-white shadow-sm rounded-2xl"
+      >
+
+        <div class="mb-8 text-center">
+
+          <!-- Icône radio -->
+          <div
+            class="flex items-center justify-center w-20 h-20 mx-auto mb-5 text-white rounded-full bg-[#00843B]"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-10 h-10"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 9l10.5-3.5A1.5 1.5 0 0121 6.92v10.16a1.5 1.5 0 01-2 1.42L9 15m0-6v6m0 0a3 3 0 11-6 0V9a3 3 0 016 0z"
+              />
+            </svg>
+          </div>
+
+          <h2 class="mb-2 text-2xl font-bold text-gray-800">
+            Écoutez la radio éducative
+          </h2>
+
+          <p class="text-gray-500">
+            Accédez à nos programmes éducatifs en direct.
+          </p>
+
+        </div>
+
+
+        <!-- Chargement -->
+        <div
+          *ngIf="loading"
+          class="flex items-center justify-center py-8"
+        >
+
+          <svg
+            class="w-8 h-8 mr-2 text-green-700 animate-spin"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            ></circle>
+
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+
+          <span class="text-gray-600">
+            Chargement de la radio...
+          </span>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- LECTEUR RADIO -->
+        <!-- ON GARDE VOTRE LOGIQUE -->
+        <!-- ================================= -->
+
+        <div *ngIf="!loading">
+
+          <ng-container
+            *ngIf="audio && audio.length > 0; else noAudio"
+          >
+
+            <div class="p-5 bg-gray-50 rounded-xl">
+
+              <div class="flex items-center gap-3 mb-4">
+
+                <div
+                  class="flex items-center justify-center w-10 h-10 text-white rounded-full bg-[#00843B]"
+                >
+                  ▶
+                </div>
+
+                <div>
+
+                  <p class="font-semibold text-gray-800">
+                    Radio éducative
+                  </p>
+
+                  <p class="text-sm text-gray-500">
+                    Écouter en direct
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <!-- VOTRE LECTEUR QUI FONCTIONNAIT -->
+              <audio
+                controls
+                class="w-full"
+                preload="none"
+              >
+
+                <source
+                  [src]="radioStreamUrl"
+                  type="audio/mpeg"
+                >
+
+              </audio>
+
+            </div>
+
+          </ng-container>
+
+
+          <!-- Aucun flux -->
+          <ng-template #noAudio>
+
+            <div class="py-8 text-center text-neutral-600">
+              La radio éducative est momentanément indisponible.
+            </div>
+
+          </ng-template>
+
+        </div>
+
       </div>
+
+
+      <!-- ========================= -->
+      <!-- BLOC DROIT : PRÉSENTATION -->
+      <!-- ========================= -->
+      <div
+        class="p-8 text-white rounded-2xl shadow-sm bg-gradient-to-br from-[#00843B] to-[#006B30]"
+      >
+
+        <div class="flex items-center gap-4 mb-6">
+
+          <div
+            class="flex items-center justify-center w-14 h-14 rounded-xl bg-white/15"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-8 h-8"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253"
+              />
+            </svg>
+          </div>
+
+          <div>
+            <h2 class="text-2xl font-bold">
+              La radio éducative
+            </h2>
+
+            <p class="text-sm text-green-100">
+              Un outil au service de l'éducation
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="space-y-5 text-green-50">
+
+          <p class="leading-7">
+            La radio éducative constitue un outil important de
+            communication et d'accompagnement du système éducatif.
+            Elle permet de diffuser des contenus pédagogiques,
+            des informations et des programmes destinés aux
+            apprenants, aux enseignants, aux parents et à
+            l'ensemble de la communauté éducative.
+          </p>
+
+          <p class="leading-7">
+            À travers ses programmes, elle contribue à renforcer
+            l'accès à l'information et au savoir, notamment en
+            permettant aux apprenants de bénéficier de contenus
+            éducatifs au-delà du cadre traditionnel de la salle
+            de classe.
+          </p>
+
+          <p class="leading-7">
+            La radio peut également servir de moyen de sensibilisation
+            sur les enjeux liés à l'éducation, de valorisation des
+            initiatives scolaires et de partage des bonnes pratiques
+            au sein du système éducatif.
+          </p>
+
+        </div>
+
+
+        <!-- Points clés -->
+        <div class="pt-6 mt-8 border-t border-white/20">
+
+          <div class="grid gap-4 sm:grid-cols-2">
+
+            <div class="flex items-start gap-3">
+              <span class="mt-1 text-xl">✓</span>
+              <div>
+                <p class="font-semibold">
+                  Contenus éducatifs
+                </p>
+                <p class="text-sm text-green-100">
+                  Diffusion de ressources pédagogiques
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <span class="mt-1 text-xl">✓</span>
+              <div>
+                <p class="font-semibold">
+                  Information
+                </p>
+                <p class="text-sm text-green-100">
+                  Actualités et informations éducatives
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <span class="mt-1 text-xl">✓</span>
+              <div>
+                <p class="font-semibold">
+                  Sensibilisation
+                </p>
+                <p class="text-sm text-green-100">
+                  Promotion des valeurs éducatives
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <span class="mt-1 text-xl">✓</span>
+              <div>
+                <p class="font-semibold">
+                  Accessibilité
+                </p>
+                <p class="text-sm text-green-100">
+                  L'éducation accessible à tous
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
 
-    <!-- Contenu principal -->
-
-    <section class="py-12">
-      <div class="container px-4 mx-auto">
-        <div class="max-w-3xl p-6 mx-auto bg-white rounded shadow">
-          <h2 class="mb-4 text-2xl font-bold">Écoutez la radio éducative</h2>
-          
-          <div *ngIf="loading" class="flex items-center justify-center py-8">
-            <svg class="w-8 h-8 mr-2 text-green-700 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-
-          </div>
-
-          <div *ngIf="!loading">
-            <ng-container *ngIf="audio && audio.length > 0; else noAudio">
-              <audio controls class="w-full" preload="none">
-                <source [src]="radioStreamUrl" type="audio/mpeg">
-              </audio>
-            </ng-container>
-
-            <ng-template #noAudio>
-              <div class="py-8 text-center text-neutral-600"></div>
-            </ng-template>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-
+  </div>
+</section>

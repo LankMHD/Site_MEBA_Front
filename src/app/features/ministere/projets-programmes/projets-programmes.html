@@ -48,7 +48,7 @@
         } @else {
 
             <div class="flex items-start gap-6">
-              
+
             <div class="flex-1 p-4 bg-white shadow rounded-xl">
                 @if (documents().length === 0) {
                 <!-- Message si aucun document trouvé -->
@@ -83,16 +83,28 @@
                     </div>
 
 
-                    <!-- Bouton Télécharger -->
+                    <!-- bouton Ouvrir -->
                     @if (doc.filePath) {
-                      <button (click)="downloadFile(doc)"
-                              class="flex items-center gap-2 px-4 py-2 text-sm text-white transition-colors bg-red-600 rounded-xl hover:bg-red-700">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                        </svg>
-                        Télécharger
-                      </button>
+                      <div class="flex items-center gap-2">
+                        <button (click)="openFile(doc)"
+                                class="flex items-center gap-2 px-3 py-2 text-sm text-white transition-colors bg-green-600 rounded-xl hover:bg-green-700">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                          </svg>
+                          Ouvrir
+                        </button>
+                        <!-- <button (click)="downloadFile(doc)"
+                                class="flex items-center gap-2 px-3 py-2 text-sm text-white transition-colors bg-red-600 rounded-xl hover:bg-red-700">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                          </svg>
+                          Télécharger
+                        </button> -->
+                      </div>
                     }
 
                     </div>
@@ -131,17 +143,7 @@
             </div>
 
             </div>
-
-
-
         }
-
-
-
-
-
-
-
       </div>
     </section>
 

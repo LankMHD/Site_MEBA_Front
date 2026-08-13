@@ -29,7 +29,7 @@
                 Retour aux actualités
             </a>
 
-            <!-- Badge catégorie 
+            <!-- Badge catégorie
             <span class="inline-block bg-white/20 text-white px-3 py-1 rounded-full mb-4 text-sm font-semibold">
                 {{ getCategoryLabel(article()!.category) }}
             </span>-->
@@ -42,7 +42,7 @@
             <!-- Meta info: auteur, date, vues -->
             <div class="flex flex-wrap items-center gap-4 text-white/80 text-sm">
 
-                @if (article()!.authorName) {
+                <!-- @if (article()!.authorName) {
                 <span class="flex items-center gap-1">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -50,7 +50,7 @@
                     </svg>
                     {{ article()!.authorName }}
                 </span>
-                }
+                } -->
 
                 <span class="flex items-center gap-1">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -75,7 +75,7 @@
         </div>
     </section>
 
-      
+
       <!-- Content -->
     <section class="py-12 bg-neutral-50">
         <div class="container mx-auto px-4">
@@ -119,23 +119,23 @@
                 </p>
             }
 
-            
+
 
 
             <!-- Image en grand -->
              @if (article()?.category === 'ACTUALITE') {
-  
+
             @if (article()?.images && article()!.images.length > 0) {
                 <div class="rounded-xl overflow-hidden shadow-lg mb-6">
-                <img 
-                    [src]="getImageUrl(article()!.images[0].imageUrl)" 
-                    [alt]="article()!.title" 
+                <img
+                    [src]="getImageUrl(article()!.images[0].imageUrl)"
+                    [alt]="article()!.title"
                     class="w-full h-auto object-cover">
                 </div>
-            } 
+            }
 
             }
-            
+
 
             <!-- Contenu détaillé -->
           <!-- Contenu détaillé -->
@@ -148,7 +148,7 @@
             <!-- Partager cet article -->
             <div class="mt-12 pt-8 border-t border-neutral-200">
             <h3 class="text-lg font-semibold text-neutral-900 mb-4">Partager cet article</h3>
-            
+
 
 
             <div class="flex gap-3">
@@ -173,22 +173,16 @@
                 </svg>
                 </button>
             </div>
-            </div>
-
-
-
-
-            </div>
-
-
+          </div>
+        </div>
 
             <!-- Sidebar droite: 5 actualités récentes -->
             <aside class="space-y-6">
                 <h3 class="text-xl font-bold text-neutral-900 mb-4">Actualités récentes</h3>
                  <div class="flex flex-col justify-between space-y-6">
-                    
 
-                    <div *ngFor="let agenda of agendas()" 
+
+                    <div *ngFor="let agenda of agendas()"
                         class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-shadow cursor-pointer group">
 
                         <a class="flex items-center gap-4 cursor-pointer" [routerLink]="['/articles', agenda.id]">
@@ -196,15 +190,15 @@
                         <!-- Date -->
                           @if (agenda.images && agenda.images.length > 0) {
                         <div class="flex-shrink-0 w-16 h-16 flex items-center justify-center">
-                          
-                            <img 
-                                [src]="getImageUrl(agenda.images[0].imageUrl)" 
+
+                            <img
+                                [src]="getImageUrl(agenda.images[0].imageUrl)"
                                 alt="image agenda"
                                 class="w-16 h-16 object-cover rounded-md"
                             />
-                            
+
                         </div>
-                        } 
+                        }
 
                         <div class="flex-1">
 
@@ -214,7 +208,7 @@
                                 {{ agenda.title }}
                             </span>
 
-                            
+
                             </div>
 
                             <!-- Summary -->
@@ -227,15 +221,15 @@
 
                     </div>
 
-                
 
-                    
-                    
-                    
 
-                   
+
+
+
+
+
                 </div>
-            
+
             </aside>
 
             </div>
